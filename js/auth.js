@@ -3,29 +3,29 @@
 let auth = null;
 let authInitialized = false;
 
-// Initialize Firebase Auth
+// Initialize Firebase Auth with persistence
 async function initializeAuth() {
     try {
         if (typeof firebase === 'undefined' || !firebase.auth) {
-            throw new Error("Firebase SDK not loaded");
+            throw new Error("Firebase SDK not loaded properly");
         }
 
         auth = firebase.auth();
         
-        // Set persistence to LOCAL to maintain login state
+        // Set persistence to LOCAL to maintain session
         await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         
         authInitialized = true;
-        console.log("Firebase Auth initialized with LOCAL persistence");
+        console.log("Firebase Auth initialized successfully with LOCAL persistence");
         return true;
     } catch (error) {
-        console.error("Auth initialization failed:", error);
-        showGlobalError("Authentication service failed to initialize");
+        console.error("Firebase Auth initialization failed:", error);
+        showGlobalError("Authentication service failed to initialize. Please refresh the page.");
         return false;
     }
 }
 
-// Check auth state with redirect logic
+// Check auth state and handle redirects
 async function checkAuthAndRedirect() {
     if (!authInitialized) {
         await initializeAuth();
@@ -36,39 +36,43 @@ async function checkAuthAndRedirect() {
             const unsubscribe = auth.onAuthStateChanged(user => {
                 unsubscribe();
                 resolve(user);
-            }, reject);
+            }, error => {
+                console.error("Auth state error:", error);
+                reject(error);
+            });
         });
 
         const currentPage = window.location.pathname.split('/').pop();
 
         if (user) {
-            // User is logged in
+            // User is logged in - redirect from login/register to mainchat
             if (currentPage === 'login.html' || currentPage === 'register.html') {
-                console.log("User is logged in, redirecting to mainchat");
+                console.log("Redirecting to mainchat.html");
                 window.location.href = 'mainchat.html';
             }
         } else {
-            // User is not logged in
+            // User is not logged in - redirect from mainchat to login
             if (currentPage === 'mainchat.html') {
-                console.log("User is not logged in, redirecting to login");
+                console.log("Redirecting to login.html");
                 window.location.href = 'login.html';
             }
         }
 
         return user;
     } catch (error) {
-        console.error("Auth state check error:", error);
+        console.error("Error checking auth state:", error);
         return null;
     }
 }
 
-// Enhanced login function
+// Enhanced login handler with immediate redirect
 async function handleLogin(email, password) {
     try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         
         if (userCredential.user) {
-            console.log("Login successful, user:", userCredential.user.email);
+            console.log("Login successful, redirecting to mainchat");
+            window.location.href = 'mainchat.html';
             return { success: true };
         }
     } catch (error) {
@@ -80,7 +84,7 @@ async function handleLogin(email, password) {
     }
 }
 
-// Setup login form
+// Setup login form with proper redirect
 function setupLoginForm() {
     const loginForm = document.getElementById('login-form');
     if (!loginForm) return;
@@ -93,17 +97,14 @@ function setupLoginForm() {
         const errorElement = loginForm.querySelector('#login-error-message');
         const submitBtn = loginForm.querySelector('button[type="submit"]');
         
-        // UI feedback
+        // Clear errors and set loading state
         errorElement.textContent = '';
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> လုပ်ဆောင်နေသည်...';
 
         const result = await handleLogin(email, password);
         
-        if (result.success) {
-            // Redirect after successful login
-            window.location.href = 'mainchat.html';
-        } else {
+        if (!result.success) {
             errorElement.textContent = result.message;
             submitBtn.disabled = false;
             submitBtn.textContent = 'ဝင်ရောက်ရန်';
@@ -120,4 +121,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     await checkAuthAndRedirect();
 });
 
-// Keep other existing functions (logout, register, etc.)
+// Keep other existing functions (register, reset, logout) as they were
