@@ -1,48 +1,63 @@
 // js/auth.js
 
 // Firebase Auth Service Initialization
-let auth;
+let auth = null;
+let authInitialized = false;
 
+// Improved Firebase initialization with retry logic
 function initializeFirebaseAuth() {
-    try {
-        // Check if Firebase app is already initialized
-        if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
-            auth = firebase.auth();
-            console.log("Firebase Auth initialized successfully");
-            return true;
-        } else {
-            throw new Error("Firebase app not initialized");
-        }
-    } catch (error) {
-        console.error("Firebase Auth initialization failed:", error);
-        showGlobalError("Authentication service initialization failed. Please refresh the page.");
-        return false;
-    }
+    return new Promise((resolve, reject) => {
+        const maxAttempts = 5;
+        let attempts = 0;
+
+        const tryInitialize = () => {
+            attempts++;
+            try {
+                if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                    auth = firebase.auth();
+                    authInitialized = true;
+                    console.log("Firebase Auth initialized successfully");
+                    resolve(true);
+                } else if (attempts < maxAttempts) {
+                    console.log(`Firebase not ready yet, retrying... (${attempts}/${maxAttempts})`);
+                    setTimeout(tryInitialize, 300);
+                } else {
+                    throw new Error("Firebase app not initialized after multiple attempts");
+                }
+            } catch (error) {
+                console.error("Firebase Auth initialization failed:", error);
+                if (attempts < maxAttempts) {
+                    setTimeout(tryInitialize, 300);
+                } else {
+                    showGlobalError("Authentication service initialization failed. Please refresh the page.");
+                    reject(false);
+                }
+            }
+        };
+
+        tryInitialize();
+    });
 }
 
 // Initialize auth when script loads
-if (!initializeFirebaseAuth()) {
+initializeFirebaseAuth().catch(() => {
     console.error("Failed to initialize Firebase Auth");
-}
+});
 
-// User-friendly error messages in Burmese
+// Enhanced user-friendly error messages in Burmese
 function getFriendlyErrorMessage(error) {
-    switch(error.code) {
-        case 'auth/invalid-email':
-            return 'ကျေးဇူးပြု၍ မှန်ကန်သော အီးမေးလ်လိပ်စာထည့်ပါ';
-        case 'auth/user-disabled':
-            return 'ဤအကောင့်ကို ယာယီပိတ်ထားပါသည်';
-        case 'auth/user-not-found':
-            return 'ဤအီးမေးလ်ဖြင့် အကောင့်မရှိပါ';
-        case 'auth/wrong-password':
-            return 'လျှို့ဝှက်နံပါတ်မှားနေပါသည်';
-        case 'auth/too-many-requests':
-            return 'အကောင့်ကို ယာယီပိတ်ထားပါသည်။ နောက်မှပြန်ကြိုးစားပါ';
-        case 'auth/network-request-failed':
-            return 'အင်တာနက်ချိတ်ဆက်မှု ပြဿနာရှိပါသည်';
-        default:
-            return 'အမှားတစ်ခုဖြစ်နေပါသည်: ' + error.message;
-    }
+    const errorMap = {
+        'auth/invalid-email': 'ကျေးဇူးပြု၍ မှန်ကန်သော အီးမေးလ်လိပ်စာထည့်ပါ',
+        'auth/user-disabled': 'ဤအကောင့်ကို ယာယီပိတ်ထားပါသည်',
+        'auth/user-not-found': 'ဤအီးမေးလ်ဖြင့် အကောင့်မရှိပါ',
+        'auth/wrong-password': 'လျှို့ဝှက်နံပါတ်မှားနေပါသည်',
+        'auth/too-many-requests': 'အကောင့်ကို ယာယီပိတ်ထားပါသည်။ နောက်မှပြန်ကြိုးစားပါ',
+        'auth/network-request-failed': 'အင်တာနက်ချိတ်ဆက်မှု ပြဿနာရှိပါသည်',
+        'auth/email-already-in-use': 'ဤအီးမေးလ်ဖြင့် အကောင့်ရှိပြီးသားဖြစ်ပါသည်',
+        'auth/weak-password': 'လျှို့ဝှက်နံပါတ်သည် အလွန်အားနည်းနေပါသည်'
+    };
+
+    return errorMap[error.code] || `အမှားတစ်ခုဖြစ်နေပါသည်: ${error.message}`;
 }
 
 // Show error message to user
@@ -51,180 +66,186 @@ function showError(elementId, message) {
     if (errorElement) {
         errorElement.textContent = message;
         errorElement.style.display = 'block';
+        // Auto-hide error after 5 seconds
+        setTimeout(() => {
+            errorElement.style.display = 'none';
+        }, 5000);
     }
 }
 
 // Show global error message
 function showGlobalError(message) {
-    const globalError = document.getElementById('global-error');
-    if (globalError) {
-        globalError.textContent = message;
-        globalError.style.display = 'block';
-    }
+    const globalError = document.getElementById('global-error') || createGlobalErrorElement();
+    globalError.textContent = message;
+    globalError.style.display = 'block';
 }
 
-// Check authentication state
+function createGlobalErrorElement() {
+    const errorDiv = document.createElement('div');
+    errorDiv.id = 'global-error';
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px;
+        background-color: #ff4444;
+        color: white;
+        border-radius: 5px;
+        z-index: 1000;
+        display: none;
+    `;
+    document.body.appendChild(errorDiv);
+    return errorDiv;
+}
+
+// Enhanced authentication state check with timeout
 function checkAuthState() {
     return new Promise((resolve, reject) => {
-        if (!auth) {
-            console.error("Auth not initialized");
-            return reject("Authentication service not available");
+        if (!authInitialized) {
+            return reject("Authentication service not initialized");
         }
 
+        const timeout = setTimeout(() => {
+            reject("Authentication check timed out");
+        }, 5000);
+
         const unsubscribe = auth.onAuthStateChanged(user => {
+            clearTimeout(timeout);
             unsubscribe();
-            if (user) {
-                console.log("User is logged in:", user.email);
-                resolve(user);
-            } else {
-                console.log("No user logged in");
-                resolve(null);
-            }
+            resolve(user);
         }, error => {
-            console.error("Auth state error:", error);
+            clearTimeout(timeout);
+            unsubscribe();
             reject(error);
         });
     });
 }
 
-// Login Form Handler
+// Enhanced login handler with loading state
 function setupLoginForm() {
     const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const errorElement = document.getElementById('login-error-message');
-            
-            // Clear previous errors
-            if (errorElement) errorElement.textContent = '';
+    if (!loginForm) return;
 
-            // Basic validation
-            if (!email || !password) {
-                showError('login-error-message', 'ကျေးဇူးပြု၍ အီးမေးလ်နှင့် လျှို့ဝှက်နံပါတ်ထည့်ပါ');
-                return;
-            }
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = loginForm.querySelector('#email').value.trim();
+        const password = loginForm.querySelector('#password').value.trim();
+        const errorElement = loginForm.querySelector('#login-error-message');
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
 
-            try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                if (userCredential.user) {
-                    console.log("Login successful, redirecting...");
-                    window.location.href = 'mainchat.html';
-                }
-            } catch (error) {
-                console.error("Login Error:", error);
-                showError('login-error-message', getFriendlyErrorMessage(error));
+        // Clear previous errors
+        if (errorElement) errorElement.textContent = '';
+
+        // Basic validation
+        if (!email || !password) {
+            showError('login-error-message', 'ကျေးဇူးပြု၍ အီးမေးလ်နှင့် လျှို့ဝှက်နံပါတ်ထည့်ပါ');
+            return;
+        }
+
+        // Set loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'လုပ်ဆောင်နေသည်...';
+
+        try {
+            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            if (userCredential.user) {
+                console.log("Login successful, redirecting...");
+                window.location.href = 'mainchat.html';
             }
-        });
-    }
+        } catch (error) {
+            console.error("Login Error:", error);
+            showError('login-error-message', getFriendlyErrorMessage(error));
+        } finally {
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    });
 }
 
-// Registration Form Handler
+// Enhanced registration handler
 function setupRegistrationForm() {
     const registerForm = document.getElementById('register-form');
-    if (registerForm) {
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const confirmPassword = document.getElementById('confirm-password').value.trim();
-            const errorElement = document.getElementById('register-error-message');
-            
-            if (errorElement) errorElement.textContent = '';
+    if (!registerForm) return;
 
-            // Validation
-            if (!email || !password || !confirmPassword) {
-                showError('register-error-message', 'ကျေးဇူးပြု၍ အကုန်လုံးဖြည့်ပါ');
-                return;
-            }
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = registerForm.querySelector('#email').value.trim();
+        const password = registerForm.querySelector('#password').value.trim();
+        const confirmPassword = registerForm.querySelector('#confirm-password').value.trim();
+        const errorElement = registerForm.querySelector('#register-error-message');
+        const submitBtn = registerForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
 
-            if (password !== confirmPassword) {
-                showError('register-error-message', 'လျှို့ဝှက်နံပါတ်နှစ်ခု တူညီရပါမည်');
-                return;
-            }
+        if (errorElement) errorElement.textContent = '';
 
-            if (password.length < 6) {
-                showError('register-error-message', 'လျှို့ဝှက်နံပါတ်သည် အနည်းဆုံး ၆ လုံးရှိရပါမည်');
-                return;
-            }
+        // Validation
+        if (!email || !password || !confirmPassword) {
+            showError('register-error-message', 'ကျေးဇူးပြု၍ အကုန်လုံးဖြည့်ပါ');
+            return;
+        }
 
-            try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                if (userCredential.user) {
-                    alert('အကောင့်အောင်မြင်စွာဖန်တီးပြီးပါပြီ။ ကျေးဇူးပြု၍ ဝင်ရောက်ပါ');
-                    window.location.href = 'login.html';
-                }
-            } catch (error) {
-                console.error("Registration Error:", error);
-                showError('register-error-message', getFriendlyErrorMessage(error));
-            }
-        });
-    }
-}
+        if (password !== confirmPassword) {
+            showError('register-error-message', 'လျှို့ဝှက်နံပါတ်နှစ်ခု တူညီရပါမည်');
+            return;
+        }
 
-// Password Reset Handler
-function setupPasswordReset() {
-    const resetForm = document.getElementById('reset-form');
-    if (resetForm) {
-        resetForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const errorElement = document.getElementById('reset-error-message');
-            const successElement = document.getElementById('reset-success-message');
-            
-            if (errorElement) errorElement.textContent = '';
-            if (successElement) successElement.textContent = '';
+        if (password.length < 6) {
+            showError('register-error-message', 'လျှို့ဝှက်နံပါတ်သည် အနည်းဆုံး ၆ လုံးရှိရပါမည်');
+            return;
+        }
 
-            if (!email) {
-                showError('reset-error-message', 'ကျေးဇူးပြု၍ အီးမေးလ်လိပ်စာထည့်ပါ');
-                return;
-            }
+        // Set loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'လုပ်ဆောင်နေသည်...';
 
-            try {
-                await auth.sendPasswordResetEmail(email);
-                if (successElement) {
-                    successElement.textContent = 'လျှို့ဝှက်နံပါတ်ပြန်လည်သတ်မှတ်ရန် လင့်ခ်ကို အီးမေးလ်ပို့ပြီးပါပြီ';
-                    successElement.style.display = 'block';
-                }
-            } catch (error) {
-                console.error("Password Reset Error:", error);
-                showError('reset-error-message', getFriendlyErrorMessage(error));
-            }
-        });
-    }
-}
-
-// Logout Handler
-function setupLogout() {
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await auth.signOut();
+        try {
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            if (userCredential.user) {
+                // Send email verification
+                await userCredential.user.sendEmailVerification();
+                alert('အကောင့်အောင်မြင်စွာဖန်တီးပြီးပါပြီ။ ကျေးဇူးပြု၍ အီးမေးလ်အတည်ပြုပါ');
                 window.location.href = 'login.html';
-            } catch (error) {
-                console.error("Logout Error:", error);
-                alert("အကောင့်မှ ထွက်ရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်");
             }
-        });
-    }
+        } catch (error) {
+            console.error("Registration Error:", error);
+            showError('register-error-message', getFriendlyErrorMessage(error));
+        } finally {
+            // Reset button state
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    });
 }
 
 // Initialize all handlers when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    setupLoginForm();
-    setupRegistrationForm();
-    setupPasswordReset();
-    setupLogout();
-    
-    // Check auth state for redirection
-    checkAuthState().then(user => {
-        if (user && (window.location.pathname.includes('login.html') || 
-                     window.location.pathname.includes('register.html'))) {
-            window.location.href = 'mainchat.html';
+    // Wait for auth to initialize before setting up forms
+    const initAuth = async () => {
+        try {
+            await initializeFirebaseAuth();
+            
+            setupLoginForm();
+            setupRegistrationForm();
+            setupPasswordReset();
+            setupLogout();
+            
+            // Check auth state for redirection
+            const user = await checkAuthState();
+            if (user && (window.location.pathname.includes('login.html') || 
+                         window.location.pathname.includes('register.html'))) {
+                window.location.href = 'mainchat.html';
+            }
+        } catch (error) {
+            console.error("Initialization error:", error);
+            // If on mainchat page and not authenticated, redirect to login
+            if (window.location.pathname.includes('mainchat.html')) {
+                window.location.href = 'login.html';
+            }
         }
-    }).catch(error => {
-        console.error("Auth state check failed:", error);
-    });
+    };
+
+    initAuth();
 });
