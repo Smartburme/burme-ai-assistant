@@ -1,0 +1,16 @@
+# Ignore Node modules
+node_modules/
+
+# Ignore environment files if you use them locally
+.env
+
+# Ignore build artifacts if any
+dist/
+
+# Ignore Firebase configuration files if they are stored separately and shouldn't be committed
+# e.g., firebase.json (if not handled by init)
+# firebase.json
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

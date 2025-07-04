@@ -1,0 +1,27 @@
+burme-ai-assistant/
+│
+├── index.html
+├── login.html
+├── register.html
+├── reset.html
+├── mainchat.html
+├── about.html
+├── privacy.html
+│
+├── js/
+│   ├── firebaseConfig.js      (သင့် API Keys ထည့်သွင်းရပါမည်)
+│   ├── auth.js
+│   ├── chat.js
+│   ├── gemini.js              (သင့် Cloudflare Worker URL ထည့်သွင်းရပါမည်)
+│   ├── ui.js
+│   └── markdown.js
+│
+├── css/
+│   └── style.css              (အခြေခံ CSS ကို အောက်မှာ ပေးပါ့မယ်)
+│   └── components/            (Optional: chat.css, auth.css စသည်)
+│
+├── assets/
+│   └── icon.jpg               (သင့် app icon ကို ဒီနေရာမှာ ထားပါ။)
+│
+├── .gitignore                 (Git အတွက် .gitignore ဖိုင်ကို ဖန်တီးပါ။)
+└── README.md                  (Project အကြောင်းအရာတွေ ရေးပါ။)
