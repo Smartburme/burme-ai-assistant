@@ -1,0 +1,3 @@
+name = "burme-ai-assistant"
+main = "src/worker.js"  # သင့် worker code ရှိရာလမ်းကြောင်း
+compatibility_date = "2025-07-04"
