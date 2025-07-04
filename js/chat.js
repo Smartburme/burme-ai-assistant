@@ -11,13 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.style.display = 'none';
     document.body.appendChild(fileInput);
 
-    // Check if user is authenticated
-    if (!auth || !auth.currentUser) {
-        console.warn("User not authenticated. Redirecting to login...");
-        window.location.href = 'login.html';
-        return;
-    }
-
     // --- Event Listeners ---
     sendBtn.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', (e) => {
