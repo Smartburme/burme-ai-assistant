@@ -1,0 +1,17 @@
+{
+  "name": "burme-ai-assistant",
+  "version": "1.0.0",
+  "description": "Burme AI Assistant Cloudflare Worker",
+  "main": "src/worker.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "wrangler": "^4.23.0"
+  }
+}
