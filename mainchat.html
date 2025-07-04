@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with AI - Burmese AI Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components/chat.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <!-- End Firebase SDK -->
+    <script src="js/firebaseConfig.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/chat.js" defer></script>
+    <script src="js/gemini.js" defer></script> <!-- For Gemini API calls via Worker -->
+    <script src="js/ui.js" defer></script> <!-- For UI interactions -->
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="window.location.href='index.html'">Burmese AI</div>
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" id="logout-btn">Logout</a></li>
+                </ul>
+            </nav>
+            <!-- Mobile Menu Icon -->
+            <div class="menu-icon">&#9776;</div>
+        </div>
+    </header>
+
+    <main class="chat-main-container">
+        <div id="chat-messages" class="chat-messages-area">
+            <!-- Initial bot message -->
+            <div class="message bot-message">Hello! How can I help you today?</div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message or /code or upload video..." autocomplete="off">
+            <button id="send-btn" class="btn-icon"><i class="fas fa-paper-plane"></i></button>
+            <!-- Image upload button -->
+            <button id="upload-img-btn" class="btn-icon"><i class="fas fa-image"></i></button>
+            <!-- Video upload button -->
+            <button id="upload-vid-btn" class="btn-icon"><i class="fas fa-video"></i></button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Burmese AI Assistant</p>
+    </footer>
+</body>
+</html>
