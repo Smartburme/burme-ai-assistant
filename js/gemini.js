@@ -1,12 +1,13 @@
 // js/gemini.js
 
-// REPLACE WITH YOUR CLOUDFLARE WORKER DEPLOYED URL
-const GEMINI_WORKER_URL = 'burme-ai-assistant.mysvm.workers.dev'; // <-- REPLACE THIS
+// Cloudflare Worker URL - HTTPS ထည့်ပါ
+const GEMINI_WORKER_URL = 'https://burme-ai-assistant.mysvm.workers.dev';
 
 async function getGeminiResponse(messageData) {
-    if (!GEMINI_WORKER_URL || GEMINI_WORKER_URL === 'burme-ai-assistant.mysvm.workers.dev) {
-        console.error("Cloudflare Worker URL is not configured!");
-        throw new Error("Gemini API Worker not configured.");
+    // URL validation ကို ပိုမိုကောင်းမွန်စွာ စစ်ဆေးခြင်း
+    if (!GEMINI_WORKER_URL || !GEMINI_WORKER_URL.startsWith('https://')) {
+        console.error("Cloudflare Worker URL is not properly configured!");
+        throw new Error("Invalid Gemini API Worker URL configuration.");
     }
 
     try {
@@ -14,33 +15,31 @@ async function getGeminiResponse(messageData) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // Add any necessary authorization headers if your worker requires them
+                'Accept': 'application/json'
             },
-            // messageData can be a string (for text) or an object (for text+image)
-            body: JSON.stringify({ message: messageData }),
+            body: JSON.stringify({ 
+                message: messageData 
+            }),
         });
 
         if (!response.ok) {
-            let errorText = `API request failed with status ${response.status}`;
-            try {
-                const errorData = await response.json();
-                errorText += `: ${errorData.error || response.statusText}`;
-            } catch {
-                errorText += `: ${response.statusText}`;
-            }
-            console.error("Worker API Error Response:", errorText);
-            throw new Error(errorText);
+            const errorData = await response.json().catch(() => null);
+            const errorMessage = errorData?.error || response.statusText;
+            console.error(`API request failed: ${response.status} - ${errorMessage}`);
+            throw new Error(`API Error: ${response.status} - ${errorMessage}`);
         }
 
         const data = await response.json();
-        if (data.response) {
-            return data.response;
-        } else {
-            throw new Error("Invalid response format from Worker.");
+        
+        if (!data || !data.response) {
+            console.error("Invalid response format:", data);
+            throw new Error("Received invalid response format from Worker");
         }
 
+        return data.response;
+
     } catch (error) {
-        console.error("Error in getGeminiResponse (calling Worker):", error);
-        throw error;
+        console.error("Failed to get Gemini response:", error);
+        throw new Error(`Failed to communicate with Gemini Worker: ${error.message}`);
     }
 }
