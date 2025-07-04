@@ -1,19 +1,21 @@
 # Burmese AI Assistant
 
-Welcome to the Burmese AI Assistant! This project provides a modern web interface powered by Firebase Authentication for user management and Cloudflare Workers with Google's Gemini API for AI capabilities (text and image processing).
+Welcome to the Burmese AI Assistant! This project provides a modern web interface powered by Firebase Authentication for user management and Cloudflare Workers with Google's Gemini API for AI capabilities (text, image, and conceptual video processing).
 
 ## Features
 
 *   **Secure Authentication:** User registration, login, and password reset via Firebase Auth.
 *   **AI Chat Interface:** Engage with an AI assistant for text-based responses.
 *   **Image Analysis:** Upload images and receive AI analysis or descriptions.
-*   **Modern UI:** Responsive design with a neon-inspired aesthetic.
+*   **Code Input & Analysis:** Send code snippets for explanation or analysis using a `/code` prefix.
+*   **Video Input (Conceptual):** Upload videos and send them for AI analysis (requires Gemini API video support and robust worker implementation).
+*   **Modern UI:** Responsive design with a neon-inspired aesthetic, clear message formatting, and loading indicators.
 *   **About & Privacy Pages:** Project information and policy details.
 
 ## Technology Stack
 
 *   **Frontend:** HTML, CSS, JavaScript
-*   **Backend/API:** Firebase Authentication, Cloudflare Workers, Google Gemini API
+*   **Backend/API:** Firebase Authentication, Cloudflare Workers, Google Gemini API (Multi-modal)
 *   **Styling:** Custom CSS with CSS Variables for theming.
 
 ## Setup and Installation
@@ -37,7 +39,7 @@ Welcome to the Burmese AI Assistant! This project provides a modern web interfac
     *   Create a new directory named `gemini-worker`.
     *   Inside `gemini-worker`, create `index.js` and paste the provided Worker code.
     *   In the `burme-ai-assistant` root directory, create `wrangler.toml` and paste the Worker configuration.
-    *   **Crucially:** In `wrangler.toml`, set your `GEMINI_API_KEY` environment variable with your actual Google Gemini API Key obtained from Google AI Studio or Google Cloud.
+    *   **Crucially:** In `wrangler.toml`, set your `GEMINI_API_KEY` environment variable with your actual Google Gemini API Key.
     *   Install worker dependencies: `cd gemini-worker && npm init -y && npm install @google/generative-ai @cloudflare/workers-types && cd ..`
     *   Deploy the worker: `wrangler deploy --config wrangler.toml`
     *   Copy the deployed Worker URL.
@@ -47,17 +49,7 @@ Welcome to the Burmese AI Assistant! This project provides a modern web interfac
     Place your app icon (e.g., `icon.jpg`) in the `assets/` folder.
 
 5.  **Configure `.gitignore`:**
-    Create a `.gitignore` file in the root directory with the following content:
-    ```
-    # Ignore Node modules
-    node_modules/
-
-    # Ignore environment files if you use them locally
-    .env
-
-    # Ignore build artifacts if any
-    dist/
-    ```
+    Create a `.gitignore` file in the root directory with the provided content to ignore unnecessary files.
 
 6.  **Deploy to Firebase Hosting:**
     *   Install Firebase CLI: `npm install -g firebase-tools`
@@ -74,7 +66,7 @@ Welcome to the Burmese AI Assistant! This project provides a modern web interfac
 1.  Navigate to your Firebase Hosting URL.
 2.  You'll be redirected to the login page if not authenticated.
 3.  Register a new account or log in.
-4.  Start chatting with the AI! You can send text messages or upload images.
+4.  Start chatting with the AI! You can send text messages, upload images, send code snippets (using `/code` prefix), or upload videos.
 
 ## Contributing
 
