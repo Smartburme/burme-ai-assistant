@@ -19,7 +19,7 @@ export default {
         return new Response(JSON.stringify(data), {
           headers: { 
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"  # CORS အတွက်
+            "Access-Control-Allow-Origin": "*"
           }
         });
       }
