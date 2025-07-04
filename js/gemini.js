@@ -4,7 +4,7 @@
 const GEMINI_WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL'; // <-- REPLACE THIS
 
 async function getGeminiResponse(messageData) {
-    if (!GEMINI_WORKER_URL || GEMINI_WORKER_URL === 'YOUR_CLOUDFLARE_WORKER_URL') {
+    if (!GEMINI_WORKER_URL || GEMINI_WORKER_URL === 'burme-ai-assistant.mysvm.workers.dev) {
         console.error("Cloudflare Worker URL is not configured!");
         throw new Error("Gemini API Worker not configured.");
     }
