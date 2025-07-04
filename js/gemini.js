@@ -1,7 +1,7 @@
 // js/gemini.js
 
 // REPLACE WITH YOUR CLOUDFLARE WORKER DEPLOYED URL
-const GEMINI_WORKER_URL = 'YOUR_CLOUDFLARE_WORKER_URL'; // <-- REPLACE THIS
+const GEMINI_WORKER_URL = 'burme-ai-assistant.mysvm.workers.dev'; // <-- REPLACE THIS
 
 async function getGeminiResponse(messageData) {
     if (!GEMINI_WORKER_URL || GEMINI_WORKER_URL === 'burme-ai-assistant.mysvm.workers.dev) {
