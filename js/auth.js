@@ -122,4 +122,5 @@ try {
 }); }
 
 // Logout Button Listener const logoutBtn = document.getElementById("logout-btn"); if (logoutBtn) { logoutBtn.addEventListener("click", async (e) => { e.preventDefault(); if (!auth) { alert("Authentication service unavailable."); return; } try { await auth.signOut(); window.location.href = "login.html"; } catch (error) { console.error("Logout Error:", error); alert("Logout failed. Please try again."); } }); }
-
+// Expose Firebase init function to global scope
+window.initializeFirebaseAndAuth = initializeFirebaseAndAuth;
