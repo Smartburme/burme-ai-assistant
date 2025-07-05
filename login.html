@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Burmese AI Assistant</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- If you created a separate auth.css, link it here -->
-    <!-- <link rel="stylesheet" href="css/components/auth.css"> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Burmese AI Assistant</title>
+  <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <!-- End Firebase SDK -->
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
 
-    <!-- Your custom scripts -->
-    <script src="js/firebaseConfig.js" defer></script>
-    <script src="js/auth.js" defer></script>
+  <!-- Firebase Config & Auth Logic -->
+  <script src="js/firebaseConfig.js" defer></script>
+  <script src="js/auth.js" defer></script>
 </head>
 <body>
-    <div class="auth-container">
-        <!-- App Logo -->
-        <div class="app-logo">
-            <!-- Replace with your actual logo or a placeholder character -->
-            <span class="logo-char">B</span>
-            <!-- Or if you have an image logo: -->
-            <!-- <img src="assets/logo.png" alt="App Logo"> -->
-        </div>
-
-        <h1>Welcome Back!</h1>
-        <p>Sign in to continue to your AI Assistant.</p>
-
-        <form id="login-form">
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" required placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" required placeholder="Enter your password">
-            </div>
-            <button type="submit" class="btn-primary">Sign In</button>
-        </form>
-
-        <div class="auth-links">
-            <p>No account? <a href="register.html">Sign up</a></p>
-            <p><a href="reset.html">Forgot password?</a></p>
-        </div>
-
-        <div id="login-error-message" class="error-message"></div>
+  <div class="auth-container">
+    <!-- App Logo -->
+    <div class="app-logo">
+      <span class="logo-char">B</span>
     </div>
+
+    <h1>Welcome Back!</h1>
+    <p>Sign in to continue to your AI Assistant.</p>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required placeholder="Enter your email" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="Enter your password" />
+      </div>
+      <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+
+    <div class="auth-links">
+      <p>No account? <a href="register.html">Sign up</a></p>
+      <p><a href="reset.html">Forgot password?</a></p>
+    </div>
+
+    <div id="login-error-message" class="error-message"></div>
+  </div>
+
+  <script>
+    // Firebase Auth ရလာအောင် initialization ပြုလုပ်
+    window.onload = async () => {
+      try {
+        await initializeFirebaseAndAuth();
+        console.log("✅ Firebase Auth Ready on Login Page.");
+      } catch (error) {
+        const errDiv = document.getElementById("login-error-message");
+        errDiv.textContent = "Firebase Initialization Error: " + (error.message || error);
+      }
+    };
+  </script>
 </body>
 </html>
