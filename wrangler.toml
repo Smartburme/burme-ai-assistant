@@ -1,3 +1,6 @@
 name = "burme-ai-assistant"
 main = "src/worker.js"  # သင့် worker code ရှိရာလမ်းကြောင်း
 compatibility_date = "2025-07-04"
+# wrangler.toml ဖိုင်တွင် အောက်ပါအတိုင်း ထည့်ပါ
+[vars]
+GEMINI_API_KEY = "{{GEMINI_API_KEY}}"
