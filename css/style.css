@@ -1,18 +1,24 @@
-/* General styles */
+/* Global styles */
 :root {
-    --primary-color: #00ffff; /* Cyan / Neon Blue */
+    --primary-color: #00ffff; /* Neon Cyan */
     --secondary-color: #00ff00; /* Neon Green */
-    --background-color: #0a0a0a; /* Dark background */
-    --card-background: #1a1a1a;
-    --accent-color: #4CAF50; /* Example green for success */
-    --error-color: #FF6347;   /* Example red for errors */
-    --border-color: #00ffff;
-    --shadow-color: rgba(0, 255, 255, 0.4);
-    --hover-shadow-color: rgba(0, 255, 0, 0.4);
+    --background-color: #2a2a2a; /* Dark Gray background */
+    --card-background: #1e1e1e; /* Slightly lighter dark gray for cards/containers */
+    --text-color: #ffffff;     /* White text */
+    --subtle-text-color: #cccccc; /* Lighter gray for secondary text */
+    --border-color: #00ffff;   /* Neon Cyan border */
+    --shadow-color: rgba(0, 255, 255, 0.4); /* Neon Cyan shadow */
+    --hover-shadow-color: rgba(0, 255, 0, 0.4); /* Neon Green hover shadow */
+    --error-color: #ff6347;   /* Tomato Red for errors */
+    --success-color: #4CAF50; /* Green for success */
+
+    /* Font family */
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-code: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-primary);
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
@@ -21,17 +27,18 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* Smooth scrolling for anchors */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Header */
 header {
-    background-color: rgba(10, 10, 10, 0.8);
+    background-color: rgba(30, 30, 30, 0.9); /* Darker, slightly transparent header */
     color: var(--primary-color);
     padding: 0.8rem 0;
     border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 10px var(--shadow-color);
-    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 15px var(--shadow-color); /* Enhanced shadow */
+    backdrop-filter: blur(8px); /* Glassmorphism effect */
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -49,8 +56,12 @@ header {
 .logo {
     font-size: 1.8rem;
     font-weight: bold;
-    text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Stronger glow */
     cursor: pointer;
+    transition: text-shadow 0.3s ease;
+}
+.logo:hover {
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Brighter glow on hover */
 }
 
 nav ul {
@@ -72,23 +83,24 @@ nav ul li a {
     font-weight: 500;
     transition: color 0.3s ease, text-shadow 0.3s ease;
     position: relative;
+    padding-bottom: 5px; /* Space for the underline */
 }
 
-nav ul li a::after {
+nav ul li a::after { /* Neon underline effect on hover */
     content: '';
     position: absolute;
     left: 0;
-    bottom: -5px;
+    bottom: -5px; /* Position below text */
     width: 0;
     height: 2px;
     background-color: var(--secondary-color);
     transition: width 0.3s ease;
-    box-shadow: 0 0 5px var(--secondary-color);
+    box-shadow: 0 0 8px var(--secondary-color); /* Neon glow for underline */
 }
 
 nav ul li a:hover {
     color: var(--primary-color);
-    text-shadow: 0 0 8px var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
 }
 
 nav ul li a:hover::after {
@@ -100,7 +112,7 @@ main {
     flex: 1;
     padding: 2rem 1.5rem;
     max-width: 1200px;
-    margin: 20px auto 0 auto;
+    margin: 20px auto 0 auto; /* Adjusted top margin for sticky header */
     width: 100%;
     box-sizing: border-box;
 }
@@ -109,16 +121,35 @@ main {
     background-color: var(--card-background);
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 10px var(--border-color);
+    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color); /* Deeper, multi-layered shadow */
     margin-top: 20px;
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle neon border */
 }
 
 h1, h2, h3 {
     color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color), 0 0 15px var(--secondary-color);
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Combined neon glow */
     margin-bottom: 1.2rem;
+    letter-spacing: 0.5px; /* Slight letter spacing */
 }
+
+/* Title Bottom Color (example for section titles) */
+h1, h2, h3 {
+    position: relative;
+    padding-bottom: 10px; /* Space for the underline */
+}
+h1::after, h2::after, h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px; /* Underline width */
+    height: 3px; /* Underline thickness */
+    background-color: var(--border-color); /* White-ish border color */
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--border-color);
+}
+
 
 /* Loading Spinner */
 .loading-container {
@@ -140,16 +171,18 @@ h1, h2, h3 {
     font-size: 1.2rem;
     margin-top: 1rem;
     letter-spacing: 1px;
+    color: var(--primary-color); /* Make loading text glow */
+    text-shadow: 0 0 5px var(--primary-color);
 }
 
 .spinner {
-    border: 5px solid rgba(0, 255, 255, 0.2);
+    border: 5px solid rgba(0, 255, 255, 0.2); /* Thicker, semi-transparent border */
     border-radius: 50%;
-    border-top: 5px solid var(--primary-color);
+    border-top: 5px solid var(--primary-color); /* Top border is primary color */
     width: 60px;
     height: 60px;
     animation: spin 1s linear infinite;
-    box-shadow: 0 0 15px var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color); /* Inner glow */
 }
 
 @keyframes spin {
@@ -159,8 +192,8 @@ h1, h2, h3 {
 
 /* Buttons */
 .btn-primary {
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: var(--background-color);
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient button */
+    color: var(--background-color); /* Dark text on gradient */
     border: none;
     padding: 12px 25px;
     border-radius: 8px;
@@ -169,13 +202,13 @@ h1, h2, h3 {
     font-weight: bold;
     text-transform: uppercase;
     transition: all 0.4s ease;
-    box-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color);
+    box-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Strong button glow */
     letter-spacing: 1px;
 }
 
 .btn-primary:hover {
-    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color);
-    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color); /* Brighter glow on hover */
+    transform: translateY(-3px); /* Slight lift on hover */
 }
 
 .btn-icon {
@@ -198,7 +231,7 @@ h1, h2, h3 {
     background-color: var(--card-background);
     padding: 2.5rem 3rem;
     border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 10px var(--border-color);
+    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color);
     text-align: center;
     max-width: 420px;
     margin: 60px auto;
@@ -212,7 +245,7 @@ h1, h2, h3 {
 }
 
 .auth-container p {
-    color: #ccc;
+    color: var(--subtle-text-color); /* Use subtle text color for descriptions */
     margin-bottom: 2rem;
 }
 
@@ -245,7 +278,7 @@ h1, h2, h3 {
 .form-group input:focus {
     outline: none;
     border-color: var(--secondary-color);
-    box-shadow: 0 0 10px var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color); /* Glow on focus */
 }
 
 .auth-links {
@@ -274,33 +307,21 @@ h1, h2, h3 {
 }
 
 .success-message {
-    color: var(--accent-color);
+    color: var(--success-color);
     margin-top: 10px;
     font-size: 0.9rem;
     text-align: left;
     font-weight: bold;
 }
 
-/* Footer */
-footer {
-    margin-top: auto;
-    text-align: center;
-    padding: 2rem 0;
-    background-color: rgba(10, 10, 10, 0.8);
-    color: #ccc;
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -2px 10px var(--shadow-color);
-    backdrop-filter: blur(5px);
-}
-
-/* Chat specific styles */
+/* Chat specific styles - Move to chat.css for better organization if desired */
 .chat-main-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 180px); /* Adjust height based on header/footer */
+    height: calc(100vh - 180px); /* Adjust based on header/footer height */
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 10px var(--border-color);
+    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color);
     background-color: var(--card-background);
     overflow: hidden;
     box-sizing: border-box;
@@ -349,7 +370,7 @@ footer {
     color: var(--background-color);
     align-self: flex-end;
     margin-left: auto;
-    box-shadow: 0 0 15px var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color); /* User message glow */
 }
 
 .bot-message {
@@ -357,14 +378,14 @@ footer {
     color: var(--text-color);
     border: 1px solid rgba(0, 255, 255, 0.3);
     align-self: flex-start;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Bot message glow */
 }
 
 .bot-message.error {
     background-color: var(--error-color);
     border-color: var(--error-color);
     color: var(--text-color);
-    box-shadow: 0 0 15px var(--error-color);
+    box-shadow: 0 0 15px var(--error-color); /* Error message glow */
 }
 
 .bot-thinking {
@@ -393,9 +414,9 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
-.chat-image-preview {
+.chat-image-preview, .chat-video-preview {
     max-width: 100%;
-    max-height: 200px;
+    max-height: 200px; /* Adjust as needed */
     width: auto;
     height: auto;
     border-radius: 8px;
@@ -404,50 +425,38 @@ footer {
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
-.chat-image-preview:hover {
+.chat-image-preview:hover, .chat-video-preview:hover {
     transform: scale(1.05);
 }
 
-.chat-video-preview { /* Styles for video preview */
-    max-width: 100%;
-    max-height: 250px;
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-    display: block;
-    margin: 5px 0;
-    cursor: pointer;
-}
-.chat-video-preview:hover {
-    transform: scale(1.02);
-}
-
-.input-area {
-    display: flex;
-    padding: 18px;
-    background-color: var(--card-background);
-    border-top: 1px solid var(--border-color);
-    align-items: center;
-    box-shadow: 0 -2px 10px var(--shadow-color);
-}
-
-.input-area input {
-    flex-grow: 1;
-    padding: 14px 18px;
-    background-color: var(--background-color);
+/* Code Styling */
+pre {
+    background-color: var(--card-background); /* Match card background */
     color: var(--text-color);
-    border: 1px solid var(--border-color);
+    padding: 15px;
     border-radius: 8px;
-    margin-right: 12px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    overflow-x: auto;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3); /* Inner neon glow */
 }
 
-.input-area input:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 12px var(--secondary-color);
+code {
+    font-family: inherit;
 }
+
+/* Basic Syntax Highlighting (can be enhanced with Prism.js) */
+/* These are simple examples, integrate Prism.js for better highlighting */
+.token.keyword { color: #00ffff; font-weight: bold; } /* Cyan */
+.token.string { color: #00ff00; } /* Green */
+.token.comment { color: #888; font-style: italic; } /* Gray */
+.token.number { color: #ff6347; } /* Red */
+.token.function { color: #ffff00; } /* Yellow */
+
 
 /* Mobile Menu Toggle */
 .menu-icon {
@@ -521,4 +530,4 @@ footer {
     .btn-icon {
         font-size: 1.6rem;
     }
-}
+    }
