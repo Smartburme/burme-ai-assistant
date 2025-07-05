@@ -1,554 +1,202 @@
-/* Global Styles & Variables */
-:root {
-    --primary-color: #00ffff; /* Neon Cyan */
-    --secondary-color: #00ff00; /* Neon Green */
-    --background-color: #2a2a2a; /* Dark Gray background */
-    --card-background: #1e1e1e; /* Slightly lighter dark gray for cards/containers */
-    --text-color: #ffffff;     /* White text */
-    --subtle-text-color: #cccccc; /* Lighter gray for secondary text */
-    --border-color: #00ffff;   /* Neon Cyan border */
-    --shadow-color: rgba(0, 255, 255, 0.4); /* Neon Cyan shadow */
-    --hover-shadow-color: rgba(0, 255, 0, 0.4); /* Neon Green hover shadow */
-    --error-color: #ff6347;   /* Tomato Red for errors */
-    --success-color: #4CAF50; /* Green for success */
+/* ... (Rest of your existing CSS code for header, global variables etc.) ... */
 
-    /* Font family */
-    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --font-code: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+/* Custom CSS for Login Page based on the image provided */
+
+/* For the entire body background if it differs from global settings */
+/* If your body background is already set correctly, you might not need this. */
+/* Generally, login/register pages have a focused background */
+body.login-page-background {
+    background-color: #1a202c; /* Dark Navy Blue background similar to the image */
+    /* Ensure this overrides the global --background-color if it's different */
 }
 
-body {
-    font-family: var(--font-primary);
-    margin: 0;
-    padding: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
+/* Authentication Container - Centered and styled */
+.auth-container {
+    background-color: rgba(26, 26, 26, 0.8); /* Darker, slightly transparent background */
+    padding: 3rem 3.5rem; /* More padding */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4), 0 0 20px rgba(0, 255, 0, 0.4); /* Combined Neon Shadows */
+    text-align: center;
+    max-width: 450px; /* Slightly wider container */
+    margin: 80px auto; /* More margin top for centering */
+    border: 1px solid rgba(0, 255, 255, 0.4); /* Neon border */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    scroll-behavior: smooth; /* Smooth scrolling for anchors */
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    align-items: center; /* Center items inside the container */
 }
 
-/* Header */
-header {
-    background-color: rgba(30, 30, 30, 0.9); /* Darker, slightly transparent header */
-    color: var(--primary-color);
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 15px var(--shadow-color); /* Enhanced shadow */
-    backdrop-filter: blur(8px); /* Glassmorphism effect */
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
+/* App Logo */
+.auth-container .app-logo {
+    width: 70px; /* Adjust size as needed */
+    height: 70px;
+    margin-bottom: 1.5rem;
+    background-color: #000; /* Black background for the logo circle */
+    border-radius: 50%; /* Make it circular */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1.5rem;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Stronger glow */
-    cursor: pointer;
-    transition: text-shadow 0.3s ease;
-}
-.logo:hover {
-    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Brighter glow on hover */
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-nav ul li {
-    margin-left: 30px;
-}
-
-nav ul li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-    position: relative;
-    padding-bottom: 5px; /* Space for the underline */
-}
-
-nav ul li a::after { /* Neon underline effect on hover */
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px; /* Position below text */
-    width: 0;
-    height: 2px;
-    background-color: var(--secondary-color);
-    transition: width 0.3s ease;
-    box-shadow: 0 0 8px var(--secondary-color); /* Neon glow for underline */
-}
-
-nav ul li a:hover {
-    color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color);
-}
-
-nav ul li a:hover::after {
-    width: 100%;
-}
-
-/* Main Content Area */
-main {
-    flex: 1;
-    padding: 2rem 1.5rem;
-    max-width: 1200px;
-    margin: 20px auto 0 auto; /* Adjusted top margin for sticky header */
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.content-container {
-    background-color: var(--card-background);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color); /* Deeper, multi-layered shadow */
-    margin-top: 20px;
-    border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle neon border */
-}
-
-h1, h2, h3 {
-    color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Combined neon glow */
-    margin-bottom: 1.2rem;
-    letter-spacing: 0.5px; /* Slight letter spacing */
-}
-
-/* Title Bottom Color (Example for section titles) */
-h1, h2, h3 {
-    position: relative;
-    padding-bottom: 10px; /* Space for the underline */
-}
-h1::after, h2::after, h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 50px; /* Underline width */
-    height: 3px; /* Underline thickness */
-    background-color: var(--border-color); /* Border color used for underline */
-    border-radius: 2px;
-    box-shadow: 0 0 10px var(--border-color);
-}
-
-
-/* Loading Spinner & Container */
-.loading-container {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    background: linear-gradient(135deg, var(--background-color) 80%, rgba(10, 10, 10, 0.9) 100%); /* Gradient background */
-    color: var(--text-color);
-    z-index: 9999; /* Ensure it's on top of everything */
-    position: fixed; /* Cover the whole screen */
-    top: 0;
-    left: 0;
-    width: 100%;
-    transition: opacity 0.3s ease-out; /* Smooth fade out (if managed by JS class) */
+    border: 2px solid var(--primary-color); /* Neon border for the logo circle */
+    box-shadow: 0 0 10px var(--primary-color);
 }
-
-.loading-container .spinner {
-    border: 5px solid rgba(0, 255, 255, 0.2); /* Thicker, semi-transparent border */
-    border-radius: 50%;
-    border-top: 5px solid var(--primary-color); /* Top border is primary color */
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite; /* Animation for the spinner */
-    box-shadow: 0 0 15px var(--primary-color); /* Inner glow */
-    margin-bottom: 1rem; /* Space below spinner */
+.auth-container .app-logo img { /* If you use an actual image */
+    width: 50px; /* Adjust logo image size */
+    height: 50px;
 }
-
-.loading-container .loading-text {
-    font-size: 1.8rem; /* Larger text */
+/* If the logo is text or a character */
+.auth-container .app-logo .logo-char {
+    font-size: 2.5rem;
     font-weight: bold;
-    letter-spacing: 1.5px;
-    color: var(--primary-color); /* Neon primary color */
-    text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Neon glow */
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Buttons */
-.btn-primary {
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient button */
-    color: var(--background-color); /* Dark text on gradient */
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: all 0.4s ease;
-    box-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Strong button glow */
-    letter-spacing: 1px;
-}
-
-.btn-primary:hover {
-    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color); /* Brighter glow on hover */
-    transform: translateY(-3px); /* Slight lift on hover */
-}
-
-.btn-icon {
-    background: none;
-    border: none;
     color: var(--primary-color);
-    font-size: 1.8rem;
-    cursor: pointer;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-    padding: 8px;
+    text-shadow: 0 0 8px var(--primary-color);
 }
 
-.btn-icon:hover {
-    color: var(--secondary-color);
-    text-shadow: 0 0 10px var(--secondary-color);
-}
-
-/* Forms (Auth Pages) */
-.auth-container {
-    background-color: var(--card-background);
-    padding: 2.5rem 3rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color); /* Deeper, multi-layered shadow */
-    text-align: center;
-    max-width: 420px;
-    margin: 60px auto; /* More margin top */
-    border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle neon border */
-}
-
+/* Welcome Text */
 .auth-container h1 {
-    font-size: 2.5rem; /* Larger heading */
-    margin-bottom: 0.8rem;
+    font-size: 2.8rem; /* Larger Welcome text */
+    margin-bottom: 0.5rem;
     letter-spacing: 1px;
+    color: var(--text-color); /* White text */
+    text-shadow: 0 0 10px var(--primary-color); /* Subtle neon glow */
 }
 
 .auth-container p {
-    color: var(--subtle-text-color); /* Lighter gray for descriptions */
+    color: var(--subtle-text-color); /* Lighter gray text */
+    font-size: 1rem;
     margin-bottom: 2rem;
 }
 
+/* Form Groups */
 .form-group {
-    margin-bottom: 1.2rem; /* More margin between form groups */
+    margin-bottom: 1.5rem; /* More space between input fields */
     text-align: left;
-    position: relative;
+    width: 100%;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.7rem;
     color: var(--text-color);
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: 1.1rem; /* Larger font size for labels */
 }
 
-.form-group input {
+.form-group input[type="email"],
+.form-group input[type="password"] {
     width: 100%;
-    padding: 12px 15px; /* Larger input padding */
-    background-color: var(--background-color);
+    padding: 14px 18px; /* Larger padding for input fields */
+    background-color: rgba(0, 0, 0, 0.3); /* Darker, semi-transparent input background */
     color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 6px; /* More rounded input */
+    border: 1px solid rgba(0, 255, 255, 0.4); /* Neon border */
+    border-radius: 8px; /* Rounded corners */
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 1.1rem; /* Larger font size for input text */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input:focus {
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 10px var(--secondary-color); /* Neon glow on focus */
+    border-color: var(--secondary-color); /* Neon Green border on focus */
+    box-shadow: 0 0 15px var(--secondary-color); /* Neon glow on focus */
 }
 
+/* Sign In Button */
+.auth-container .btn-primary { /* Override global btn-primary if needed */
+    margin-top: 1rem; /* Space above the button */
+    width: 100%; /* Make button full width */
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    background: var(--text-color); /* White background */
+    color: var(--background-color); /* Dark text */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* White glow */
+    border: 2px solid var(--primary-color); /* Neon border */
+}
+
+.auth-container .btn-primary:hover {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient on hover */
+    color: var(--background-color); /* Dark text on gradient */
+    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color); /* Stronger glow */
+    transform: translateY(-3px);
+}
+
+/* Auth Links (Sign up, Forgot password) */
 .auth-links {
-    margin-top: 2rem; /* More margin */
+    margin-top: 2rem;
     font-size: 0.98rem;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center links */
+    flex-wrap: wrap;
+    gap: 10px; /* Space between links */
+}
+
+.auth-links p {
+    margin-bottom: 0; /* Remove default paragraph margin */
 }
 
 .auth-links a {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Neon Cyan for links */
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease, text-shadow 0.3s ease;
+    padding: 0 5px; /* Add some padding for better click target */
 }
 
 .auth-links a:hover {
-    color: var(--secondary-color);
+    color: var(--secondary-color); /* Neon Green on hover */
     text-shadow: 0 0 8px var(--secondary-color);
 }
 
-/* Error and Success Messages styling */
+/* Error and Success Messages */
 .error-message {
     color: var(--error-color);
-    margin-top: 10px;
-    font-size: 0.9rem;
+    margin-top: 15px; /* More space above error messages */
+    font-size: 0.95rem;
     text-align: left;
     font-weight: bold;
+    width: 100%; /* Ensure it takes full width for alignment */
 }
 
 .success-message {
     color: var(--success-color);
-    margin-top: 10px;
-    font-size: 0.9rem;
+    margin-top: 15px;
+    font-size: 0.95rem;
     text-align: left;
     font-weight: bold;
+    width: 100%;
 }
 
-/* Chat specific styles */
-.chat-main-container {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 180px); /* Adjust based on header/footer height */
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color);
-    background-color: var(--card-background);
-    overflow: hidden;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-/* Chat Messages Area */
-.chat-messages-area {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px; /* Space between messages */
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) var(--background-color);
-}
-
-/* Scrollbar for Webkit browsers (Chrome, Safari) */
-.chat-messages-area::-webkit-scrollbar {
-    width: 8px;
-}
-.chat-messages-area::-webkit-scrollbar-track {
-    background: var(--background-color);
-    border-radius: 10px;
-}
-.chat-messages-area::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    border: 2px solid var(--background-color);
-}
-.chat-messages-area::-webkit-scrollbar-thumb:hover {
-    background-color: var(--secondary-color);
-}
-
-/* Individual Message Bubble */
-.message {
-    padding: 12px 18px;
-    border-radius: 10px;
-    max-width: 75%;
-    word-wrap: break-word;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease-in-out;
-}
-.message:hover {
-    transform: scale(1.01);
-}
-
-.user-message {
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: var(--background-color);
-    align-self: flex-end;
-    margin-left: auto;
-    box-shadow: 0 0 15px var(--primary-color); /* User message glow */
-}
-
-.bot-message {
-    background-color: var(--card-background);
-    color: var(--text-color);
-    border: 1px solid rgba(0, 255, 255, 0.3);
-    align-self: flex-start;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Bot message glow */
-}
-
-.bot-message.error {
-    background-color: var(--error-color);
-    border-color: var(--error-color);
-    color: var(--text-color);
-    box-shadow: 0 0 15px var(--error-color); /* Error message glow */
-}
-
-/* Bot Thinking Indicator */
-.bot-thinking {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-style: italic;
-    color: var(--subtle-text-color);
-    padding: 10px 15px;
-    border-radius: 10px;
-    background-color: rgba(26, 26, 26, 0.7);
-    border: 1px solid rgba(0, 255, 255, 0.1);
-}
-
-.thinking-animation {
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top: 2px solid var(--primary-color);
-    width: 24px;
-    height: 24px;
-    animation: spin-small 1s linear infinite;
-}
-
-@keyframes spin-small {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Image/Video Preview Styling */
-.chat-image-preview, .chat-video-preview {
-    max-width: 100%;
-    max-height: 200px;
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-    display: block;
-    margin: 5px 0;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-.chat-image-preview:hover, .chat-video-preview:hover {
-    transform: scale(1.05);
-}
-
-/* Code Styling */
-pre {
-    background-color: var(--card-background); /* Match card background */
-    color: var(--text-color);
-    padding: 15px;
-    border-radius: 8px;
-    overflow-x: auto;
-    font-family: var(--font-code);
-    font-size: 0.85rem;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    border: 1px solid var(--border-color);
-    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3); /* Inner neon glow */
-}
-
-code {
-    font-family: inherit;
-}
-
-/* Basic Syntax Highlighting (can be enhanced with Prism.js) */
-.token.keyword { color: #00ffff; font-weight: bold; }
-.token.string { color: #00ff00; }
-.token.comment { color: #888; font-style: italic; }
-.token.number { color: #ff6347; }
-.token.function { color: #ffff00; }
-
-
-/* Mobile Menu Toggle Icon */
-.menu-icon {
-    display: none; /* Hidden on larger screens by default */
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: var(--primary-color);
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-.menu-icon:hover {
-    color: var(--secondary-color);
-    text-shadow: 0 0 8px var(--secondary-color);
-}
-
-/* Responsive Adjustments */
+/* Responsive Adjustments for Auth Pages */
 @media (max-width: 768px) {
-    /* Header Adjustments */
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-        padding: 0 1rem;
-    }
-    .logo {
-        font-size: 1.6rem;
-    }
-    nav ul {
-        margin-top: 10px;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    nav ul li {
-        margin-left: 0;
-        margin-bottom: 15px;
-        width: 100%;
-        text-align: center;
-    }
-    nav ul li a {
-        display: block;
-        padding: 10px 0;
-    }
-    .menu-icon {
-        display: block; /* Show menu icon on mobile */
-        margin-top: 10px;
-    }
-    nav ul:not(.active) {
-        display: none; /* Hide menu items when not active */
-    }
-    nav ul.active {
-        display: flex; /* Show menu items when active */
-    }
-
-    /* Auth Containers */
     .auth-container {
-        margin: 30px auto;
+        margin: 30px auto; /* Reduce top margin on mobile */
         padding: 1.8rem;
-        width: 90%;
+        width: 95%; /* Slightly wider on mobile */
     }
     .auth-container h1 {
-        font-size: 2.2rem; /* Slightly smaller heading on mobile */
+        font-size: 2.2rem; /* Smaller heading on mobile */
     }
     .auth-container p {
         font-size: 0.9rem;
     }
-
-    /* Chat Container Adjustments */
-    .chat-main-container {
-        height: calc(100vh - 140px); /* Adjust height for smaller headers/footers */
+    .form-group {
+        margin-bottom: 1rem; /* Less margin for smaller screens */
     }
-    .message {
-        max-width: 95%;
-        padding: 10px 12px;
+    .form-group input {
+        padding: 10px 12px; /* Smaller input padding */
+        font-size: 1rem;
     }
-    .input-area {
-        padding: 15px;
+    .auth-container .btn-primary {
+        padding: 10px 20px; /* Smaller button padding */
+        font-size: 1rem;
     }
-    .input-area input[type="text"] {
-        padding: 12px 15px;
-        margin-right: 8px;
+    .auth-links {
+        flex-direction: column; /* Stack links vertically */
+        align-items: center;
+        text-align: center;
+        gap: 5px; /* Less gap between stacked links */
     }
-    .btn-icon {
-        font-size: 1.6rem;
+    .auth-links p {
+        margin-bottom: 0.5rem;
     }
-    }
+}
