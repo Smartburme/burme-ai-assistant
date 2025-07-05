@@ -1,69 +1,138 @@
 /* css/components/auth.css */
 
+/* Authentication Container - Centered and styled */
 .auth-container {
     background-color: var(--card-background);
-    padding: 2.5rem 3rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color);
+    padding: 3rem 3.5rem; /* More padding */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 8px 30px var(--shadow-color), 0 0 20px rgba(0, 255, 0, 0.4); /* Combined Neon Shadows */
     text-align: center;
-    max-width: 420px;
-    margin: 60px auto; /* More margin top */
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    width: 90%; /* Default width for responsiveness */
+    max-width: 450px; /* Maximum width */
+    margin: 80px auto; /* Top/bottom margin, auto left/right for centering */
+    border: 1px solid rgba(0, 255, 255, 0.4); /* Neon border */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items inside the container */
+    box-sizing: border-box;
 }
 
+/* App Logo Styling */
+.auth-container .app-logo {
+    width: 70px; /* Adjust size as needed */
+    height: 70px;
+    margin-bottom: 1.5rem;
+    background-color: #000; /* Black background for the logo circle */
+    border-radius: 50%; /* Make it circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--primary-color); /* Neon border for the logo circle */
+    box-shadow: 0 0 10px var(--primary-color); /* Glow for the logo circle */
+}
+/* If using an image logo */
+/* .auth-container .app-logo img {
+    width: 50px;
+    height: 50px;
+} */
+/* If using text as logo */
+.auth-container .logo-char {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Welcome Text */
 .auth-container h1 {
-    font-size: 2.5rem; /* Larger heading */
-    margin-bottom: 0.8rem;
+    font-size: 2.8rem; /* Larger Welcome text */
+    margin-bottom: 0.5rem;
     letter-spacing: 1px;
+    color: var(--text-color); /* White text */
+    text-shadow: 0 0 10px var(--primary-color); /* Subtle neon glow */
 }
 
 .auth-container p {
-    color: var(--subtle-text-color); /* Lighter gray for descriptions */
+    color: var(--subtle-text-color); /* Lighter gray text */
+    font-size: 1rem;
     margin-bottom: 2rem;
 }
 
+/* Form Groups */
 .form-group {
-    margin-bottom: 1.2rem; /* More margin between form groups */
+    margin-bottom: 1.5rem; /* More space between input fields */
     text-align: left;
-    position: relative;
+    width: 100%; /* Ensure form groups take full width of container */
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.7rem;
     color: var(--text-color);
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: 1.1rem; /* Larger font size for labels */
 }
 
-.form-group input {
+.form-group input[type="email"],
+.form-group input[type="password"] {
     width: 100%;
-    padding: 12px 15px; /* Larger input padding */
-    background-color: var(--background-color);
+    padding: 14px 18px; /* Larger padding for input fields */
+    background-color: rgba(0, 0, 0, 0.3); /* Darker, semi-transparent input background */
     color: var(--text-color);
-    border: 1px solid var(--border-color);
-    border-radius: 6px; /* More rounded input */
+    border: 1px solid rgba(0, 255, 255, 0.4); /* Neon border */
+    border-radius: 8px; /* Rounded corners */
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 1.1rem; /* Larger font size for input text */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input:focus {
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 10px var(--secondary-color); /* Neon glow on focus */
+    border-color: var(--secondary-color); /* Neon Green border on focus */
+    box-shadow: 0 0 15px var(--secondary-color); /* Neon glow on focus */
 }
 
+/* Sign In Button Specific Styling within Auth Container */
+.auth-container .btn-primary {
+    margin-top: 1rem; /* Space above the button */
+    width: 100%; /* Make button full width */
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    background: var(--text-color); /* White background */
+    color: var(--background-color); /* Dark text */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* White glow */
+    border: 2px solid var(--primary-color); /* Neon border */
+}
+
+.auth-container .btn-primary:hover {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient on hover */
+    color: var(--background-color); /* Dark text on gradient */
+    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color); /* Stronger glow */
+    transform: translateY(-3px);
+}
+
+/* Auth Links (Sign up, Forgot password) */
 .auth-links {
-    margin-top: 2rem; /* More margin */
+    margin-top: 2rem;
     font-size: 0.98rem;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center links */
+    flex-wrap: wrap;
+    gap: 10px; /* Space between links */
+}
+
+.auth-links p {
+    margin-bottom: 0; /* Remove default paragraph margin */
 }
 
 .auth-links a {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Neon Cyan for links */
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease, text-shadow 0.3s ease;
+    padding: 0 5px; /* Add some padding for better click target */
 }
 
 .auth-links a:hover {
@@ -71,34 +140,56 @@
     text-shadow: 0 0 8px var(--secondary-color);
 }
 
-/* Error and Success Messages styling */
+/* Error and Success Messages */
 .error-message {
     color: var(--error-color);
-    margin-top: 10px;
-    font-size: 0.9rem;
+    margin-top: 15px; /* More space above error messages */
+    font-size: 0.95rem;
     text-align: left;
     font-weight: bold;
+    width: 100%; /* Ensure it takes full width for alignment */
 }
 
 .success-message {
     color: var(--success-color);
-    margin-top: 10px;
-    font-size: 0.9rem;
+    margin-top: 15px;
+    font-size: 0.95rem;
     text-align: left;
     font-weight: bold;
+    width: 100%;
 }
 
 /* Responsive Adjustments for Auth Pages */
 @media (max-width: 768px) {
     .auth-container {
-        margin: 30px auto;
+        margin: 30px auto; /* Reduce top margin on mobile */
         padding: 1.8rem;
-        width: 90%;
+        width: 95%; /* Slightly wider on mobile */
     }
     .auth-container h1 {
-        font-size: 2.2rem; /* Slightly smaller heading on mobile */
+        font-size: 2.2rem; /* Smaller heading on mobile */
     }
     .auth-container p {
         font-size: 0.9rem;
+    }
+    .form-group {
+        margin-bottom: 1rem; /* Less margin for smaller screens */
+    }
+    .form-group input {
+        padding: 10px 12px; /* Smaller input padding */
+        font-size: 1rem;
+    }
+    .auth-container .btn-primary {
+        padding: 10px 20px; /* Smaller button padding */
+        font-size: 1rem;
+    }
+    .auth-links {
+        flex-direction: column; /* Stack links vertically */
+        align-items: center;
+        text-align: center;
+        gap: 5px;
+    }
+    .auth-links p {
+        margin-bottom: 0.5rem;
     }
 }
