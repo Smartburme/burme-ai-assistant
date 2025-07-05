@@ -5,36 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Burmese AI Assistant</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components/auth.css">
-    <!-- In the <head> section of your HTML files -->
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-<!-- End Firebase SDK -->
+    <!-- If you created a separate auth.css, link it here -->
+    <!-- <link rel="stylesheet" href="css/components/auth.css"> -->
 
-<!-- Your custom scripts -->
-<script src="js/firebaseConfig.js" defer></script>
-<script src="js/auth.js" defer></script>
-    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <!-- End Firebase SDK -->
+
+    <!-- Your custom scripts -->
+    <script src="js/firebaseConfig.js" defer></script>
+    <script src="js/auth.js" defer></script>
 </head>
 <body>
     <div class="auth-container">
+        <!-- App Logo -->
+        <div class="app-logo">
+            <!-- Replace with your actual logo or a placeholder character -->
+            <span class="logo-char">B</span>
+            <!-- Or if you have an image logo: -->
+            <!-- <img src="assets/logo.png" alt="App Logo"> -->
+        </div>
+
         <h1>Welcome Back!</h1>
         <p>Sign in to continue to your AI Assistant.</p>
+
         <form id="login-form">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" required>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" required placeholder="Enter your email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" required>
+                <input type="password" id="password" required placeholder="Enter your password">
             </div>
             <button type="submit" class="btn-primary">Sign In</button>
         </form>
+
         <div class="auth-links">
-            <p>Don't have an account? <a href="register.html">Sign Up</a></p>
-            <p><a href="reset.html">Forgot Password?</a></p>
+            <p>No account? <a href="register.html">Sign up</a></p>
+            <p><a href="reset.html">Forgot password?</a></p>
         </div>
+
         <div id="login-error-message" class="error-message"></div>
     </div>
 </body>
