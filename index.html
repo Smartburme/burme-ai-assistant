@@ -23,13 +23,7 @@
             await checkAuthState().then((user) => {
                 if (user) {
                     window.location.href = 'mainchat.html';
-                } else {
-                    window.location.href = 'login.html';
                 }
-            }).catch((error) => {
-                console.error("Auth check error:", error);
-                document.querySelector('.loading-container').innerHTML = '<p>Error loading application. Please try again later.</p>';
-            });
         };
     </script>
 </body>
