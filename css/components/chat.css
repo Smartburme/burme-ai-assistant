@@ -9,7 +9,7 @@
     border-radius: 12px;
     box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color); /* Deeper, multi-layered shadow */
     background-color: var(--card-background);
-    overflow: hidden; /* Ensures contents stay within rounded corners */
+    overflow: hidden;
     box-sizing: border-box;
     transition: all 0.3s ease;
 }
@@ -22,8 +22,8 @@
     display: flex;
     flex-direction: column;
     gap: 18px; /* Space between messages */
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: var(--primary-color) var(--background-color); /* Scrollbar style */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-color);
 }
 
 /* Scrollbar for Webkit browsers (Chrome, Safari) */
@@ -31,16 +31,16 @@
     width: 8px;
 }
 .chat-messages-area::-webkit-scrollbar-track {
-    background: var(--background-color); /* Track background */
+    background: var(--background-color);
     border-radius: 10px;
 }
 .chat-messages-area::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color); /* Thumb color */
+    background-color: var(--primary-color);
     border-radius: 10px;
-    border: 2px solid var(--background-color); /* Creates a slight gap for visual appeal */
+    border: 2px solid var(--background-color);
 }
 .chat-messages-area::-webkit-scrollbar-thumb:hover {
-    background-color: var(--secondary-color); /* Thumb color on hover */
+    background-color: var(--secondary-color);
 }
 
 /* Individual Message Bubble */
@@ -48,32 +48,30 @@
     padding: 12px 18px;
     border-radius: 10px;
     max-width: 75%;
-    word-wrap: break-word; /* Break long words to fit */
+    word-wrap: break-word;
     font-size: 0.95rem;
     line-height: 1.5;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-in-out;
 }
 .message:hover {
-    transform: scale(1.01); /* Slight scale effect on hover */
+    transform: scale(1.01);
 }
 
-/* User Message Styling */
 .user-message {
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient background */
-    color: var(--background-color); /* Dark text on gradient */
-    align-self: flex-end; /* Align to the right */
-    margin-left: auto; /* Push to the right edge */
-    box-shadow: 0 0 15px var(--primary-color); /* Neon glow */
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--background-color);
+    align-self: flex-end;
+    margin-left: auto;
+    box-shadow: 0 0 15px var(--primary-color); /* User message glow */
 }
 
-/* Bot Message Styling */
 .bot-message {
     background-color: var(--card-background);
     color: var(--text-color);
-    border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle neon border */
-    align-self: flex-start; /* Align to the left */
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Neon glow */
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    align-self: flex-start;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Bot message glow */
 }
 
 .bot-message.error {
@@ -89,11 +87,11 @@
     align-items: center;
     gap: 12px;
     font-style: italic;
-    color: var(--subtle-text-color); /* Lighter text for thinking status */
+    color: var(--subtle-text-color);
     padding: 10px 15px;
     border-radius: 10px;
-    background-color: rgba(26, 26, 26, 0.7); /* Semi-transparent background */
-    border: 1px solid rgba(0, 255, 255, 0.1); /* Faint border */
+    background-color: rgba(26, 26, 26, 0.7);
+    border: 1px solid rgba(0, 255, 255, 0.1);
 }
 
 .thinking-animation {
@@ -102,7 +100,7 @@
     border-top: 2px solid var(--primary-color);
     width: 24px;
     height: 24px;
-    animation: spin-small 1s linear infinite; /* Animation for the spinner */
+    animation: spin-small 1s linear infinite;
 }
 
 @keyframes spin-small {
@@ -110,26 +108,10 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Image Preview Styling */
-.chat-image-preview {
+/* Image/Video Preview Styling */
+.chat-image-preview, .chat-video-preview {
     max-width: 100%;
-    max-height: 200px; /* Limit height to prevent oversized images */
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-    display: block; /* Ensure it takes its own line */
-    margin: 5px 0;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-.chat-image-preview:hover {
-    transform: scale(1.05); /* Slight zoom on hover */
-}
-
-/* Video Preview Styling */
-.chat-video-preview {
-    max-width: 100%;
-    max-height: 250px; /* Allow slightly larger video previews */
+    max-height: 200px;
     width: auto;
     height: auto;
     border-radius: 8px;
@@ -138,9 +120,36 @@
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
-.chat-video-preview:hover {
-    transform: scale(1.02); /* Slight scale on hover */
+.chat-image-preview:hover, .chat-video-preview:hover {
+    transform: scale(1.05);
 }
+
+/* Code Styling */
+pre {
+    background-color: var(--card-background); /* Match card background */
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3); /* Inner neon glow */
+}
+
+code {
+    font-family: inherit;
+}
+
+/* Basic Syntax Highlighting (can be enhanced with Prism.js) */
+.token.keyword { color: #00ffff; font-weight: bold; }
+.token.string { color: #00ff00; }
+.token.comment { color: #888; font-style: italic; }
+.token.number { color: #ff6347; }
+.token.function { color: #ffff00; }
 
 /* Input Area */
 .input-area {
@@ -167,7 +176,7 @@
 .input-area input[type="text"]:focus {
     outline: none;
     border-color: var(--secondary-color);
-    box-shadow: 0 0 12px var(--secondary-color); /* Neon glow on focus */
+    box-shadow: 0 0 12px var(--secondary-color);
 }
 
 /* Button placement adjustments */
@@ -191,23 +200,46 @@
     text-shadow: 0 0 8px var(--secondary-color);
 }
 
-/* Responsive Adjustments */
+/* Responsive Adjustments for Global Elements (excluding auth/chat specific) */
 @media (max-width: 768px) {
-    .chat-main-container {
-        height: calc(100vh - 140px); /* Adjust height for smaller headers/footers */
+    /* Header Adjustments */
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
     }
-    .message {
-        max-width: 95%; /* Allow messages to be wider on mobile */
-        padding: 10px 12px;
-    }
-    .input-area {
-        padding: 15px;
-    }
-    .input-area input[type="text"] {
-        padding: 12px 15px;
-        margin-right: 8px;
-    }
-    .btn-icon {
+    .logo {
         font-size: 1.6rem;
     }
-}
+    nav ul {
+        margin-top: 10px;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    nav ul li {
+        margin-left: 0;
+        margin-bottom: 15px;
+        width: 100%;
+        text-align: center;
+    }
+    nav ul li a {
+        display: block;
+        padding: 10px 0;
+    }
+    .menu-icon {
+        display: block; /* Show menu icon on mobile */
+        margin-top: 10px;
+    }
+    nav ul:not(.active) {
+        display: none; /* Hide menu items when not active */
+    }
+    nav ul.active {
+        display: flex; /* Show menu items when active */
+    }
+
+    /* Main Content Padding */
+    main {
+        padding: 1.5rem 1rem;
+    }
+        }
