@@ -1,50 +1,51 @@
 // js/auth.js
 
-let auth = null; // Initialize auth to null
+let auth = null; // Initialize auth service variable to null
 let firebaseAppInstance = null; // To hold the Firebase app instance
 
-// Function to ensure Firebase and Auth services are initialized
+// Function to ensure Firebase app and Auth service are initialized.
+// It returns a Promise that resolves with the auth service or rejects on error.
 function initializeFirebaseAndAuth() {
     return new Promise((resolve, reject) => {
-        // 1. Check if Firebase SDK scripts are loaded
+        // 1. Check if Firebase SDK scripts are loaded and firebase object is available.
         if (typeof firebase === 'undefined' || !firebase.initializeApp) {
             console.error("Firebase SDK scripts are not loaded or incomplete. Ensure scripts are correctly linked in HTML.");
             return reject("Firebase SDK not loaded.");
         }
 
-        // 2. Check if firebaseApp is already initialized
+        // 2. Check if Firebase app instance is already initialized.
         if (!firebaseAppInstance) {
-            // If firebaseApp is not initialized yet, try to initialize it
+            // If not initialized, try to initialize it using firebaseConfig.
             if (typeof firebase.apps === 'undefined' || firebase.apps.length === 0) {
-                // Attempt to initialize if not already done
+                // Check if firebaseConfig is defined.
                 if (typeof firebaseConfig === 'undefined') {
                     console.error("firebaseConfig is not defined. Ensure js/firebaseConfig.js is loaded correctly.");
                     return reject("firebaseConfig is not defined.");
                 }
                 try {
                     firebaseAppInstance = firebase.initializeApp(firebaseConfig);
-                    console.log("Firebase initialized.");
+                    console.log("Firebase initialized from auth.js.");
                 } catch (error) {
-                    console.error("Firebase initialization error:", error);
+                    console.error("Firebase initialization error from auth.js:", error);
                     return reject("Firebase initialization failed.");
                 }
             } else {
-                // Get existing instance if initialized elsewhere (e.g., by another script)
+                // If initialized elsewhere (e.g., directly in index.html's script tag), get the existing instance.
                 firebaseAppInstance = firebase.app();
-                console.log("Firebase already initialized, using existing instance.");
+                console.log("Firebase already initialized, using existing instance in auth.js.");
             }
         } else {
-            console.log("Firebase app instance already available.");
+            console.log("Firebase app instance already available in auth.js.");
         }
 
-        // 3. Get the Auth service from the initialized app instance
+        // 3. Get the Auth service from the Firebase app instance.
         try {
             if (!firebaseAppInstance) {
-                throw new Error("Firebase app instance is null.");
+                throw new Error("Firebase app instance is null, cannot get Auth service.");
             }
             auth = firebaseAppInstance.auth();
             console.log("Firebase Auth service obtained.");
-            resolve(auth); // Resolve with the auth service
+            resolve(auth); // Resolve the promise with the auth service
         } catch (error) {
             console.error("Error obtaining Firebase Auth service:", error);
             reject("Failed to get Firebase Auth service.");
@@ -52,35 +53,39 @@ function initializeFirebaseAndAuth() {
     });
 }
 
-// Function to check auth state (relies on auth service being initialized)
+// Function to check authentication state. Relies on auth service being initialized.
+// Returns a Promise that resolves with the user object (or null if not logged in).
 function checkAuthState() {
     return new Promise((resolve, reject) => {
-        // Ensure auth service is available before proceeding
+        // First, ensure the Auth service is initialized.
         if (!auth) {
             console.warn("Auth service not available yet. Attempting to initialize...");
             initializeFirebaseAndAuth()
                 .then(() => {
-                    // After initialization, auth should be available
-                    if (!auth) return reject("Auth service unavailable after initialization.");
-                    // Now, listen for auth state changes
+                    // If initialization succeeds, auth should be available.
+                    if (!auth) return reject("Auth service unavailable even after initialization.");
+
+                    // Now, listen for auth state changes.
+                    // onAuthStateChanged returns an unsubscribe function, which we call to clean up the listener.
                     const unsubscribe = auth.onAuthStateChanged(user => {
-                        unsubscribe(); // Stop listening once state is captured
-                        resolve(user);
+                        unsubscribe(); // Stop listening after the first state change
+                        resolve(user); // Resolve the promise with the user object (null if not logged in)
                     }, (error) => {
+                        // Handle any errors that occur during the state change listener
                         console.error("Error in onAuthStateChanged:", error);
                         reject(error);
                     });
                 })
-                .catch(reject); // Catch errors from initializeFirebaseAndAuth
+                .catch(reject); // Reject the promise if initialization fails
             return;
         }
 
-        // If auth is already initialized, directly listen for state changes
+        // If auth is already initialized, directly listen for auth state changes.
         const unsubscribe = auth.onAuthStateChanged(user => {
-            unsubscribe();
+            unsubscribe(); // Stop listening
             resolve(user);
         }, (error) => {
-            console.error("Error in onAuthStateChanged:", error);
+            console.error("Error in onAuthStateChanged (auth already init):", error);
             reject(error);
         });
     });
@@ -96,19 +101,21 @@ if (loginForm) {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const errorMessageDiv = document.getElementById('login-error-message');
-        errorMessageDiv.textContent = '';
+        errorMessageDiv.textContent = ''; // Clear previous errors
 
+        // Check if auth service is available before attempting login
         if (!auth) {
             errorMessageDiv.textContent = 'Authentication service unavailable. Please wait or refresh.';
             return;
         }
 
         try {
+            // Attempt to sign in the user
             await auth.signInWithEmailAndPassword(email, password);
-            // Redirection is handled by index.html's checkAuthState on page load
+            // Redirection is handled by index.html's window.onload checkAuthState()
         } catch (error) {
             console.error("Login Error:", error);
-            errorMessageDiv.textContent = error.message;
+            errorMessageDiv.textContent = error.message; // Display Firebase error message
         }
     });
 }
@@ -135,7 +142,10 @@ if (registerForm) {
         }
 
         try {
+            // Create a new user with email and password
             await auth.createUserWithEmailAndPassword(email, password);
+            // Optionally send email verification after successful creation
+            // await auth.currentUser.sendEmailVerification();
             alert('Registration successful! Please check your email to verify your account.');
             window.location.href = 'login.html'; // Redirect to login page
         } catch (error) {
@@ -189,6 +199,5 @@ if (logoutBtn) {
     });
 }
 
-// Ensure initializeFirebaseAndAuth is callable by index.html if needed
-// If using modules, you would export it. Otherwise, it's globally available.
+// Exporting key functions and variables if using ES Modules
 // export { initializeFirebaseAndAuth, checkAuthState, auth, firebaseAppInstance };
