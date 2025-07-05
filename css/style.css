@@ -1,202 +1,314 @@
-/* ... (Rest of your existing CSS code for header, global variables etc.) ... */
+/* css/style.css */
 
-/* Custom CSS for Login Page based on the image provided */
+/* Global Variables - Defines your color palette, fonts, etc. */
+:root {
+    --primary-color: #00ffff; /* Neon Cyan */
+    --secondary-color: #00ff00; /* Neon Green */
+    --background-color: #2a2a2a; /* Dark Gray background */
+    --card-background: #1e1e1e; /* Slightly lighter dark gray for cards/containers */
+    --text-color: #ffffff;     /* White text */
+    --subtle-text-color: #cccccc; /* Lighter gray for secondary text */
+    --border-color: #00ffff;   /* Neon Cyan border */
+    --shadow-color: rgba(0, 255, 255, 0.4); /* Neon Cyan shadow */
+    --hover-shadow-color: rgba(0, 255, 0, 0.4); /* Neon Green hover shadow */
+    --error-color: #ff6347;   /* Tomato Red for errors */
+    --success-color: #4CAF50; /* Green for success */
 
-/* For the entire body background if it differs from global settings */
-/* If your body background is already set correctly, you might not need this. */
-/* Generally, login/register pages have a focused background */
-body.login-page-background {
-    background-color: #1a202c; /* Dark Navy Blue background similar to the image */
-    /* Ensure this overrides the global --background-color if it's different */
+    /* Font family */
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-code: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
-/* Authentication Container - Centered and styled */
-.auth-container {
-    background-color: rgba(26, 26, 26, 0.8); /* Darker, slightly transparent background */
-    padding: 3rem 3.5rem; /* More padding */
-    border-radius: 15px; /* More rounded corners */
-    box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4), 0 0 20px rgba(0, 255, 0, 0.4); /* Combined Neon Shadows */
-    text-align: center;
-    max-width: 450px; /* Slightly wider container */
-    margin: 80px auto; /* More margin top for centering */
-    border: 1px solid rgba(0, 255, 255, 0.4); /* Neon border */
+/* Global Reset & Body Styles */
+body {
+    font-family: var(--font-primary);
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items inside the container */
+    min-height: 100vh; /* Ensures footer sticks to the bottom */
+    scroll-behavior: smooth; /* Smooth scrolling for anchors */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* App Logo */
-.auth-container .app-logo {
-    width: 70px; /* Adjust size as needed */
-    height: 70px;
-    margin-bottom: 1.5rem;
-    background-color: #000; /* Black background for the logo circle */
-    border-radius: 50%; /* Make it circular */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid var(--primary-color); /* Neon border for the logo circle */
-    box-shadow: 0 0 10px var(--primary-color);
-}
-.auth-container .app-logo img { /* If you use an actual image */
-    width: 50px; /* Adjust logo image size */
-    height: 50px;
-}
-/* If the logo is text or a character */
-.auth-container .app-logo .logo-char {
-    font-size: 2.5rem;
-    font-weight: bold;
+/* Header Styling */
+header {
+    background-color: rgba(30, 30, 30, 0.9); /* Darker, slightly transparent header */
     color: var(--primary-color);
-    text-shadow: 0 0 8px var(--primary-color);
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 15px var(--shadow-color); /* Enhanced shadow */
+    backdrop-filter: blur(8px); /* Glassmorphism effect */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Welcome Text */
-.auth-container h1 {
-    font-size: 2.8rem; /* Larger Welcome text */
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-    color: var(--text-color); /* White text */
-    text-shadow: 0 0 10px var(--primary-color); /* Subtle neon glow */
-}
-
-.auth-container p {
-    color: var(--subtle-text-color); /* Lighter gray text */
-    font-size: 1rem;
-    margin-bottom: 2rem;
-}
-
-/* Form Groups */
-.form-group {
-    margin-bottom: 1.5rem; /* More space between input fields */
-    text-align: left;
-    width: 100%;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.7rem;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 1.1rem; /* Larger font size for labels */
-}
-
-.form-group input[type="email"],
-.form-group input[type="password"] {
-    width: 100%;
-    padding: 14px 18px; /* Larger padding for input fields */
-    background-color: rgba(0, 0, 0, 0.3); /* Darker, semi-transparent input background */
-    color: var(--text-color);
-    border: 1px solid rgba(0, 255, 255, 0.4); /* Neon border */
-    border-radius: 8px; /* Rounded corners */
-    box-sizing: border-box;
-    font-size: 1.1rem; /* Larger font size for input text */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus {
-    outline: none;
-    border-color: var(--secondary-color); /* Neon Green border on focus */
-    box-shadow: 0 0 15px var(--secondary-color); /* Neon glow on focus */
-}
-
-/* Sign In Button */
-.auth-container .btn-primary { /* Override global btn-primary if needed */
-    margin-top: 1rem; /* Space above the button */
-    width: 100%; /* Make button full width */
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    background: var(--text-color); /* White background */
-    color: var(--background-color); /* Dark text */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* White glow */
-    border: 2px solid var(--primary-color); /* Neon border */
-}
-
-.auth-container .btn-primary:hover {
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient on hover */
-    color: var(--background-color); /* Dark text on gradient */
-    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color); /* Stronger glow */
-    transform: translateY(-3px);
-}
-
-/* Auth Links (Sign up, Forgot password) */
-.auth-links {
-    margin-top: 2rem;
-    font-size: 0.98rem;
-    width: 100%;
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center; /* Center links */
-    flex-wrap: wrap;
-    gap: 10px; /* Space between links */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
 }
 
-.auth-links p {
-    margin-bottom: 0; /* Remove default paragraph margin */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Stronger glow */
+    cursor: pointer;
+    transition: text-shadow 0.3s ease;
+}
+.logo:hover {
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Brighter glow on hover */
 }
 
-.auth-links a {
-    color: var(--primary-color); /* Neon Cyan for links */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li a {
+    color: var(--text-color);
     text-decoration: none;
+    font-size: 1.1rem;
     font-weight: 500;
     transition: color 0.3s ease, text-shadow 0.3s ease;
-    padding: 0 5px; /* Add some padding for better click target */
+    position: relative;
+    padding-bottom: 5px; /* Space for the underline */
 }
 
-.auth-links a:hover {
-    color: var(--secondary-color); /* Neon Green on hover */
+nav ul li a::after { /* Neon underline effect on hover */
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Position below text */
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px var(--secondary-color); /* Neon glow for underline */
+}
+
+nav ul li a:hover {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Main Content Area */
+main {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    max-width: 1200px;
+    margin: 20px auto 0 auto; /* Adjusted top margin for sticky header */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content-container {
+    background-color: var(--card-background);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px var(--shadow-color), 0 0 15px var(--border-color); /* Deeper, multi-layered shadow */
+    margin-top: 20px;
+    border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle neon border */
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Combined neon glow */
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.5px; /* Slight letter spacing */
+}
+
+/* Title Bottom Color (Example for section titles) */
+h1, h2, h3 {
+    position: relative;
+    padding-bottom: 10px; /* Space for the underline */
+}
+h1::after, h2::after, h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px; /* Underline width */
+    height: 3px; /* Underline thickness */
+    background-color: var(--border-color); /* Border color used for underline */
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--border-color);
+}
+
+
+/* Loading Spinner & Container */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background: linear-gradient(135deg, var(--background-color) 80%, rgba(10, 10, 10, 0.9) 100%); /* Gradient background */
+    color: var(--text-color);
+    z-index: 9999; /* Ensure it's on top of everything */
+    position: fixed; /* Cover the whole screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: opacity 0.5s ease-out; /* Smooth fade out effect if JS manages it */
+}
+
+.loading-container .spinner {
+    border: 5px solid rgba(0, 255, 255, 0.2); /* Thicker, semi-transparent border */
+    border-radius: 50%;
+    border-top: 5px solid var(--primary-color); /* Top border is primary color */
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 15px var(--primary-color); /* Inner glow */
+    margin-bottom: 1rem; /* Space below spinner */
+}
+
+.loading-container .loading-text {
+    font-size: 1.8rem; /* Larger text size */
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    color: var(--primary-color); /* Neon primary color for text */
+    text-align: center;
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); /* Neon glow */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Gradient button */
+    color: var(--background-color); /* Dark text on gradient */
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--secondary-color); /* Strong button glow */
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 15px var(--primary-color), 0 0 25px var(--secondary-color); /* Brighter glow on hover */
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    padding: 8px;
+}
+
+.btn-icon:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px var(--secondary-color);
+}
+
+/* Mobile Menu Toggle Icon */
+.menu-icon {
+    display: none; /* Hidden on larger screens by default */
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.menu-icon:hover {
+    color: var(--secondary-color);
     text-shadow: 0 0 8px var(--secondary-color);
 }
 
-/* Error and Success Messages */
-.error-message {
-    color: var(--error-color);
-    margin-top: 15px; /* More space above error messages */
-    font-size: 0.95rem;
-    text-align: left;
-    font-weight: bold;
-    width: 100%; /* Ensure it takes full width for alignment */
-}
-
-.success-message {
-    color: var(--success-color);
-    margin-top: 15px;
-    font-size: 0.95rem;
-    text-align: left;
-    font-weight: bold;
-    width: 100%;
-}
-
-/* Responsive Adjustments for Auth Pages */
+/* Responsive Adjustments for Global Elements */
 @media (max-width: 768px) {
-    .auth-container {
-        margin: 30px auto; /* Reduce top margin on mobile */
-        padding: 1.8rem;
-        width: 95%; /* Slightly wider on mobile */
-    }
-    .auth-container h1 {
-        font-size: 2.2rem; /* Smaller heading on mobile */
-    }
-    .auth-container p {
-        font-size: 0.9rem;
-    }
-    .form-group {
-        margin-bottom: 1rem; /* Less margin for smaller screens */
-    }
-    .form-group input {
-        padding: 10px 12px; /* Smaller input padding */
-        font-size: 1rem;
-    }
-    .auth-container .btn-primary {
-        padding: 10px 20px; /* Smaller button padding */
-        font-size: 1rem;
-    }
-    .auth-links {
-        flex-direction: column; /* Stack links vertically */
-        align-items: center;
+    /* Header Adjustments */
+    .header-content {
+        flex-direction: column;
         text-align: center;
-        gap: 5px; /* Less gap between stacked links */
+        padding: 0 1rem;
     }
-    .auth-links p {
-        margin-bottom: 0.5rem;
+    .logo {
+        font-size: 1.6rem;
+    }
+    nav ul {
+        margin-top: 10px;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    nav ul li {
+        margin-left: 0;
+        margin-bottom: 15px;
+        width: 100%;
+        text-align: center;
+    }
+    nav ul li a {
+        display: block;
+        padding: 10px 0;
+    }
+    .menu-icon {
+        display: block; /* Show menu icon on mobile */
+        margin-top: 10px;
+    }
+    nav ul:not(.active) {
+        display: none; /* Hide menu items when not active */
+    }
+    nav ul.active {
+        display: flex; /* Show menu items when active */
+    }
+
+    /* Main Content Padding */
+    main {
+        padding: 1.5rem 1rem;
+    }
+
+    /* Chat Container Adjustments */
+    .chat-main-container {
+        height: calc(100vh - 140px); /* Adjust height for smaller headers/footers */
+    }
+    .message {
+        max-width: 95%;
+        padding: 10px 12px;
+    }
+    .input-area {
+        padding: 15px;
+    }
+    .input-area input[type="text"] {
+        padding: 12px 15px;
+        margin-right: 8px;
+    }
+    .btn-icon {
+        font-size: 1.6rem;
     }
 }
+
+/* Import Component Styles */
+@import url('components/auth.css');
+@import url('components/chat.css');
+/* End Import */
