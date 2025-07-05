@@ -1,30 +1,54 @@
-<!-- In the <head> section of your HTML files -->
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-<!-- End Firebase SDK -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burmese AI Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <!-- End Firebase SDK -->
+    <script src="js/firebaseConfig.js" defer></script>
+    <script src="js/auth.js" defer></script>
+</head>
+<body>
+    <!-- Loading Container - Initially visible -->
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <div class="loading-text">
+            Burme AI Assistant
+        </div>
+    </div>
 
-<!-- Your custom scripts -->
-<script src="js/firebaseConfig.js" defer></script>
-<script src="js/auth.js" defer></script>
+    <!-- The rest of your body content would normally be here, but index.html acts as a redirector -->
+    <!-- The script below will handle the redirection, so the loading container will be replaced by the next page -->
 
-<!-- In the <body> of index.html -->
-<script>
-    window.onload = async () => {
-        // Wait for Firebase to be initialized and auth service to be ready
-        try {
-            // First, ensure Firebase app is initialized and auth is accessible
-            await initializeAuth(); // Call the initialization function if not globally available
+    <script>
+        window.onload = async () => {
+            try {
+                // Ensure Firebase and Auth services are ready before checking state
+                await initializeFirebaseAndAuth(); // Make sure initialization is complete
 
-            // Then check the authentication state
-            const user = await checkAuthState(); // Assuming checkAuthState is available globally or exported
-            if (user) {
-                window.location.href = 'mainchat.html';
-            } else {
-                window.location.href = 'login.html';
+                // Then check the authentication state
+                const user = await checkAuthState(); // Assuming checkAuthState is available globally
+
+                if (user) {
+                    // User is signed in, redirect to the main chat page
+                    window.location.href = 'mainchat.html';
+                } else {
+                    // No user is signed in, redirect to the login page
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                console.error("Initialization or Auth check error:", error);
+                // Display a user-friendly error message if something goes wrong
+                const loadingContainer = document.querySelector('.loading-container');
+                if (loadingContainer) {
+                    loadingContainer.innerHTML = `<p style="color: var(--error-color);">Error loading application: ${error.message || error}</p>`;
+                }
             }
-        } catch (error) {
-            console.error("Initialization or Auth check error:", error);
-            document.querySelector('.loading-container').innerHTML = '<p>Error loading application. Please try again later.</p>';
-        }
-    };
-</script>
+        };
+    </script>
+</body>
+</html>
