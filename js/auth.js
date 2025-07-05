@@ -1,27 +1,55 @@
 // js/auth.js
 
-let auth;
-try {
-    if (firebaseApp) { // Ensure firebaseApp is initialized before accessing auth
-        auth = firebaseApp.auth();
-    } else {
-        throw new Error("Firebase Auth service not available. Ensure firebaseConfig.js is loaded correctly.");
-    }
-} catch (error) {
-    console.error("Error accessing Firebase Auth:", error);
+let auth; // Initialize auth variable outside functions
+let firebaseAppInstance; // To hold the Firebase app instance
+
+// Function to initialize Firebase and get Auth service
+function initializeAuth() {
+    return new Promise((resolve, reject) => {
+        // Check if firebaseApp is available (initialized in firebaseConfig.js)
+        if (typeof firebase === 'undefined' || typeof firebase.apps === 'undefined' || firebase.apps.length === 0) {
+            console.error("Firebase SDK is not loaded or initialized. Ensure firebaseConfig.js and SDK scripts are loaded correctly.");
+            return reject("Firebase SDK not loaded.");
+        }
+
+        try {
+            firebaseAppInstance = firebase.app(); // Get the initialized app instance
+            auth = firebaseAppInstance.auth();
+            console.log("Firebase Auth service obtained.");
+            resolve(auth);
+        } catch (error) {
+            console.error("Error initializing Firebase Auth:", error);
+            reject(error);
+        }
+    });
 }
 
 // Function to check auth state and return a Promise
 function checkAuthState() {
     return new Promise((resolve, reject) => {
+        // Ensure auth is initialized before proceeding
         if (!auth) {
-            return reject("Firebase Auth is not initialized or accessible.");
+            console.error("Firebase Auth service is not initialized yet.");
+            // Optionally try to initialize it here, or reject the promise
+            initializeAuth().then(() => {
+                if (!auth) return reject("Firebase Auth service failed to initialize.");
+                // After initialization, listen for auth state changes
+                const unsubscribe = auth.onAuthStateChanged(user => {
+                    unsubscribe(); // Stop listening
+                    resolve(user);
+                }, (error) => {
+                    console.error("Error in onAuthStateChanged:", error);
+                    reject(error);
+                });
+            }).catch(reject); // Catch initialization errors
+            return;
         }
-        // onAuthStateChanged returns an unsubscribe function
+
+        // If auth is already initialized, directly listen for state changes
         const unsubscribe = auth.onAuthStateChanged(user => {
-            unsubscribe(); // Stop listening after the first state change
+            unsubscribe();
             resolve(user);
-        }, (error) => { // Handle errors during auth state check
+        }, (error) => {
             console.error("Error in onAuthStateChanged:", error);
             reject(error);
         });
@@ -47,7 +75,7 @@ if (loginForm) {
 
         try {
             await auth.signInWithEmailAndPassword(email, password);
-            // If successful, index.html's window.onload will handle redirection
+            // Redirection is handled by index.html's checkAuthState on page load
         } catch (error) {
             console.error("Login Error:", error);
             errorMessageDiv.textContent = error.message;
@@ -78,10 +106,10 @@ if (registerForm) {
 
         try {
             await auth.createUserWithEmailAndPassword(email, password);
-            // Optionally send email verification after successful creation
+            // Optionally send email verification
             // await auth.currentUser.sendEmailVerification();
             alert('Registration successful! Please check your email to verify your account.');
-            window.location.href = 'login.html'; // Redirect to login page
+            window.location.href = 'login.html'; // Redirect to login page after successful registration
         } catch (error) {
             console.error("Registration Error:", error);
             errorMessageDiv.textContent = error.message;
@@ -134,5 +162,6 @@ if (logoutBtn) {
 }
 
 // Exporting checkAuthState for index.html to use.
-// If you are not using modules, this function is globally available.
-// export { checkAuthState };
+// Ensure that firebaseConfig.js is loaded and initializes firebaseApp before this is called.
+// Exporting auth instance for other modules if needed.
+// export { checkAuthState, auth, firebaseAppInstance }; // Uncomment if using modules
