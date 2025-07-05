@@ -1,36 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burmese AI Assistant</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <!-- End Firebase SDK -->
-    <script src="js/firebaseConfig.js" defer></script>
-    <script src="js/auth.js" defer></script>
-</head>
-<body>
-    <div class="loading-container">
-        <div class="spinner"></div>
-        <p>Loading...</p>
-    </div>
+<!-- In the <head> of index.html -->
+<script src="js/firebaseConfig.js" defer></script>
+<script src="js/auth.js" defer></script>
 
-    <script>
-        window.onload = async () => {
-            await checkAuthState().then((user) => {
-                if (user) {
-                    window.location.href = 'mainchat.html';
-                } else {
-                    window.location.href = 'login.html';
-                }
-            }).catch((error) => {
-                console.error("Auth check error:", error);
-                document.querySelector('.loading-container').innerHTML = '<p>Error loading application. Please try again later.</p>';
-            });
-        };
-    </script>
-</body>
-</html>
+<!-- In the <body> of index.html -->
+<script>
+    window.onload = async () => {
+        // Wait for Firebase to be initialized and auth service to be ready
+        try {
+            // First, ensure Firebase app is initialized and auth is accessible
+            await initializeAuth(); // Call the initialization function if not globally available
+
+            // Then check the authentication state
+            const user = await checkAuthState(); // Assuming checkAuthState is available globally or exported
+            if (user) {
+                window.location.href = 'mainchat.html';
+            } else {
+                window.location.href = 'login.html';
+            }
+        } catch (error) {
+            console.error("Initialization or Auth check error:", error);
+            document.querySelector('.loading-container').innerHTML = '<p>Error loading application. Please try again later.</p>';
+        }
+    };
+</script>
