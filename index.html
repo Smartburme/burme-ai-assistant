@@ -8,29 +8,72 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <!-- End Firebase SDK -->
     <script src="js/firebaseConfig.js" defer></script>
     <script src="js/auth.js" defer></script>
 </head>
 <body>
     <div class="loading-container">
         <div class="spinner"></div>
-        <p>Loading...</p>
+        <p class="loading-text">Loading Burmese AI Assistant...</p>
+        <div class="error-message" style="display:none;">
+            <p></p>
+            <button class="retry-button">Try Again</button>
+        </div>
     </div>
 
     <script>
-        window.onload = async () => {
-            await checkAuthState().then((user) => {
+        // Loading timeout သတ်မှတ်ခြင်း (10 စက္ကန့်)
+        const loadingTimeout = setTimeout(showLoadingError, 10000);
+        
+        // Auth state စစ်ဆေးပြီး redirect လုပ်မည့် function
+        async function checkAndRedirect() {
+            try {
+                const user = await checkAuthState();
+                clearTimeout(loadingTimeout);
+                
                 if (user) {
                     window.location.href = 'mainchat.html';
                 } else {
                     window.location.href = 'login.html';
                 }
-            }).catch((error) => {
+            } catch (error) {
                 console.error("Auth check error:", error);
-                document.querySelector('.loading-container').innerHTML = '<p>Error loading application. Please try again later.</p>';
-            });
-        };
+                showLoadingError("Authentication check failed. Please try again.");
+            }
+        }
+
+        // Loading error ပြမည့် function
+        function showLoadingError(message = "The application is taking too long to load.") {
+            const spinner = document.querySelector('.spinner');
+            const loadingText = document.querySelector('.loading-text');
+            const errorDiv = document.querySelector('.error-message');
+            const errorText = errorDiv.querySelector('p');
+            const retryButton = errorDiv.querySelector('.retry-button');
+            
+            if (spinner) spinner.style.display = 'none';
+            if (loadingText) loadingText.style.display = 'none';
+            
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            retryButton.onclick = () => {
+                errorDiv.style.display = 'none';
+                if (spinner) spinner.style.display = 'block';
+                if (loadingText) loadingText.style.display = 'block';
+                checkAndRedirect();
+            };
+        }
+
+        // DOM ပြည့်စုံမှု စစ်ဆေးခြင်း
+        document.addEventListener('DOMContentLoaded', () => {
+            // Firebase initialization ပြီးမှသာ auth check လုပ်ရန်
+            if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                checkAndRedirect();
+            } else {
+                // Firebase မလာသေးပါက 1 စက္ကန့်စောင့်ပါ
+                setTimeout(checkAndRedirect, 1000);
+            }
+        });
     </script>
 </body>
 </html>
