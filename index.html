@@ -1,71 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burmese AI Assistant</title>
-
-    <!-- App Icon Link -->
-    <link rel="icon" href="assets/icon.jpg" type="image/jpeg"> <!-- Adjust path/type if needed -->
-
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Optional: If you have separate auth CSS, link it here -->
-    <!-- <link rel="stylesheet" href="css/components/auth.css"> -->
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <!-- End Firebase SDK -->
-
-    <!-- Your custom scripts -->
-    <script src="js/firebaseConfig.js" defer></script>
-    <script src="js/auth.js" defer></script>
+  <meta charset="UTF-8" />
+  <title>Burme AI</title>
+  <link rel="icon" href="assets/icon.jpg" type="image/jpeg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <!-- App Scripts -->
+  <script src="js/firebaseConfig.js" defer></script>
+  <script src="js/auth.js" defer></script>
 </head>
-<!-- Apply a specific class to body for unique styling if needed for login page background -->
-<!-- For this case, we'll rely on the auth-container and the global body styles -->
 <body>
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <div class="loading-text">Burme AI <br> Assistant</div>
+  </div>
 
-    <!-- Loading Container - Initially visible -->
-    <div class="loading-container">
-        <div class="spinner"></div>
-        <div class="loading-text">
-            Burme AI <br> Assistant
-        </div>
-    </div>
+  <script>
+    window.onload = async () => {
+      try {
+        await initializeFirebaseAndAuth();
+        const user = await checkAuthState();
 
-    <!-- The main content for index.html is just the loading screen. -->
-    <!-- The actual redirection logic will move the user away from this page -->
-    <!-- after checking their authentication status. -->
-
-    <script>
-        window.onload = async () => {
-            // Ensure Firebase and Auth services are ready before checking state
-            try {
-                // First, ensure Firebase app is initialized and auth is accessible
-                await initializeFirebaseAndAuth(); // Call the initialization function defined in auth.js
-
-                // Then check the authentication state
-                const user = await checkAuthState(); // This function is also in auth.js
-
-                if (user) {
-                    // User is signed in, redirect to the main chat page
-                    window.location.href = 'mainchat.html';
-                } else {
-                    // No user is signed in, redirect to the login page
-                    window.location.href = 'login.html';
-                }
-            } catch (error) {
-                console.error("Initialization or Auth check error:", error);
-                // Display a user-friendly error message if something goes wrong
-                const loadingContainer = document.querySelector('.loading-container');
-                if (loadingContainer) {
-                    // Clear the spinner and text, show error message
-                    loadingContainer.innerHTML = `<p style="color: var(--error-color);">Error loading application: ${error.message || error}</p>`;
-                    loadingContainer.style.justifyContent = 'center'; // Center the error message
-                }
-            }
-        };
-    </script>
+        if (user) {
+          window.location.href = 'mainchat.html';
+        } else {
+          window.location.href = 'login.html';
+        }
+      } catch (err) {
+        const container = document.querySelector('.loading-container');
+        container.innerHTML = `<p style="color:red;">App Error: ${err.message || err}</p>`;
+      }
+    };
+  </script>
 </body>
 </html>
