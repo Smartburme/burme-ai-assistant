@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- App Icon Link -->
+    <link rel="icon" href="assets/icon.jpg" type="image/jpeg"> <!-- OR use .png or .svg -->
     <title>Burmese AI Assistant</title>
     <link rel="stylesheet" href="css/style.css">
     <!-- Firebase SDK -->
@@ -17,21 +19,25 @@
     <div class="loading-container">
         <div class="spinner"></div>
         <div class="loading-text">
-            Burme AI Assistant
+            Burme AI <br> Assistant <!-- Line break for better display -->
         </div>
     </div>
 
-    <!-- The rest of your body content would normally be here, but index.html acts as a redirector -->
-    <!-- The script below will handle the redirection, so the loading container will be replaced by the next page -->
+    <!-- The rest of your body content would normally be here -->
+    <!-- For index.html, it acts as a redirector, so the loading screen will be replaced -->
 
     <script>
         window.onload = async () => {
+            // Ensure Firebase and Auth services are ready before checking state
             try {
-                // Ensure Firebase and Auth services are ready before checking state
-                await initializeFirebaseAndAuth(); // Make sure initialization is complete
+                // Wait for initialization and auth service availability
+                await initializeFirebaseAndAuth(); // This function is defined in auth.js
 
-                // Then check the authentication state
-                const user = await checkAuthState(); // Assuming checkAuthState is available globally
+                // Now check the authentication state
+                const user = await checkAuthState(); // This will also work reliably
+
+                // Hide loading screen before redirection (optional, can be done by the next page)
+                // hideLoading(); // If you have hideLoading in ui.js
 
                 if (user) {
                     // User is signed in, redirect to the main chat page
@@ -45,7 +51,9 @@
                 // Display a user-friendly error message if something goes wrong
                 const loadingContainer = document.querySelector('.loading-container');
                 if (loadingContainer) {
+                    // Clear the spinner and text, show error message
                     loadingContainer.innerHTML = `<p style="color: var(--error-color);">Error loading application: ${error.message || error}</p>`;
+                    loadingContainer.style.justifyContent = 'center'; // Center the error message
                 }
             }
         };
