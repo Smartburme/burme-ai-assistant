@@ -1,106 +1,135 @@
-// gemini-worker/index.js - Conceptual addition for Video Handling
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+// Cloudflare Worker မှာ env.GEMINI_API_KEY ကနေ API Key ရယူ
+const GEMINI_API_KEY = (typeof globalThis !== 'undefined' && globalThis.GEMINI_API_KEY) || ""; 
+// Cloudflare Worker မှာ env.GEMINI_API_KEY ဖြစ်မှ သုံးမယ်ဆိုမှတ်ပါ
 
-const GEMINI_API_KEY = GEMINI_API_KEY;
 if (!GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY environment variable not set.");
+  throw new Error("GEMINI_API_KEY environment variable not set.");
 }
+
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" }); // Or gemini-pro-vision
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
 
 const corsHeaders = {
-    "Access-Control-Allow-Origin": "*", // Restrict for production
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Max-Age": "86400",
+  "Access-Control-Allow-Origin": "*", // production မှာ restrict လုပ်ပါ
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Max-Age": "86400",
 };
 
 export default {
-    async fetch(request, env, ctx) {
-        // ... existing CORS and method checks ...
+  async fetch(request, env, ctx) {
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
 
-        try {
-            const body = await request.json();
-            const userMessage = body.message;
+    const url = new URL(request.url);
 
-            if (!userMessage) {
-                return new Response(JSON.stringify({ error: "Message is required." }), {
-                    status: 400,
-                    headers: { ...corsHeaders, "Content-Type": "application/json" },
-                });
-            }
+    if (url.pathname === '/favicon.ico') {
+      return new Response(null, { status: 204, statusText: 'No Content' });
+    }
 
-            let GeminiRequest;
+    if (request.method !== "POST") {
+      return new Response("Method Not Allowed", { status: 405, headers: corsHeaders });
+    }
 
-            if (typeof userMessage === 'string') {
-                // Text-only input
-                GeminiRequest = { contents: [{ parts: [{ text: userMessage }] }] };
-            } else if (userMessage.type === 'text_and_image' && userMessage.text && userMessage.base64Image) {
-                // Text and Image input
-                GeminiRequest = {
-                    contents: [{
-                        parts: [
-                            { text: userMessage.text },
-                            { inlineData: { mimeType: "image/jpeg", data: userMessage.base64Image } }
-                        ]
-                    }],
-                };
-            }
-            // --- VIDEO HANDLING (Conceptual & Needs API Confirmation) ---
-            else if (userMessage.type === 'text_and_video' && userMessage.text && userMessage.videoDataUrl) {
-                // Gemini API might accept video data in Data URL format or require conversion.
-                // Example assumes Data URL format is acceptable (VERIFY THIS WITH GOOGLE DOCS).
-                // The mime type needs to be correctly identified.
-                const mimeType = userMessage.videoDataUrl.split(';')[0].split(':')[1]; // Extract mime type from Data URL
+    try {
+      const body = await request.json();
+      const userMessage = body.message;
 
-                // IMPORTANT: Sending large video files via Data URL in a single request might exceed limits.
-                // A more robust solution might involve uploading the video to Cloudflare R2,
-                // getting a public URL, and sending that URL to Gemini API if supported.
+      if (!userMessage) {
+        return new Response(JSON.stringify({ error: "Message is required." }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
 
-                GeminiRequest = {
-                    contents: [{
-                        parts: [
-                            { text: userMessage.text },
-                            // Placeholder for video data part. The exact structure is crucial.
-                            // Refer to Google's Gemini API documentation for video input.
-                            // Example might look like:
-                            // { video: { url: "gs://bucket/video.mp4" } } // If using GCS
-                            // OR { inlineData: { mimeType: "video/mp4", data: "BASE64_ENCODED_VIDEO_DATA" } }
-                            // For simplicity, let's assume Data URL works conceptually:
-                            { inlineData: { mimeType: mimeType || "video/mp4", data: userMessage.videoDataUrl.split(',')[1] } } // Split off "data:..." prefix
-                        ]
-                    }],
-                };
-            }
-            // --- END VIDEO HANDLING ---
-            else {
-                return new Response(JSON.stringify({ error: "Unsupported message format." }), {
-                    status: 400,
-                    headers: { ...corsHeaders, "Content-Type": "application/json" },
-                });
-            }
+      let GeminiRequest;
 
-            // Call the Gemini API
-            const result = await model.generateContent(GeminiRequest);
-            const response = await result.response;
-            const text = response.text(); // Extract text from the response
-
-            return new Response(JSON.stringify({ response: text }), {
-                status: 200,
-                headers: { ...corsHeaders, "Content-Type": "application/json" },
-            });
-
-        } catch (error) {
-            console.error("Error in Gemini Worker:", error);
-            let errorMessage = "An internal error occurred.";
-            if (error instanceof Error) {
-                errorMessage = error.message;
-            }
-            return new Response(JSON.stringify({ error: `Failed to get Gemini response: ${errorMessage}` }), {
-                status: 500,
-                headers: { ...corsHeaders, "Content-Type": "application/json" },
-            });
+      // Text only
+      if (typeof userMessage === "string") {
+        GeminiRequest = { contents: [{ parts: [{ text: userMessage }] }] };
+      }
+      // Text + Image (Base64)
+      else if (
+        userMessage.type === "text_and_image" &&
+        userMessage.text &&
+        userMessage.base64Image
+      ) {
+        GeminiRequest = {
+          contents: [
+            {
+              parts: [
+                { text: userMessage.text },
+                {
+                  inlineData: {
+                    mimeType: "image/jpeg",
+                    data: userMessage.base64Image,
+                  },
+                },
+              ],
+            },
+          ],
+        };
+      }
+      // Text + Video (Base64 Data URL)
+      else if (
+        userMessage.type === "text_and_video" &&
+        userMessage.text &&
+        userMessage.videoDataUrl
+      ) {
+        // Extract mime type & base64 data from data URL
+        const match = userMessage.videoDataUrl.match(/^data:(.+);base64,(.*)$/);
+        if (!match) {
+          return new Response(
+            JSON.stringify({ error: "Invalid videoDataUrl format." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
         }
-    },
+        const mimeType = match[1];
+        const base64Data = match[2];
+
+        // WARNING: Large base64 video may cause request size issues in Workers.
+        // Production recommendation: Upload video to R2 or GCS, send URL to Gemini if supported.
+
+        GeminiRequest = {
+          contents: [
+            {
+              parts: [
+                { text: userMessage.text },
+                {
+                  inlineData: {
+                    mimeType,
+                    data: base64Data,
+                  },
+                },
+              ],
+            },
+          ],
+        };
+      } else {
+        return new Response(
+          JSON.stringify({ error: "Unsupported message format." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      const result = await model.generateContent(GeminiRequest);
+      const response = await result.response;
+      const text = response.text();
+
+      return new Response(
+        JSON.stringify({ response: text }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    } catch (error) {
+      console.error("Error in Gemini Worker:", error);
+      const errorMessage = error instanceof Error ? error.message : "Internal error";
+      return new Response(
+        JSON.stringify({ error: `Failed to get Gemini response: ${errorMessage}` }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+  },
 };
