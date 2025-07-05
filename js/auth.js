@@ -25,43 +25,56 @@ async function initializeAuth() {
     }
 }
 
-// Check auth state and handle redirects
-async function checkAuthAndRedirect() {
-    if (!authInitialized) {
-        await initializeAuth();
-    }
+// Enhanced auth state checker with timeout
+async function checkAuthState() {
+    return new Promise((resolve) => {
+        if (!authInitialized) {
+            resolve(null);
+            return;
+        }
 
-    try {
-        const user = await new Promise((resolve, reject) => {
-            const unsubscribe = auth.onAuthStateChanged(user => {
-                unsubscribe();
-                resolve(user);
-            }, error => {
-                console.error("Auth state error:", error);
-                reject(error);
-            });
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            unsubscribe();
+            resolve(user || null);
+        }, (error) => {
+            console.error("Auth state error:", error);
+            resolve(null);
         });
 
+        // Add timeout (5 seconds)
+        setTimeout(() => {
+            unsubscribe();
+            console.warn("Auth state check timed out");
+            resolve(null);
+        }, 5000);
+    });
+}
+
+// Improved redirect logic for index.html
+async function handleRedirects() {
+    try {
+        const user = await checkAuthState();
         const currentPage = window.location.pathname.split('/').pop();
 
         if (user) {
-            // User is logged in - redirect from login/register to mainchat
-            if (currentPage === 'login.html' || currentPage === 'register.html') {
-                console.log("Redirecting to mainchat.html");
+            // User is logged in - redirect from index to mainchat
+            if (currentPage === 'index.html' || currentPage === '') {
+                console.log("User authenticated, redirecting to mainchat");
                 window.location.href = 'mainchat.html';
+                return true;
             }
         } else {
-            // User is not logged in - redirect from mainchat to login
+            // User is not logged in - redirect from mainchat to index
             if (currentPage === 'mainchat.html') {
-                console.log("Redirecting to login.html");
-                window.location.href = 'login.html';
+                console.log("User not authenticated, redirecting to index");
+                window.location.href = 'index.html';
+                return true;
             }
         }
-
-        return user;
+        return false;
     } catch (error) {
-        console.error("Error checking auth state:", error);
-        return null;
+        console.error("Redirect error:", error);
+        return false;
     }
 }
 
@@ -72,9 +85,11 @@ async function handleLogin(email, password) {
         
         if (userCredential.user) {
             console.log("Login successful, redirecting to mainchat");
-            window.location.href = 'mainchat.html';
+            // Force reload to ensure all auth state is properly initialized
+            window.location.href = 'mainchat.html?t=' + Date.now();
             return { success: true };
         }
+        return { success: false, message: "Login failed - no user returned" };
     } catch (error) {
         console.error("Login error:", error);
         return { 
@@ -84,7 +99,7 @@ async function handleLogin(email, password) {
     }
 }
 
-// Setup login form with proper redirect
+// Setup login form in index.html
 function setupLoginForm() {
     const loginForm = document.getElementById('login-form');
     if (!loginForm) return;
@@ -115,10 +130,21 @@ function setupLoginForm() {
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
     await initializeAuth();
-    setupLoginForm();
+    
+    // Set up login form if on index page
+    if (window.location.pathname.endsWith('index.html') || 
+        window.location.pathname === '/') {
+        setupLoginForm();
+    }
     
     // Check auth state and handle redirects
-    await checkAuthAndRedirect();
+    const redirected = await handleRedirects();
+    
+    // If not redirected and on mainchat, verify auth
+    if (!redirected && window.location.pathname.includes('mainchat.html')) {
+        const user = await checkAuthState();
+        if (!user) {
+            window.location.href = 'index.html';
+        }
+    }
 });
-
-// Keep other existing functions (register, reset, logout) as they were
