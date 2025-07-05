@@ -11,6 +11,27 @@
     <!-- End Firebase SDK -->
     <script src="js/firebaseConfig.js" defer></script>
     <script src="js/auth.js" defer></script>
+    <style>
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <div class="loading-container">
@@ -19,12 +40,32 @@
     </div>
 
     <script>
-        window.onload = async () => {
-            await checkAuthState().then((user) => {
-                if (user) {
-                    window.location.href = 'mainchat.html';
-                }
-        };
+        // Make sure auth.js is loaded first
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check auth state after Firebase is initialized
+            const checkAuth = async () => {
+                return new Promise((resolve) => {
+                    firebase.auth().onAuthStateChanged((user) => {
+                        if (user) {
+                            window.location.href = 'mainchat.html';
+                        } else {
+                            window.location.href = 'login.html';
+                        }
+                        resolve();
+                    });
+                });
+            };
+
+            // Wait for Firebase to be ready
+            if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                await checkAuth();
+            } else {
+                // If Firebase isn't ready yet, wait a bit and try again
+                setTimeout(async () => {
+                    await checkAuth();
+                }, 500);
+            }
+        });
     </script>
 </body>
 </html>
