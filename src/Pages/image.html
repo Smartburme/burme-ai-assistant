@@ -1,63 +1,49 @@
-<!DOCTYPE html>
-<html lang="my">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Image Generation</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/generate.css">
-</head>
-<body>
-    <div class="generator-container">
-        <div class="generator-header">
-            <h2><i class="fas fa-image"></i> ရုပ်ပုံထုတ်လုပ်ရန်</h2>
+<div class="page-container">
+    <h1 class="page-title">Image Generation</h1>
+    
+    <div class="generation-controls">
+        <div class="input-group">
+            <label for="imagePrompt">Image description:</label>
+            <textarea id="imagePrompt" rows="3" placeholder="Describe the image you want to generate..."></textarea>
         </div>
         
-        <div class="input-section">
-            <textarea id="image-prompt" placeholder="ထုတ်လုပ်လိုသော ပုံအကြောင်း ရေးပါ... (မြန်မာလို သို့မဟုတ် အင်္ဂလိပ်လို)"></textarea>
-            
-            <div class="options-row">
-                <div class="option-group">
-                    <label for="image-size">ပုံအရွယ်</label>
-                    <select id="image-size">
-                        <option value="256x256">သေး (256x256)</option>
-                        <option value="512x512" selected>အလတ် (512x512)</option>
-                        <option value="1024x1024">ကြီး (1024x1024)</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <label for="image-style">ပုံစံ</label>
-                    <select id="image-style">
-                        <option value="realistic">လက်တွေ့ဆန်သော</option>
-                        <option value="artistic" selected>အနုပညာဆန်သော</option>
-                        <option value="cartoon">ကာတွန်းပုံစံ</option>
-                    </select>
-                </div>
+        <div class="image-settings">
+            <div>
+                <label for="imageModel">Model:</label>
+                <select id="imageModel">
+                    <option value="dall-e-3">DALL-E 3</option>
+                    <option value="stable-diffusion">Stable Diffusion</option>
+                    <option value="midjourney">Midjourney</option>
+                </select>
             </div>
             
-            <button id="generate-image" class="btn btn-primary">
-                <i class="fas fa-paint-brush"></i> ပုံထုတ်လုပ်မည်
+            <div>
+                <label for="imageSize">Size:</label>
+                <select id="imageSize">
+                    <option value="256x256">256x256</option>
+                    <option value="512x512">512x512</option>
+                    <option value="1024x1024" selected>1024x1024</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="imageCount">Number of images:</label>
+                <input type="number" id="imageCount" min="1" max="4" value="1">
+            </div>
+        </div>
+        
+        <button id="generateImage" class="generate-btn">
+            <i class="fas fa-image"></i> Generate Image
+        </button>
+    </div>
+    
+    <div class="result-container">
+        <h3>Generated Images:</h3>
+        <div id="imageOutput" class="image-grid"></div>
+        <div class="result-actions">
+            <button id="downloadAll" class="action-btn">
+                <i class="fas fa-download"></i> Download All
             </button>
         </div>
-        
-        <div class="output-section">
-            <div class="output-header">
-                <h3>ရလဒ်</h3>
-                <button id="download-image" class="btn btn-secondary">
-                    <i class="fas fa-download"></i> ဒေါင်းလုတ်ရယူမည်
-                </button>
-            </div>
-            <div id="image-output" class="output-content">
-                <!-- Generated image will appear here -->
-                <div class="placeholder">
-                    <i class="fas fa-image"></i>
-                    <p>ထုတ်လုပ်ထားသော ပုံများ ဤနေရာတွင် ပေါ်လာပါမည်</p>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <script src="../../assets/js/image.js"></script>
-</body>
-</html>
+</div>
