@@ -1,59 +1,40 @@
-<!DOCTYPE html>
-<html lang="my">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Text Generation</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/generate.css">
-</head>
-<body>
-    <div class="generator-container">
-        <div class="generator-header">
-            <h2><i class="fas fa-font"></i> စာသားထုတ်လုပ်ရန်</h2>
+<div class="page-container">
+    <h1 class="page-title">Text Generation</h1>
+    
+    <div class="generation-controls">
+        <div class="input-group">
+            <label for="textPrompt">Enter your prompt:</label>
+            <textarea id="textPrompt" rows="5" placeholder="Describe what you want to generate..."></textarea>
         </div>
         
-        <div class="input-section">
-            <textarea id="text-prompt" placeholder="ထုတ်လုပ်လိုသော စာသားအကြောင်း ရေးပါ..."></textarea>
+        <div class="settings-group">
+            <label for="textModel">Model:</label>
+            <select id="textModel">
+                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                <option value="gpt-4">GPT-4</option>
+                <option value="claude-2">Claude 2</option>
+            </select>
             
-            <div class="options-row">
-                <div class="option-group">
-                    <label for="text-length">စာသားအရှည်</label>
-                    <select id="text-length">
-                        <option value="short">တိုတို (၅၀-၁၀၀ စာ)</option>
-                        <option value="medium" selected>အလယ်အလတ် (၁၀၀-၃၀၀ စာ)</option>
-                        <option value="long">ရှည်ရှည် (၃၀၀+ စာ)</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <label for="text-style">ဟန်ပန်</label>
-                    <select id="text-style">
-                        <option value="formal">ရုံးသုံး</option>
-                        <option value="casual" selected>သာမန်</option>
-                        <option value="creative">ဖန်တီးမှု</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button id="generate-text" class="btn btn-primary">
-                <i class="fas fa-magic"></i> စာသားထုတ်လုပ်မည်
+            <label for="textLength">Length:</label>
+            <input type="range" id="textLength" min="100" max="2000" value="500">
+            <span id="lengthValue">500 tokens</span>
+        </div>
+        
+        <button id="generateText" class="generate-btn">
+            <i class="fas fa-magic"></i> Generate Text
+        </button>
+    </div>
+    
+    <div class="result-container">
+        <h3>Generated Output:</h3>
+        <div id="textOutput" class="output-box"></div>
+        <div class="result-actions">
+            <button id="copyText" class="action-btn">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+            <button id="saveText" class="action-btn">
+                <i class="fas fa-save"></i> Save
             </button>
         </div>
-        
-        <div class="output-section">
-            <div class="output-header">
-                <h3>ရလဒ်</h3>
-                <button id="copy-text" class="btn btn-secondary">
-                    <i class="fas fa-copy"></i> ကူးယူမည်
-                </button>
-            </div>
-            <div id="text-output" class="output-content">
-                <!-- Generated text will appear here -->
-            </div>
-        </div>
     </div>
-
-    <script src="../../assets/js/text.js"></script>
-</body>
-</html>
+</div>
