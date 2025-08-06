@@ -1,58 +1,115 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - ကုဒ်ရေးသားခြင်း</title>
-    <link rel="stylesheet" href="../../assets/css/generate.css">
+    <title>BURME AI - Code Assistant</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/coder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
 </head>
-<body class="coder-page">
-    <header class="hyper-header">
-        <div class="logo-container">
-            <img src="../../assets/image/logo.png" alt="BURME AI" class="logo">
-            <h1>ကုဒ်ရေးသားခြင်း</h1>
-        </div>
-        <button class="menu-toggle">☰</button>
-    </header>
+<body>
+    <div class="app-container">
+        <!-- Shared Sidebar -->
+        <aside class="sidebar">
+            <!-- Same sidebar as main.html -->
+        </aside>
 
-    <nav class="hyper-sidebar">
-        <ul class="site-menu">
-            <li><a href="main.html">အဓိက ချက်</a></li>
-            <li><a href="text.html">စာသား ထုတ်လုပ်မှု</a></li>
-            <li><a href="image.html">ပုံထုတ်လုပ်မှု</a></li>
-            <li class="active"><a href="coder.html">ကုဒ်ရေးသားခြင်း</a></li>
-            <li><a href="api.html">API</a></li>
-        </ul>
-    </nav>
+        <!-- Code Assistant Main Content -->
+        <main class="coder-container">
+            <div class="coder-header">
+                <h1><i class="fas fa-code"></i> Code Assistant</h1>
+                <div class="coder-controls">
+                    <div class="control-group">
+                        <label for="languageSelect">Language:</label>
+                        <select id="languageSelect">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="java">Java</option>
+                            <option value="php">PHP</option>
+                        </select>
+                    </div>
+                    <button id="generateCodeBtn" class="generate-btn">
+                        <i class="fas fa-magic"></i> Generate
+                    </button>
+                    <button id="explainCodeBtn" class="secondary-btn">
+                        <i class="fas fa-question-circle"></i> Explain
+                    </button>
+                </div>
+            </div>
 
-    <main class="generator-container">
-        <div class="input-section">
-            <textarea placeholder="ဖန်တီးလိုသော ကုဒ်အကြောင်း ရေးသားပါ (ဥပမာ: JavaScript တွင် စာရင်းတစ်ခုကို စီရန် function...)"></textarea>
-            <div class="controls">
-                <select class="language-selector">
-                    <option value="python">Python</option>
-                    <option value="javascript">JavaScript</option>
-                    <option value="html">HTML</option>
-                    <option value="css">CSS</option>
-                    <option value="java">Java</option>
-                </select>
-                <button class="generate-btn">ကုဒ်ထုတ်လုပ်ရန်</button>
+            <div class="coder-input-output">
+                <div class="input-section">
+                    <textarea id="codePrompt" placeholder="Describe the code you want (e.g., 'Python function to calculate Fibonacci sequence')"></textarea>
+                    <div class="input-tools">
+                        <button class="tool-btn" title="Add example">
+                            <i class="fas fa-lightbulb"></i>
+                        </button>
+                        <button class="tool-btn" title="Clear">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-toolbar">
+                        <span class="output-label">Generated Code</span>
+                        <div class="output-actions">
+                            <button class="action-btn" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn" title="Run">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="action-btn" title="Save">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <pre><code id="generatedCode" class="hljs"></code></pre>
+                </div>
             </div>
-        </div>
-        
-        <div class="output-section">
-            <div class="result-header">
-                <h3>ထုတ်လုပ်ပြီး ကုဒ်</h3>
-                <button class="copy-btn">ကူးယူရန်</button>
+
+            <div class="code-explanation" id="codeExplanation">
+                <div class="explanation-header">
+                    <h3><i class="fas fa-question-circle"></i> Explanation</h3>
+                    <button class="collapse-btn">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+                <div class="explanation-content" id="explanationContent">
+                    <p>Code explanations will appear here...</p>
+                </div>
             </div>
-            <pre><code class="generated-code hljs">
-<!-- ထုတ်လုပ်ပြီး ကုဒ်များ ဤနေရာတွင် ပြသမည် -->
-            </code></pre>
-        </div>
-    </main>
+
+            <div class="code-templates">
+                <h3>Common Code Patterns</h3>
+                <div class="template-grid">
+                    <div class="template-card" data-prompt="Python function to reverse a string">
+                        <i class="fab fa-python"></i>
+                        <span>String Reverse</span>
+                    </div>
+                    <div class="template-card" data-prompt="JavaScript fetch API example">
+                        <i class="fab fa-js"></i>
+                        <span>API Call</span>
+                    </div>
+                    <div class="template-card" data-prompt="CSS grid layout template">
+                        <i class="fab fa-css3"></i>
+                        <span>CSS Grid</span>
+                    </div>
+                    <div class="template-card" data-prompt="PHP MySQL database connection">
+                        <i class="fas fa-database"></i>
+                        <span>DB Connection</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script src="../../assets/js/coder.js"></script>
+    <script src="../../assets/js/coder.js" type="module"></script>
 </body>
 </html>
