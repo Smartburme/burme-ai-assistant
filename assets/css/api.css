@@ -1,0 +1,93 @@
+/* API Page Styles */
+.api-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.api-form {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.api-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.save-btn {
+    background-color: var(--success-color);
+}
+
+.clear-btn {
+    background-color: var(--danger-color);
+}
+
+.visibility-btn {
+    background-color: var(--secondary-color);
+}
+
+.hint-text {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin-top: 5px;
+}
+
+.status-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.api-info {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.api-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.api-info ol {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.api-info a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.api-info a:hover {
+    text-decoration: underline;
+}
+
+.warning-box {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.warning-box i {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .api-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
