@@ -1,49 +1,69 @@
-<div class="page-container">
-    <h1 class="page-title">Image Generation</h1>
-    
-    <div class="generation-controls">
-        <div class="input-group">
-            <label for="imagePrompt">Image description:</label>
-            <textarea id="imagePrompt" rows="3" placeholder="Describe the image you want to generate..."></textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Image Generation</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/generate.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <!-- Sidebar content from main.html -->
         </div>
         
-        <div class="image-settings">
-            <div>
-                <label for="imageModel">Model:</label>
-                <select id="imageModel">
-                    <option value="dall-e-3">DALL-E 3</option>
-                    <option value="stable-diffusion">Stable Diffusion</option>
-                    <option value="midjourney">Midjourney</option>
-                </select>
+        <div class="main-content">
+            <div class="generation-header">
+                <h2>Image Generation</h2>
+                <p>Create stunning visuals from your imagination</p>
             </div>
             
-            <div>
-                <label for="imageSize">Size:</label>
-                <select id="imageSize">
-                    <option value="256x256">256x256</option>
-                    <option value="512x512">512x512</option>
-                    <option value="1024x1024" selected>1024x1024</option>
-                </select>
+            <div class="generation-controls">
+                <div class="input-section">
+                    <textarea id="image-prompt" placeholder="Describe the image you want to create..."></textarea>
+                    <div class="generation-options">
+                        <select id="image-style">
+                            <option value="realistic">Realistic</option>
+                            <option value="cartoon">Cartoon</option>
+                            <option value="anime">Anime</option>
+                            <option value="painting">Painting</option>
+                        </select>
+                        <select id="image-size">
+                            <option value="512x512">Small (512x512)</option>
+                            <option value="768x768">Medium (768x768)</option>
+                            <option value="1024x1024">Large (1024x1024)</option>
+                        </select>
+                        <button id="generate-image-btn" class="primary-btn">Generate Image</button>
+                    </div>
+                </div>
+                
+                <div class="output-section">
+                    <div class="output-toolbar">
+                        <button id="download-image-btn">Download</button>
+                        <button id="save-image-btn">Save to Gallery</button>
+                        <button id="clear-image-btn">Clear</button>
+                    </div>
+                    <div id="image-output" class="output-content">
+                        <img id="generated-image" style="display: none;">
+                        <div id="image-placeholder">Your generated image will appear here</div>
+                    </div>
+                </div>
             </div>
             
-            <div>
-                <label for="imageCount">Number of images:</label>
-                <input type="number" id="imageCount" min="1" max="4" value="1">
+            <div class="templates-section">
+                <h3>Style Examples</h3>
+                <div class="style-examples">
+                    <div class="style-example" data-style="realistic">
+                        <img src="../assets/image/example-realistic.jpg" alt="Realistic Style">
+                        <p>Realistic</p>
+                    </div>
+                    <!-- More style examples -->
+                </div>
             </div>
         </div>
-        
-        <button id="generateImage" class="generate-btn">
-            <i class="fas fa-image"></i> Generate Image
-        </button>
     </div>
     
-    <div class="result-container">
-        <h3>Generated Images:</h3>
-        <div id="imageOutput" class="image-grid"></div>
-        <div class="result-actions">
-            <button id="downloadAll" class="action-btn">
-                <i class="fas fa-download"></i> Download All
-            </button>
-        </div>
-    </div>
-</div>
+    <script src="../assets/js/image.js"></script>
+</body>
+</html>
