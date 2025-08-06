@@ -1,135 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Settings</title>
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/setting.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>BURME AI - ဆက်တင်များ</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/setting.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Shared Sidebar -->
-        <aside class="sidebar">
-            <!-- Same sidebar as main.html -->
-        </aside>
-
-        <!-- Settings Main Content -->
-        <main class="settings-container">
-            <div class="settings-header">
-                <h1><i class="fas fa-cog"></i> Settings</h1>
-            </div>
-
-            <div class="settings-sections">
-                <!-- User Profile Section -->
-                <section class="settings-section">
-                    <h2><i class="fas fa-user"></i> Profile</h2>
-                    <div class="settings-form">
-                        <div class="form-group">
-                            <label for="userName">Name</label>
-                            <input type="text" id="userName" placeholder="Your name">
-                        </div>
-                        <div class="form-group">
-                            <label for="userEmail">Email</label>
-                            <input type="email" id="userEmail" placeholder="your@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="userAvatar">Avatar</label>
-                            <div class="avatar-upload">
-                                <div class="avatar-preview" id="avatarPreview">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <input type="file" id="userAvatar" accept="image/*">
-                                <label for="userAvatar" class="upload-btn">
-                                    <i class="fas fa-upload"></i> Change
-                                </label>
-                            </div>
-                        </div>
-                        <button class="save-btn">Save Profile</button>
-                    </div>
-                </section>
-
-                <!-- Appearance Section -->
-                <section class="settings-section">
-                    <h2><i class="fas fa-palette"></i> Appearance</h2>
-                    <div class="settings-form">
-                        <div class="form-group">
-                            <label>Theme</label>
-                            <div class="theme-options">
-                                <div class="theme-option" data-theme="light">
-                                    <div class="theme-preview light"></div>
-                                    <span>Light</span>
-                                </div>
-                                <div class="theme-option" data-theme="dark">
-                                    <div class="theme-preview dark"></div>
-                                    <span>Dark</span>
-                                </div>
-                                <div class="theme-option" data-theme="auto">
-                                    <div class="theme-preview auto"></div>
-                                    <span>System</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="fontSize">Font Size</label>
-                            <select id="fontSize">
-                                <option value="small">Small</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="large">Large</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="languageSelect">Language</label>
-                            <select id="languageSelect">
-                                <option value="en">English</option>
-                                <option value="my">မြန်မာ</option>
-                                <option value="th">ไทย</option>
-                                <option value="zh">中文</option>
-                                <option value="ru">Русский</option>
-                                <option value="vi">Tiếng Việt</option>
-                                <option value="km">ភាសាខ្មែរ</option>
-                            </select>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Account Section -->
-                <section class="settings-section">
-                    <h2><i class="fas fa-shield-alt"></i> Account</h2>
-                    <div class="settings-form">
-                        <div class="form-group">
-                            <label for="currentPassword">Current Password</label>
-                            <input type="password" id="currentPassword" placeholder="••••••••">
-                        </div>
-                        <div class="form-group">
-                            <label for="newPassword">New Password</label>
-                            <input type="password" id="newPassword" placeholder="••••••••">
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" id="confirmPassword" placeholder="••••••••">
-                        </div>
-                        <button class="save-btn">Change Password</button>
-                    </div>
-                </section>
-
-                <!-- Danger Zone -->
-                <section class="settings-section danger-zone">
-                    <h2><i class="fas fa-exclamation-triangle"></i> Danger Zone</h2>
-                    <div class="danger-actions">
-                        <button class="danger-btn" id="clearHistoryBtn">
-                            <i class="fas fa-trash"></i> Clear All History
-                        </button>
-                        <button class="danger-btn" id="deleteAccountBtn">
-                            <i class="fas fa-user-slash"></i> Delete Account
-                        </button>
-                    </div>
-                </section>
-            </div>
-        </main>
+    <div class="settings-container">
+        <div class="settings-header">
+            <h1>ဆက်တင်များ</h1>
+            <p>သင့် BURME AI အတွေ့အကြုံကို စိတ်ကြိုက်ပြင်ဆင်ပါ</p>
+        </div>
+        
+        <div class="settings-sections">
+            <section class="settings-section">
+                <h2><i class="fas fa-user"></i> သင့်အကောင့်</h2>
+                <div class="input-group">
+                    <label for="user-name">အမည်</label>
+                    <input type="text" id="user-name" placeholder="သင့်အမည်">
+                </div>
+                <div class="input-group">
+                    <label for="user-email">အီးမေးလ်</label>
+                    <input type="email" id="user-email" placeholder="example@burme.ai">
+                </div>
+                <button id="save-profile-btn" class="primary-btn">ပရိုဖိုင်းသိမ်းဆည်းရန်</button>
+            </section>
+            
+            <section class="settings-section">
+                <h2><i class="fas fa-paint-brush"></i> အပြင်အဆင်</h2>
+                <div class="input-group">
+                    <label for="theme-select">အပြင်အဆင်အမျိုးအစား</label>
+                    <select id="theme-select">
+                        <option value="auto">စက်ပေါ်မူတည် (အလိုအလျောက်)</option>
+                        <option value="light">အလင်းရောင်</option>
+                        <option value="dark">အမှောင်ရောင်</option>
+                        <option value="myanmar">မြန်မာ့အရောင်</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="font-size">စာလုံးအရွယ်အစား</label>
+                    <select id="font-size">
+                        <option value="small">သေး</option>
+                        <option value="medium" selected>သာမန်</option>
+                        <option value="large">ကြီး</option>
+                        <option value="xlarge">အလွန်ကြီး</option>
+                    </select>
+                </div>
+                
+                <button id="apply-theme-btn" class="secondary-btn">အပြင်အဆင်ပြောင်းရန်</button>
+            </section>
+            
+            <section class="settings-section">
+                <h2><i class="fas fa-language"></i> ဘာသာစကား</h2>
+                <div class="input-group">
+                    <label for="language-select">ဘာသာစကားရွေးချယ်ပါ</label>
+                    <select id="language-select">
+                        <option value="myanmar" selected>မြန်မာ</option>
+                        <option value="english">အင်္ဂလိပ်</option>
+                        <option value="chinese">တရုတ်</option>
+                        <option value="thai">ထိုင်း</option>
+                        <option value="vietnamese">ဗီယက်နမ်</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="input-method">မြန်မာစာရိုက်နည်း</label>
+                    <select id="input-method">
+                        <option value="zawgyi">ဇော်ဂျီ</option>
+                        <option value="unicode" selected>ယူနီကုဒ်</option>
+                    </select>
+                </div>
+                
+                <button id="apply-language-btn" class="secondary-btn">ဘာသာစကားပြောင်းရန်</button>
+            </section>
+            
+            <section class="settings-section">
+                <h2><i class="fas fa-bell"></i> အသိပေးချက်များ</h2>
+                <div class="toggle-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="notify-new" checked>
+                        <span class="toggle-slider"></span>
+                        <span>အသစ်များအတွက် အသိပေးချက်များ</span>
+                    </label>
+                </div>
+                
+                <div class="toggle-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="notify-updates" checked>
+                        <span class="toggle-slider"></span>
+                        <span>အပ်ဒိတ်များအတွက် အသိပေးချက်များ</span>
+                    </label>
+                </div>
+                
+                <div class="toggle-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="notify-promo">
+                        <span class="toggle-slider"></span>
+                        <span>ကြော်ငြာများအတွက် အသိပေးချက်များ</span>
+                    </label>
+                </div>
+            </section>
+            
+            <section class="settings-section danger-zone">
+                <h2><i class="fas fa-exclamation-triangle"></i> အန္တရာယ်ဇုံ</h2>
+                <div class="danger-actions">
+                    <button id="clear-history-btn" class="danger-btn">စာမျက်နှာမှတ်တမ်းရှင်းရန်</button>
+                    <button id="reset-settings-btn" class="danger-btn">ဆက်တင်များပြန်လည်သတ်မှတ်ရန်</button>
+                    <button id="delete-account-btn" class="danger-btn">အကောင့်ဖျက်ရန်</button>
+                </div>
+            </section>
+        </div>
     </div>
-
-    <script src="../../assets/js/setting.js" type="module"></script>
+    
+    <script src="../assets/js/setting.js"></script>
 </body>
 </html>
