@@ -1,43 +1,122 @@
-<div class="page-container">
-    <h1 class="page-title">API Key Management</h1>
-    
-    <div class="api-container">
-        <form id="apiForm" class="api-form">
-            <div class="input-group">
-                <label for="apiKeyInput">Enter your API Key:</label>
-                <input type="password" id="apiKeyInput" placeholder="sk-...">
-                <p class="hint-text">Your API key is stored locally in your browser and never sent to our servers.</p>
-            </div>
-            
-            <div class="api-actions">
-                <button type="submit" class="save-btn">
-                    <i class="fas fa-save"></i> Save Key
-                </button>
-                <button type="button" id="clearApiKey" class="clear-btn">
-                    <i class="fas fa-trash"></i> Clear Key
-                </button>
-                <button type="button" id="toggleVisibility" class="visibility-btn">
-                    <i class="fas fa-eye"></i> Show
-                </button>
-            </div>
-            
-            <div id="apiStatus" class="status-message"></div>
-        </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - API Key Management</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/api.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <!-- Sidebar content from main.html -->
+        </div>
         
-        <div class="api-info">
-            <h3>How to get an API key:</h3>
-            <ol>
-                <li>Go to <a href="https://platform.openai.com/" target="_blank">OpenAI Platform</a></li>
-                <li>Sign in to your account</li>
-                <li>Navigate to API Keys section</li>
-                <li>Create a new secret key</li>
-                <li>Copy and paste it here</li>
-            </ol>
-            
-            <div class="warning-box">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>Keep your API key secure and don't share it with others. You will be charged for usage based on OpenAI's pricing.</p>
+        <div class="main-content">
+            <div class="api-container">
+                <div class="api-header">
+                    <h2>API Key Management</h2>
+                    <p>Manage your API keys and monitor usage</p>
+                </div>
+                
+                <div class="api-key-section">
+                    <div class="api-key-form">
+                        <h3>Add New API Key</h3>
+                        <div class="form-group">
+                            <label for="api-key-name">Key Name</label>
+                            <input type="text" id="api-key-name" placeholder="e.g., My Project Key">
+                        </div>
+                        <div class="form-group">
+                            <label for="api-key-value">API Key</label>
+                            <div class="input-with-button">
+                                <input type="password" id="api-key-value" placeholder="Paste your API key here">
+                                <button id="toggle-visibility" class="icon-btn">
+                                    <i class="eye-icon">👁️</i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="api-key-source">Key Source</label>
+                            <select id="api-key-source">
+                                <option value="openai">OpenAI</option>
+                                <option value="custom">Custom API</option>
+                            </select>
+                        </div>
+                        <button id="save-api-key" class="primary-btn">Save API Key</button>
+                    </div>
+                    
+                    <div class="api-key-list">
+                        <h3>Your API Keys</h3>
+                        <div class="key-list-header">
+                            <span>Name</span>
+                            <span>Source</span>
+                            <span>Last Used</span>
+                            <span>Actions</span>
+                        </div>
+                        <div id="api-keys-container" class="keys-container">
+                            <!-- API keys will be dynamically inserted here -->
+                            <div class="no-keys">No API keys saved yet</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="api-usage-section">
+                    <h3>API Usage Statistics</h3>
+                    <div class="usage-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value" id="total-requests">0</div>
+                            <div class="metric-label">Total Requests</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="tokens-used">0</div>
+                            <div class="metric-label">Tokens Used</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="success-rate">100%</div>
+                            <div class="metric-label">Success Rate</div>
+                        </div>
+                    </div>
+                    
+                    <div class="usage-chart">
+                        <canvas id="usage-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="api-docs-section">
+                    <h3>API Documentation</h3>
+                    <div class="docs-content">
+                        <p>To use BURME AI programmatically, you can make requests to our API endpoint:</p>
+                        <div class="code-block">
+                            <pre>POST https://api.burme.ai/v1/chat/completions</pre>
+                        </div>
+                        <p>Required headers:</p>
+                        <div class="code-block">
+                            <pre>{
+  "Content-Type": "application/json",
+  "Authorization": "Bearer YOUR_API_KEY"
+}</pre>
+                        </div>
+                        <button id="copy-curl" class="secondary-btn">Copy cURL Example</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    
+    <!-- Modal for key confirmation -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this API key? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button id="confirm-delete" class="danger-btn">Delete</button>
+                <button id="cancel-delete" class="secondary-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/api.js"></script>
+</body>
+                            </html>
