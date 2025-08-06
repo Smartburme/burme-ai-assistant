@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI</title>
+    
+    <!-- Favicon နှင့် app icon -->
+    <link rel="icon" href="./assets/image/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="./assets/image/logo.png">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- CSS ဖိုင်များ -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-spinner"></div>
+        <p>တပ်ဆင်နေပါသည်...</p>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar">
+        <div class="logo-container">
+            <img src="./assets/image/logo.png" alt="BURME AI Logo">
+            <h1>BURME AI</h1>
+        </div>
+        <ul class="menu-items">
+            <li><a href="#" onclick="loadPage('main')"><i class="fas fa-comments"></i> အသစ်ချတ်</a></li>
+            <li><a href="#" onclick="loadPage('text')"><i class="fas fa-font"></i> စာသားထုတ်လုပ်ရန်</a></li>
+            <li><a href="#" onclick="loadPage('image')"><i class="fas fa-image"></i> ရုပ်ပုံထုတ်လုပ်ရန်</a></li>
+            <li><a href="#" onclick="loadPage('coder')"><i class="fas fa-code"></i> ကုဒ်ရေးသားရန်</a></li>
+            <li><a href="#" onclick="loadPage('api')"><i class="fas fa-key"></i> API Key</a></li>
+            <li><a href="#" onclick="loadPage('setting')"><i class="fas fa-cog"></i> အပြင်အဆင်</a></li>
+            <li><a href="#" onclick="loadPage('about')"><i class="fas fa-info-circle"></i> အကြောင်း</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="main-content">
+        <iframe id="content-frame" src="./src/Pages/main.html" frameborder="0"></iframe>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <div id="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>
