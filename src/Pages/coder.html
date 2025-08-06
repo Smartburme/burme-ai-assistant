@@ -1,0 +1,59 @@
+<div class="page-container">
+    <h1 class="page-title">AI Coder</h1>
+    
+    <div class="coder-container">
+        <div class="coder-input">
+            <div class="input-group">
+                <label for="codePrompt">Describe what you want to code:</label>
+                <textarea id="codePrompt" rows="4" placeholder="Describe the functionality you need..."></textarea>
+            </div>
+            
+            <div class="code-settings">
+                <div>
+                    <label for="codeLanguage">Language:</label>
+                    <select id="codeLanguage">
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="java">Java</option>
+                        <option value="c++">C++</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="codeComplexity">Complexity:</label>
+                    <select id="codeComplexity">
+                        <option value="simple">Simple</option>
+                        <option value="intermediate" selected>Intermediate</option>
+                        <option value="complex">Complex</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="generateCode" class="generate-btn">
+                <i class="fas fa-code"></i> Generate Code
+            </button>
+        </div>
+        
+        <div class="code-output">
+            <div class="output-header">
+                <h3>Generated Code:</h3>
+                <div class="output-actions">
+                    <button id="copyCode" class="action-btn">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button id="runCode" class="action-btn">
+                        <i class="fas fa-play"></i> Run
+                    </button>
+                </div>
+            </div>
+            <pre id="codeOutput"><code></code></pre>
+            
+            <div class="execution-result">
+                <h3>Execution Result:</h3>
+                <div id="executionOutput" class="output-box"></div>
+            </div>
+        </div>
+    </div>
+</div>
