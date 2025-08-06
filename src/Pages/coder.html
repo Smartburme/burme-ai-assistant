@@ -1,59 +1,57 @@
-<div class="page-container">
-    <h1 class="page-title">AI Coder</h1>
-    
-    <div class="coder-container">
-        <div class="coder-input">
-            <div class="input-group">
-                <label for="codePrompt">Describe what you want to code:</label>
-                <textarea id="codePrompt" rows="4" placeholder="Describe the functionality you need..."></textarea>
-            </div>
-            
-            <div class="code-settings">
-                <div>
-                    <label for="codeLanguage">Language:</label>
-                    <select id="codeLanguage">
-                        <option value="python">Python</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="html">HTML</option>
-                        <option value="css">CSS</option>
-                        <option value="java">Java</option>
-                        <option value="c++">C++</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label for="codeComplexity">Complexity:</label>
-                    <select id="codeComplexity">
-                        <option value="simple">Simple</option>
-                        <option value="intermediate" selected>Intermediate</option>
-                        <option value="complex">Complex</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button id="generateCode" class="generate-btn">
-                <i class="fas fa-code"></i> Generate Code
-            </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Code Generation</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/generate.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <!-- Sidebar content from main.html -->
         </div>
         
-        <div class="code-output">
-            <div class="output-header">
-                <h3>Generated Code:</h3>
-                <div class="output-actions">
-                    <button id="copyCode" class="action-btn">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                    <button id="runCode" class="action-btn">
-                        <i class="fas fa-play"></i> Run
-                    </button>
+        <div class="main-content">
+            <div class="generation-header">
+                <h2>Code Generation</h2>
+                <p>Generate, explain, and debug code with AI</p>
+            </div>
+            
+            <div class="code-container">
+                <div class="code-input-section">
+                    <div class="code-toolbar">
+                        <select id="code-language">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="java">Java</option>
+                        </select>
+                        <button id="generate-code-btn" class="primary-btn">Generate Code</button>
+                    </div>
+                    <textarea id="code-prompt" placeholder="Describe the code you want to generate or paste existing code to explain/debug..."></textarea>
+                </div>
+                
+                <div class="code-output-section">
+                    <div class="output-toolbar">
+                        <button id="copy-code-btn">Copy</button>
+                        <button id="run-code-btn">Run Code</button>
+                        <button id="save-code-btn">Save</button>
+                    </div>
+                    <pre id="code-output"><code class="language-javascript">// Your generated code will appear here</code></pre>
                 </div>
             </div>
-            <pre id="codeOutput"><code></code></pre>
             
-            <div class="execution-result">
-                <h3>Execution Result:</h3>
-                <div id="executionOutput" class="output-box"></div>
+            <div class="code-actions">
+                <button id="explain-code-btn">Explain Code</button>
+                <button id="debug-code-btn">Debug Code</button>
+                <button id="optimize-code-btn">Optimize Code</button>
             </div>
         </div>
     </div>
-</div>
+    
+    <script src="../assets/js/coder.js"></script>
+</body>
+</html>
