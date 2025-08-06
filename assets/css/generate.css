@@ -1,0 +1,125 @@
+/* Generation Pages Common Styles */
+.generation-controls {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.settings-group {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: var(--border-radius);
+}
+
+.settings-group h3 {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.generate-btn {
+    background-color: var(--success-color);
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* Result Containers */
+.result-container {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.output-box {
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin: 10px 0;
+    white-space: pre-wrap;
+    min-height: 100px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.action-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+/* Image Specific Styles */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.image-item {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.image-item:hover {
+    transform: scale(1.02);
+}
+
+.image-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Code Specific Styles */
+.code-output {
+    background-color: #282c34;
+    color: #abb2bf;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin: 15px 0;
+    overflow-x: auto;
+}
+
+.code-output pre {
+    margin: 0;
+    font-family: var(--font-code);
+    tab-size: 4;
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.execution-result {
+    margin-top: 20px;
+}
+
+/* Range Input Styles */
+input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+}
