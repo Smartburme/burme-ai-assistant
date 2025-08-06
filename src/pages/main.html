@@ -7,63 +7,95 @@
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Additional styles for feature quick links */
-        .feature-quicklinks {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 0.75rem;
-            background-color: var(--sidebar-bg);
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .feature-link {
+        /* Enhanced sidebar styles */
+        .sidebar-nav {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 0.75rem;
-            transition: all 0.2s;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            min-width: 60px;
+            height: 100%;
         }
-        
-        .feature-link:hover {
+
+        .nav-menu {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-header-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .nav-header-btn:hover {
             background-color: rgba(79, 70, 229, 0.1);
             color: var(--primary-color);
         }
-        
-        .feature-link i {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
+
+        .history-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid var(--border-color);
         }
-        
+
+        .clear-history {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-history:hover {
+            color: var(--primary-color);
+        }
+
         @media (max-width: 768px) {
-            .feature-quicklinks {
-                gap: 0.75rem;
-                padding: 0.5rem;
+            .sidebar-header {
+                padding: 0.75rem;
             }
-            .feature-link {
-                padding: 0.5rem;
-                font-size: 0.7rem;
-            }
-            .feature-link i {
-                font-size: 1rem;
+            .nav-header-btn {
+                font-size: 0.9rem;
+                padding: 0.4rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar Navigation -->
+        <!-- Enhanced Sidebar Navigation -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <button class="new-chat-btn">
                     <i class="fas fa-plus"></i>
                     <span>New Chat</span>
                 </button>
+                <div class="header-actions">
+                    <button class="nav-header-btn" data-page="settings" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="nav-header-btn" data-page="about" title="About">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                </div>
             </div>
             
             <nav class="sidebar-nav">
@@ -73,16 +105,22 @@
                         <span>Chat</span>
                     </li>
                     <li class="nav-item" data-page="text">
-                        <i class="fas fa-font"></i>
-                        <span>Text Generate</span>
+                        <a href="../text/text.html" class="nav-link">
+                            <i class="fas fa-font"></i>
+                            <span>Text Generate</span>
+                        </a>
                     </li>
                     <li class="nav-item" data-page="image">
-                        <i class="fas fa-image"></i>
-                        <span>Image Generate</span>
+                        <a href="../image/image.html" class="nav-link">
+                            <i class="fas fa-image"></i>
+                            <span>Image Generate</span>
+                        </a>
                     </li>
                     <li class="nav-item" data-page="coder">
-                        <i class="fas fa-code"></i>
-                        <span>Coder</span>
+                        <a href="../coder/coder.html" class="nav-link">
+                            <i class="fas fa-code"></i>
+                            <span>Coder</span>
+                        </a>
                     </li>
                 </ul>
                 
@@ -94,18 +132,13 @@
                     <ul class="history-list" id="historyList">
                         <!-- Dynamically populated -->
                     </ul>
+                    <div class="history-actions">
+                        <button class="clear-history" id="clearHistoryBtn">
+                            <i class="fas fa-trash-alt"></i> Clear History
+                        </button>
+                    </div>
                 </div>
             </nav>
-            
-            <div class="sidebar-footer">
-                <div class="user-profile">
-                    <div class="avatar">U</div>
-                    <span class="username">User</span>
-                </div>
-                <button class="settings-btn" data-page="settings">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
         </aside>
 
         <!-- Main Chat Area -->
@@ -138,33 +171,9 @@
                     <span class="hint-text">BURME AI may produce inaccurate information</span>
                 </div>
             </div>
-
-            <!-- Feature Quick Links at Bottom -->
-            <div class="feature-quicklinks">
-                <a href="../text/text.html" class="feature-link">
-                    <i class="fas fa-font"></i>
-                    <span>Text</span>
-                </a>
-                <a href="../image/image.html" class="feature-link">
-                    <i class="fas fa-image"></i>
-                    <span>Image</span>
-                </a>
-                <a href="../coder/coder.html" class="feature-link">
-                    <i class="fas fa-code"></i>
-                    <span>Code</span>
-                </a>
-                <a href="../setting/setting.html" class="feature-link">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-                <a href="../about/about.html" class="feature-link">
-                    <i class="fas fa-info-circle"></i>
-                    <span>About</span>
-                </a>
-            </div>
         </main>
     </div>
 
     <script src="../../assets/js/main.js" type="module"></script>
 </body>
-              </html>
+                </html>
