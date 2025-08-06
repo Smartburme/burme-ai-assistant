@@ -1,335 +1,231 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Loading...</title>
-    
-    <!-- Favicon and PWA Meta -->
-    <link rel="icon" href="./assets/image/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="./assets/image/logo.png">
-    <meta name="theme-color" content="#3a0ca3">
-    
-    <!-- Fonts & Icons -->
+    <title>BURME AI - Myanmar's AI Assistant</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/generate.css">
+    <link rel="stylesheet" href="assets/css/api.css">
+    <link rel="stylesheet" href="assets/css/setting.css">
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Loader CSS -->
-    <style>
-        :root {
-            --primary-color: #3a0ca3;
-            --secondary-color: #4361ee;
-            --accent-color: #f72585;
-            --dark-bg: #1a1a2e;
-            --darker-bg: #16213e;
-            --text-light: #f8f9fa;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans Myanmar', sans-serif;
-            overflow: hidden;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-        }
-        
-        /* Advanced Loader Styles */
-        .loader-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-        }
-        
-        .loader-content {
-            text-align: center;
-            max-width: 400px;
-            padding: 2rem;
-            position: relative;
-        }
-        
-        .logo-loader {
-            margin-bottom: 2.5rem;
-            position: relative;
-        }
-        
-        .logo-spinner {
-            width: 120px;
-            height: 120px;
-            animation: pulse 2s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            100% { transform: scale(1.05); opacity: 1; }
-        }
-        
-        .progress-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            margin: 1.5rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            border-radius: 3px;
-            width: 0%;
-            position: relative;
-            transition: width 0.4s ease-out;
-        }
-        
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.4),
-                transparent
-            );
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.5rem;
-        }
-        
-        .progress-text {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .loading-message {
-            margin-top: 2rem;
-            min-height: 60px;
-        }
-        
-        .message-text {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            display: inline-block;
-            background: linear-gradient(90deg, var(--text-light), #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .typing-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-        }
-        
-        .typing-indicator .dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0.4;
-        }
-        
-        .typing-indicator .dot:nth-child(1) {
-            animation: typing-pulse 1.2s infinite;
-        }
-        
-        .typing-indicator .dot:nth-child(2) {
-            animation: typing-pulse 1.2s infinite 0.2s;
-        }
-        
-        .typing-indicator .dot:nth-child(3) {
-            animation: typing-pulse 1.2s infinite 0.4s;
-        }
-        
-        @keyframes typing-pulse {
-            0%, 100% { opacity: 0.4; transform: translateY(0); }
-            50% { opacity: 1; transform: translateY(-5px); }
-        }
-        
-        /* Loading complete animation */
-        .loader-complete .logo-spinner {
-            animation: zoomOut 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-        }
-        
-        @keyframes zoomOut {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        
-        /* Content frame styles */
-        #content-frame {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            z-index: 1;
-        }
-        
-        .frame-loaded {
-            opacity: 1 !important;
-        }
-    </style>
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <!-- Advanced Loader -->
-    <div id="loader" class="loader-container">
+    <!-- Loader Screen -->
+    <div id="loader" class="loader">
         <div class="loader-content">
-            <div class="logo-loader">
-                <svg viewBox="0 0 100 100" class="logo-spinner">
-                    <circle cx="50" cy="50" r="45" stroke="#3a0ca3" stroke-width="8" fill="none" stroke-linecap="round">
-                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1.8s" repeatCount="indefinite"/>
-                    </circle>
-                    <path d="M30,50 Q50,30 70,50 Q50,70 30,50" fill="#3a0ca3"/>
-                </svg>
+            <div class="loader-spinner"></div>
+            <div class="loader-text">BURME AI ကိုစတင်နေပါသည်...</div>
+            <div class="progress-bar">
+                <div class="progress"></div>
             </div>
-            
-            <div class="progress-track">
-                <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <img src="assets/images/logo.png" alt="BURME AI Logo" class="logo">
+                <h2>BURME AI</h2>
             </div>
-            
-            <div class="progress-info">
-                <span class="progress-text">BURME AI စတင်နေပါသည်</span>
-                <span class="progress-text" id="progress-percent">0%</span>
-            </div>
-            
-            <div class="loading-message">
-                <span class="message-text" id="loading-message">စနစ်စစ်ဆေးနေသည်...</span>
-                <div class="typing-indicator">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
+            <button id="closeSidebar" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="menu-items">
+            <button class="menu-item active" data-page="main.html">
+                <i class="fas fa-comment-dots"></i>
+                <span>စကားပြော</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <button class="menu-item" data-page="text.html">
+                <i class="fas fa-font"></i>
+                <span>စာသားထုတ်ခြင်း</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <button class="menu-item" data-page="image.html">
+                <i class="fas fa-image"></i>
+                <span>ပုံထုတ်ခြင်း</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <button class="menu-item" data-page="coder.html">
+                <i class="fas fa-code"></i>
+                <span>ကုဒ်ရေးခြင်း</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <hr class="menu-divider">
+            <button class="menu-item" data-page="api.html">
+                <i class="fas fa-key"></i>
+                <span>API Key</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <button class="menu-item" data-page="setting.html">
+                <i class="fas fa-cog"></i>
+                <span>ဆက်တင်များ</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <button class="menu-item" data-page="about.html">
+                <i class="fas fa-info-circle"></i>
+                <span>အကြောင်း</span>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="username">အသုံးပြုသူ</span>
+                    <span class="user-email">user@example.com</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Content Frame (Initially Hidden) -->
-    <iframe id="content-frame" src="./src/Pages/main.html" loading="eager"></iframe>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <button id="menuToggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-title">BURME AI</div>
+            <div class="header-actions">
+                <button id="themeToggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Dynamic Content Container -->
+        <div id="contentContainer" class="content-container"></div>
+    </div>
 
-    <!-- JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <!-- JavaScript Files -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/router.js"></script>
+    <script src="assets/js/theme.js"></script>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // DOM Loaded Event
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize loader
             const loader = document.getElementById('loader');
-            const progressBar = document.getElementById('progress-bar');
-            const progressPercent = document.getElementById('progress-percent');
-            const loadingMessage = document.getElementById('loading-message');
-            const contentFrame = document.getElementById('content-frame');
             
-            // Loading messages in Burmese
-            const messages = [
-                "စနစ်စစ်ဆေးနေသည်...",
-                "အရင်းအမြစ်များ ဖွင့်နေသည်...",
-                "AI အင်ဂျင် စတင်နေသည်...",
-                "မကြာမီ အဆင်သင့်ဖြစ်ပါမည်..."
-            ];
-            
-            // Simulate progress with realistic delays
+            // Simulate loading (remove in production)
             let progress = 0;
-            const targetProgress = 100;
-            const duration = 3000; // 3 seconds total loading time
-            const startTime = performance.now();
-            
-            // Preload main.html content
-            fetch('./src/Pages/main.html')
-                .then(response => response.text())
-                .then(() => {
-                    // Content is ready, we can proceed
-                });
-            
-            function updateProgress() {
-                const elapsed = performance.now() - startTime;
-                progress = Math.min(elapsed / duration * 100, targetProgress);
+            const progressBar = document.querySelector('.progress');
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                progressBar.style.width = `${Math.min(progress, 100)}%`;
                 
-                progressBar.style.width = `${progress}%`;
-                progressPercent.textContent = `${Math.floor(progress)}%`;
-                
-                // Update message at specific intervals
-                if (progress < 30 && loadingMessage.textContent !== messages[0]) {
-                    loadingMessage.textContent = messages[0];
-                } else if (progress >= 30 && progress < 60 && loadingMessage.textContent !== messages[1]) {
-                    loadingMessage.textContent = messages[1];
-                } else if (progress >= 60 && progress < 85 && loadingMessage.textContent !== messages[2]) {
-                    loadingMessage.textContent = messages[2];
-                } else if (progress >= 85 && loadingMessage.textContent !== messages[3]) {
-                    loadingMessage.textContent = messages[3];
-                }
-                
-                if (progress < targetProgress) {
-                    requestAnimationFrame(updateProgress);
-                } else {
-                    completeLoading();
-                }
-            }
-            
-            function completeLoading() {
-                // Add completion class for animations
-                loader.classList.add('loader-complete');
-                
-                // Animate loader out
-                gsap.to(loader, {
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power2.inOut",
-                    onComplete: () => {
+                if (progress >= 100) {
+                    clearInterval(loadingInterval);
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
                         loader.style.display = 'none';
-                        
-                        // Show content frame with fade-in
-                        gsap.to(contentFrame, {
-                            opacity: 1,
-                            duration: 0.8,
-                            ease: "power2.out",
-                            onStart: () => {
-                                contentFrame.classList.add('frame-loaded');
-                            }
-                        });
+                    }, 500);
+                    
+                    // Load default page
+                    loadPage('main.html');
+                }
+            }, 200);
+            
+            // Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('closeSidebar');
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+            });
+            
+            // Menu Item Click Handlers
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    const page = this.getAttribute('data-page');
+                    loadPage(page);
+                    
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
                     }
                 });
+            });
+            
+            // Dynamic Page Loading Function
+            async function loadPage(page) {
+                try {
+                    const response = await fetch(`src/Pages/${page}`);
+                    if (!response.ok) throw new Error('Page not found');
+                    
+                    const html = await response.text();
+                    document.getElementById('contentContainer').innerHTML = html;
+                    
+                    // Load corresponding JS file
+                    const scriptName = page.split('.')[0];
+                    await loadScript(`assets/js/${scriptName}.js`);
+                    
+                    // Update document title
+                    const pageTitle = document.querySelector('.page-title');
+                    if (pageTitle) {
+                        document.title = `${pageTitle.textContent} | BURME AI`;
+                    }
+                } catch (error) {
+                    console.error('Error loading page:', error);
+                    document.getElementById('contentContainer').innerHTML = `
+                        <div class="error-message">
+                            <h2>စာမျက်နှာဖွင့်ရန်မအောင်မြင်ပါ</h2>
+                            <p>${page} စာမျက်နှာကိုဖွင့်၍မရပါ။ ကျေးဇူးပြု၍နောက်မှထပ်ကြိုးစားပါ။</p>
+                            <button onclick="loadPage('main.html')" class="btn btn-primary">
+                                <i class="fas fa-home"></i> အခြေခံစာမျက်နှာသို့
+                            </button>
+                        </div>
+                    `;
+                }
             }
             
-            // Start the loading process
-            updateProgress();
+            // Dynamic Script Loading
+            function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    // Remove previous script if exists
+                    const oldScript = document.querySelector(`script[src="${src}"]`);
+                    if (oldScript) oldScript.remove();
+                    
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.body.appendChild(script);
+                });
+            }
             
-            // Handle frame load event
-            contentFrame.onload = () => {
-                // Update document title with the framed content's title
-                try {
-                    document.title = contentFrame.contentDocument.title || 'BURME AI';
-                } catch (e) {
-                    document.title = 'BURME AI';
+            // Close sidebar when clicking outside
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768 && 
+                    !sidebar.contains(event.target) && 
+                    !menuToggle.contains(event.target) &&
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
                 }
-            };
+            });
         });
     </script>
 </body>
