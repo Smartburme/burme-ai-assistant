@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Text Generation</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/generate.css">
+</head>
+<body>
+    <div class="generator-container">
+        <div class="generator-header">
+            <h2><i class="fas fa-font"></i> စာသားထုတ်လုပ်ရန်</h2>
+        </div>
+        
+        <div class="input-section">
+            <textarea id="text-prompt" placeholder="ထုတ်လုပ်လိုသော စာသားအကြောင်း ရေးပါ..."></textarea>
+            
+            <div class="options-row">
+                <div class="option-group">
+                    <label for="text-length">စာသားအရှည်</label>
+                    <select id="text-length">
+                        <option value="short">တိုတို (၅၀-၁၀၀ စာ)</option>
+                        <option value="medium" selected>အလယ်အလတ် (၁၀၀-၃၀၀ စာ)</option>
+                        <option value="long">ရှည်ရှည် (၃၀၀+ စာ)</option>
+                    </select>
+                </div>
+                
+                <div class="option-group">
+                    <label for="text-style">ဟန်ပန်</label>
+                    <select id="text-style">
+                        <option value="formal">ရုံးသုံး</option>
+                        <option value="casual" selected>သာမန်</option>
+                        <option value="creative">ဖန်တီးမှု</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="generate-text" class="btn btn-primary">
+                <i class="fas fa-magic"></i> စာသားထုတ်လုပ်မည်
+            </button>
+        </div>
+        
+        <div class="output-section">
+            <div class="output-header">
+                <h3>ရလဒ်</h3>
+                <button id="copy-text" class="btn btn-secondary">
+                    <i class="fas fa-copy"></i> ကူးယူမည်
+                </button>
+            </div>
+            <div id="text-output" class="output-content">
+                <!-- Generated text will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/text.js"></script>
+</body>
+</html>
