@@ -1,40 +1,61 @@
-<div class="page-container">
-    <h1 class="page-title">Text Generation</h1>
-    
-    <div class="generation-controls">
-        <div class="input-group">
-            <label for="textPrompt">Enter your prompt:</label>
-            <textarea id="textPrompt" rows="5" placeholder="Describe what you want to generate..."></textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Text Generation</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/generate.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <!-- Sidebar content from main.html -->
         </div>
         
-        <div class="settings-group">
-            <label for="textModel">Model:</label>
-            <select id="textModel">
-                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
-                <option value="gpt-4">GPT-4</option>
-                <option value="claude-2">Claude 2</option>
-            </select>
+        <div class="main-content">
+            <div class="generation-header">
+                <h2>Text Generation</h2>
+                <p>Create high-quality written content with AI assistance</p>
+            </div>
             
-            <label for="textLength">Length:</label>
-            <input type="range" id="textLength" min="100" max="2000" value="500">
-            <span id="lengthValue">500 tokens</span>
+            <div class="generation-controls">
+                <div class="input-section">
+                    <textarea id="text-prompt" placeholder="Describe what you want to generate..."></textarea>
+                    <div class="generation-options">
+                        <select id="text-style">
+                            <option value="formal">Formal</option>
+                            <option value="casual">Casual</option>
+                            <option value="creative">Creative</option>
+                            <option value="technical">Technical</option>
+                        </select>
+                        <input type="number" id="text-length" min="50" max="2000" value="300">
+                        <button id="generate-text-btn" class="primary-btn">Generate Text</button>
+                    </div>
+                </div>
+                
+                <div class="output-section">
+                    <div class="output-toolbar">
+                        <button id="copy-text-btn">Copy</button>
+                        <button id="save-text-btn">Save</button>
+                        <button id="clear-text-btn">Clear</button>
+                    </div>
+                    <div id="text-output" class="output-content" contenteditable="true"></div>
+                </div>
+            </div>
+            
+            <div class="templates-section">
+                <h3>Quick Templates</h3>
+                <div class="template-buttons">
+                    <button class="template-btn" data-template="blog">Blog Post</button>
+                    <button class="template-btn" data-template="email">Email</button>
+                    <button class="template-btn" data-template="story">Short Story</button>
+                    <button class="template-btn" data-template="ad">Advertisement</button>
+                </div>
+            </div>
         </div>
-        
-        <button id="generateText" class="generate-btn">
-            <i class="fas fa-magic"></i> Generate Text
-        </button>
     </div>
     
-    <div class="result-container">
-        <h3>Generated Output:</h3>
-        <div id="textOutput" class="output-box"></div>
-        <div class="result-actions">
-            <button id="copyText" class="action-btn">
-                <i class="fas fa-copy"></i> Copy
-            </button>
-            <button id="saveText" class="action-btn">
-                <i class="fas fa-save"></i> Save
-            </button>
-        </div>
-    </div>
-</div>
+    <script src="../assets/js/text.js"></script>
+</body>
+</html>
