@@ -1,55 +1,103 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - ပုံထုတ်လုပ်မှု</title>
-    <link rel="stylesheet" href="../../assets/css/generate.css">
+    <title>BURME AI - Image Generator</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/image.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="image-gen-page">
-    <header class="hyper-header">
-        <div class="logo-container">
-            <img src="../../assets/image/logo.png" alt="BURME AI" class="logo">
-            <h1>ပုံထုတ်လုပ်မှု</h1>
-        </div>
-        <button class="menu-toggle">☰</button>
-    </header>
+<body>
+    <div class="app-container">
+        <!-- Shared Sidebar -->
+        <aside class="sidebar">
+            <!-- Same sidebar as main.html -->
+        </aside>
 
-    <nav class="hyper-sidebar">
-        <ul class="site-menu">
-            <li><a href="main.html">အဓိက ချက်</a></li>
-            <li><a href="text.html">စာသား ထုတ်လုပ်မှု</a></li>
-            <li class="active"><a href="image.html">ပုံထုတ်လုပ်မှု</a></li>
-            <li><a href="coder.html">ကုဒ်ရေးသားခြင်း</a></li>
-        </ul>
-    </nav>
-
-    <main class="generator-container">
-        <div class="input-section">
-            <textarea placeholder="ထုတ်လုပ်လိုသော ပုံအကြောင်း ရေးသားပါ..."></textarea>
-            <div class="controls">
-                <select class="style-selector">
-                    <option value="realistic">လက်တွေ့ဆန်သော</option>
-                    <option value="anime">အန်နီမေ</option>
-                    <option value="painting">ပန်းချီကား</option>
-                </select>
-                <button class="generate-btn">ပုံထုတ်လုပ်ရန်</button>
-            </div>
-        </div>
-        
-        <div class="output-section">
-            <div class="result-header">
-                <h3>ထုတ်လုပ်ပြီး ပုံများ</h3>
-            </div>
-            <div class="generated-images">
-                <!-- ထုတ်လုပ်ပြီး ပုံများ ဤနေရာတွင် ပြသမည် -->
-                <div class="placeholder">
-                    <p>ထုတ်လုပ်ပြီး ပုံများကို ဤနေရာတွင် ပြသပေးမည်</p>
+        <!-- Image Generation Main Content -->
+        <main class="image-generator-container">
+            <div class="image-header">
+                <h1><i class="fas fa-image"></i> Image Generator</h1>
+                <div class="image-controls">
+                    <div class="control-group">
+                        <label for="imageStyle">Style:</label>
+                        <select id="imageStyle">
+                            <option value="realistic">Realistic</option>
+                            <option value="anime">Anime</option>
+                            <option value="painting">Painting</option>
+                            <option value="digital-art">Digital Art</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="imageRatio">Ratio:</label>
+                        <select id="imageRatio">
+                            <option value="1:1">Square (1:1)</option>
+                            <option value="16:9">Wide (16:9)</option>
+                            <option value="9:16">Portrait (9:16)</option>
+                        </select>
+                    </div>
+                    <button id="generateImageBtn" class="generate-btn">
+                        <i class="fas fa-magic"></i> Generate
+                    </button>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <script src="../../assets/js/image.js"></script>
+            <div class="image-input-output">
+                <div class="input-section">
+                    <textarea id="imagePrompt" placeholder="Describe the image you want to generate (e.g., 'A golden pagoda at sunrise with hot air balloons in the background')"></textarea>
+                    <div class="input-tools">
+                        <button class="tool-btn" title="Upload reference">
+                            <i class="fas fa-upload"></i>
+                        </button>
+                        <button class="tool-btn" title="Clear">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-toolbar">
+                        <span class="output-label">Generated Images</span>
+                        <div class="output-actions">
+                            <button class="action-btn" title="Download All">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="generatedImages" class="image-grid">
+                        <div class="image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>Your generated images will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="image-examples">
+                <h3>Prompt Examples</h3>
+                <div class="example-grid">
+                    <div class="example-card" data-prompt="Traditional Myanmar market scene, vibrant colors, 8K detailed">
+                        <img src="../../assets/images/market-thumb.jpg" alt="Market example">
+                        <span>Market Scene</span>
+                    </div>
+                    <div class="example-card" data-prompt="Shwedagon Pagoda at golden hour, cinematic lighting">
+                        <img src="../../assets/images/pagoda-thumb.jpg" alt="Pagoda example">
+                        <span>Pagoda</span>
+                    </div>
+                    <div class="example-card" data-prompt="Portrait of a Myanmar lady in traditional dress, soft lighting">
+                        <img src="../../assets/images/portrait-thumb.jpg" alt="Portrait example">
+                        <span>Portrait</span>
+                    </div>
+                    <div class="example-card" data-prompt="Futuristic Yangon cityscape with flying cars">
+                        <img src="../../assets/images/future-thumb.jpg" alt="Futuristic example">
+                        <span>Futuristic City</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/js/image.js" type="module"></script>
 </body>
 </html>
