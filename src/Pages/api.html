@@ -1,63 +1,43 @@
-<!DOCTYPE html>
-<html lang="my">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - API Settings</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/api.css">
-</head>
-<body>
+<div class="page-container">
+    <h1 class="page-title">API Key Management</h1>
+    
     <div class="api-container">
-        <div class="api-header">
-            <h2><i class="fas fa-key"></i> API Key စီမံခန့်ခွဲမှု</h2>
-        </div>
-        
-        <div class="api-form">
-            <div class="form-group">
-                <label for="api-key">OpenAI API Key</label>
-                <input type="password" id="api-key" placeholder="sk-...">
-                <p class="help-text">
-                    API Key ကို <a href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI</a> တွင် ရယူနိုင်ပါသည်။
-                    သင့် API Key ကို သင့်စက်တွင်သာ သိမ်းဆည်းပါမည်။
-                </p>
+        <form id="apiForm" class="api-form">
+            <div class="input-group">
+                <label for="apiKeyInput">Enter your API Key:</label>
+                <input type="password" id="apiKeyInput" placeholder="sk-...">
+                <p class="hint-text">Your API key is stored locally in your browser and never sent to our servers.</p>
             </div>
             
-            <div class="form-group">
-                <label for="api-service">ဝန်ဆောင်မှု</label>
-                <select id="api-service">
-                    <option value="openai">OpenAI</option>
-                    <option value="azure">Azure OpenAI</option>
-                    <option value="custom">ကိုယ်ပိုင် API</option>
-                </select>
+            <div class="api-actions">
+                <button type="submit" class="save-btn">
+                    <i class="fas fa-save"></i> Save Key
+                </button>
+                <button type="button" id="clearApiKey" class="clear-btn">
+                    <i class="fas fa-trash"></i> Clear Key
+                </button>
+                <button type="button" id="toggleVisibility" class="visibility-btn">
+                    <i class="fas fa-eye"></i> Show
+                </button>
             </div>
             
-            <div class="form-actions">
-                <button id="save-api" class="btn btn-primary">
-                    <i class="fas fa-save"></i> သိမ်းဆည်းမည်
-                </button>
-                <button id="test-api" class="btn btn-secondary">
-                    <i class="fas fa-test"></i> စမ်းသပ်မည်
-                </button>
-                <button id="clear-api" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> ဖျက်မည်
-                </button>
-            </div>
-        </div>
+            <div id="apiStatus" class="status-message"></div>
+        </form>
         
-        <div class="api-status">
-            <h3><i class="fas fa-info-circle"></i> API အခြေအနေ</h3>
-            <div id="api-status-message" class="status-message">
-                <i class="fas fa-circle-notch fa-spin"></i> စစ်ဆေးနေသည်...
-            </div>
-            <div class="status-details">
-                <p><strong>အသုံးပြုမှု:</strong> <span id="api-usage">-</span></p>
-                <p><strong>ကျန်ရှိမှု:</strong> <span id="api-remaining">-</span></p>
-                <p><strong>ကန့်သတ်ချက်:</strong> <span id="api-limit">-</span></p>
+        <div class="api-info">
+            <h3>How to get an API key:</h3>
+            <ol>
+                <li>Go to <a href="https://platform.openai.com/" target="_blank">OpenAI Platform</a></li>
+                <li>Sign in to your account</li>
+                <li>Navigate to API Keys section</li>
+                <li>Create a new secret key</li>
+                <li>Copy and paste it here</li>
+            </ol>
+            
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Keep your API key secure and don't share it with others. You will be charged for usage based on OpenAI's pricing.</p>
             </div>
         </div>
     </div>
-
-    <script src="../../assets/js/api.js"></script>
-</body>
-</html>
+</div>
