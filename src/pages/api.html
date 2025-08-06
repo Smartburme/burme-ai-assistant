@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - API Keys</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/api.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Shared Sidebar -->
+        <aside class="sidebar">
+            <!-- Same sidebar as main.html -->
+        </aside>
+
+        <!-- API Key Management Main Content -->
+        <main class="api-container">
+            <div class="api-header">
+                <h1><i class="fas fa-key"></i> API Key Management</h1>
+                <button class="primary-btn" id="addApiKeyBtn">
+                    <i class="fas fa-plus"></i> Add New Key
+                </button>
+            </div>
+
+            <div class="api-content">
+                <!-- API Key Form -->
+                <div class="api-form" id="apiForm">
+                    <h2><i class="fas fa-key"></i> Register New API Key</h2>
+                    <div class="form-group">
+                        <label for="apiKeyName">Key Name</label>
+                        <input type="text" id="apiKeyName" placeholder="e.g., My OpenAI Key">
+                    </div>
+                    <div class="form-group">
+                        <label for="apiKeyValue">API Key</label>
+                        <div class="input-with-toggle">
+                            <input type="password" id="apiKeyValue" placeholder="sk-...">
+                            <button class="toggle-visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="apiService">Service</label>
+                        <select id="apiService">
+                            <option value="openai">OpenAI</option>
+                            <option value="stabilityai">Stability AI</option>
+                            <option value="googleai">Google AI</option>
+                            <option value="anthropic">Anthropic</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button class="secondary-btn" id="cancelApiBtn">Cancel</button>
+                        <button class="primary-btn" id="saveApiBtn">Save Key</button>
+                    </div>
+                </div>
+
+                <!-- API Keys List -->
+                <div class="api-keys-list">
+                    <h2><i class="fas fa-list"></i> Your API Keys</h2>
+                    <div class="keys-table">
+                        <div class="table-header">
+                            <div class="col-name">Name</div>
+                            <div class="col-service">Service</div>
+                            <div class="col-status">Status</div>
+                            <div class="col-actions">Actions</div>
+                        </div>
+                        <div class="table-body" id="apiKeysTable">
+                            <!-- Keys will be dynamically inserted here -->
+                            <div class="empty-state">
+                                <i class="fas fa-key"></i>
+                                <p>No API keys registered yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Documentation -->
+                <div class="api-docs">
+                    <h2><i class="fas fa-book"></i> API Documentation</h2>
+                    <div class="docs-content">
+                        <div class="doc-card">
+                            <h3><i class="fab fa-openai"></i> OpenAI API</h3>
+                            <p>To get your OpenAI API key:</p>
+                            <ol>
+                                <li>Go to <a href="https://platform.openai.com/" target="_blank">OpenAI Platform</a></li>
+                                <li>Sign in to your account</li>
+                                <li>Click on your profile icon → "View API keys"</li>
+                                <li>Click "Create new secret key"</li>
+                            </ol>
+                        </div>
+                        <div class="doc-card">
+                            <h3><i class="fas fa-shield-alt"></i> Security Best Practices</h3>
+                            <ul>
+                                <li>Never share your API keys publicly</li>
+                                <li>Rotate keys regularly</li>
+                                <li>Set usage limits when possible</li>
+                                <li>Monitor your API usage</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/js/api.js" type="module"></script>
+</body>
+                      </html>
