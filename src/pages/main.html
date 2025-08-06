@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Chat</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/chat.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2><i class="fas fa-comments"></i> BURME AI Chat</h2>
+            <button id="new-chat" class="btn btn-primary">
+                <i class="fas fa-plus"></i> အသစ်
+            </button>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be inserted here -->
+        </div>
+        
+        <div class="chat-input">
+            <textarea id="message-input" placeholder="မင်းသိင်္ခါ..."></textarea>
+            <button id="send-button" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        
+        <div class="chat-tools">
+            <button class="tool-btn" data-action="clear">
+                <i class="fas fa-trash"></i> ရှင်းမည်
+            </button>
+            <button class="tool-btn" data-action="copy">
+                <i class="fas fa-copy"></i> ကူးမည်
+            </button>
+            <button class="tool-btn" data-action="save">
+                <i class="fas fa-save"></i> သိမ်းမည်
+            </button>
+        </div>
+    </div>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
