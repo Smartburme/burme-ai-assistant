@@ -2,115 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Intelligent Assistant</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="icon" href="../../assets/image/logo.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BURME AI - Myanmar's Advanced AI Assistant</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" href="./assets/image/logo.png" type="image/png">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Enhanced Sidebar with Proper Icon Sizes -->
-        <div class="sidebar">
-            <div class="logo-container">
-                <img src="../../assets/image/logo.png" alt="BURME AI" class="logo-img" width="48" height="48">
-                <h1 class="logo-text">BURME AI</h1>
+    <!-- App Container with View Mode Classes -->
+    <div class="app-container" id="app-container">
+        <!-- Sidebar with Slide-in/out Functionality -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="./assets/image/logo.png" alt="BURME AI Logo" class="logo" width="40" height="40">
+                <h1>BURME AI</h1>
+                <button class="close-sidebar" id="close-sidebar">×</button>
             </div>
             
-            <button class="sidebar-toggle" aria-label="Toggle sidebar">
-                <i class="fas fa-chevron-left" style="font-size: 1.2rem;"></i>
-            </button>
-            
-            <div class="search-box">
-                <i class="fas fa-search" style="font-size: 1rem;"></i>
-                <input type="text" placeholder="Search chats..." id="chatSearch">
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <h3>AI Tools</h3>
+                    <ul>
+                        <li><a href="main.html" class="active"><i class="icon icon-chat"></i> Chat</a></li>
+                        <li><a href="text.html"><i class="icon icon-text"></i> Text Generation</a></li>
+                        <li><a href="image.html"><i class="icon icon-image"></i> Image Generation</a></li>
+                        <li><a href="coder.html"><i class="icon icon-code"></i> Code Assistant</a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <h3>Settings</h3>
+                    <ul>
+                        <li><a href="setting.html"><i class="icon icon-settings"></i> Settings</a></li>
+                        <li><a href="api.html"><i class="icon icon-key"></i> API Keys</a></li>
+                        <li><a href="about.html"><i class="icon icon-info"></i> About</a></li>
+                    </ul>
+                </div>
             </div>
             
-            <nav class="main-menu">
-                <ul>
-                    <li class="active">
-                        <a href="#" data-page="main">
-                            <i class="fas fa-comment-dots" style="font-size: 1.2rem; width: 24px;"></i>
-                            <span>Chat</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="text">
-                            <i class="fas fa-font" style="font-size: 1.2rem; width: 24px;"></i>
-                            <span>Text</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="image">
-                            <i class="fas fa-image" style="font-size: 1.2rem; width: 24px;"></i>
-                            <span>Image</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="coder">
-                            <i class="fas fa-code" style="font-size: 1.2rem; width: 24px;"></i>
-                            <span>Coder</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            
-            <div class="bottom-menu">
-                <ul>
-                    <li>
-                        <a href="#" data-page="setting">
-                            <i class="fas fa-cog" style="font-size: 1.2rem; width: 24px;"></i>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-page="about">
-                            <i class="fas fa-info-circle" style="font-size: 1.2rem; width: 24px;"></i>
-                            <span>About</span>
-                        </a>
-                    </li>
-                </ul>
+            <div class="sidebar-footer">
+                <div class="view-toggle">
+                    <button id="mobile-view" class="view-btn active"><i class="icon icon-mobile"></i></button>
+                    <button id="desktop-view" class="view-btn"><i class="icon icon-desktop"></i></button>
+                    <button id="fullscreen-view" class="view-btn"><i class="icon icon-fullscreen"></i></button>
+                </div>
+                <div class="user-profile">
+                    <img src="./assets/image/user.png" alt="User" width="32" height="32">
+                    <span>User</span>
+                </div>
             </div>
-            
-            <div class="user-profile">
-                <img src="../../assets/image/user-avatar.png" alt="User" width="32" height="32">
-                <span>User</span>
-            </div>
-        </div>
-        
+        </aside>
+
         <!-- Main Content Area -->
-        <div class="main-content">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <div class="chat-title">
-                        <i class="fas fa-comment-dots" style="font-size: 1.5rem;"></i>
-                        <h2>BURME AI Chat</h2>
-                    </div>
-                    <button class="btn-new-chat">
-                        <i class="fas fa-plus" style="font-size: 0.9rem;"></i>
-                        <span>New Chat</span>
-                    </button>
+        <main class="main-content" id="main-content">
+            <!-- Header with Menu Toggle -->
+            <header class="main-header">
+                <button class="menu-toggle" id="menu-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                <h2>AI Chat Assistant</h2>
+                <div class="header-actions">
+                    <button id="new-chat" class="icon-btn"><i class="icon icon-refresh"></i></button>
+                    <button id="theme-toggle" class="icon-btn"><i class="icon icon-theme"></i></button>
+                </div>
+            </header>
+            
+            <!-- Chat Container -->
+            <div class="chat-container" id="chat-container">
+                <div class="chat-history" id="chat-history">
+                    <!-- Messages will be inserted here -->
                 </div>
                 
-                <div class="chat-history" id="chatHistory">
-                    <!-- Chat messages will be dynamically inserted here -->
-                </div>
-                
-                <div class="chat-input-container">
-                    <div class="chat-input">
-                        <textarea placeholder="Ask BURME AI anything..." id="userInput" rows="1"></textarea>
-                        <button id="sendButton">
-                            <i class="fas fa-paper-plane" style="font-size: 1.2rem;"></i>
-                        </button>
+                <div class="chat-input-area">
+                    <div class="input-container">
+                        <textarea id="message-input" placeholder="Type your message here..." rows="1"></textarea>
+                        <button id="send-button" class="send-btn"><i class="icon icon-send"></i></button>
                     </div>
                     <div class="input-footer">
                         <small>BURME AI may produce inaccurate information. Please verify important details.</small>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
-    
-    <script src="../../assets/js/main.js"></script>
+
+    <!-- Scripts -->
+    <script src="./assets/js/main.js"></script>
 </body>
 </html>
