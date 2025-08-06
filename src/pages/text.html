@@ -1,95 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Text Generator</title>
+    <title>BURME AI - ပုံဖန်တီးရန်</title>
     <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/text.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/image.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Shared Sidebar -->
-        <aside class="sidebar">
-            <!-- Same sidebar as main.html -->
-        </aside>
-
-        <!-- Text Generation Main Content -->
-        <main class="text-generator-container">
-            <div class="text-header">
-                <h1><i class="fas fa-font"></i> Text Generator</h1>
-                <div class="text-controls">
-                    <select id="textStyle">
-                        <option value="creative">Creative</option>
-                        <option value="formal">Formal</option>
-                        <option value="casual">Casual</option>
-                        <option value="academic">Academic</option>
+    <div class="image-generator-container">
+        <div class="image-header">
+            <h1>AI ပုံဖန်တီးရန်</h1>
+            <p>စကားလုံးများဖြင့် အံ့ဖွယ်ပုံများကို ဖန်တီးပါ</p>
+        </div>
+        
+        <div class="image-controls">
+            <div class="input-group full-width">
+                <label for="image-prompt">ဖော်ပြချက်</label>
+                <textarea id="image-prompt" rows="3" placeholder="ဥပမာ - ရှေးဟောင်းမြန်မာနန်းတွင်းပုံ၊ အရောင်စုံဆေးခြယ်ထားသော"></textarea>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="image-style">ပုံစံ</label>
+                    <select id="image-style">
+                        <option value="realistic">လက်တွေ့ဆန်သော</option>
+                        <option value="cartoon">ကာတွန်း</option>
+                        <option value="anime" selected>အန်နီမေ</option>
+                        <option value="painting">ပန်းချီကား</option>
+                        <option value="myanmar">မြန်မာရိုးရာ</option>
                     </select>
-                    <button id="generateTextBtn" class="generate-btn">
-                        <i class="fas fa-magic"></i> Generate
-                    </button>
+                </div>
+                
+                <div class="input-group">
+                    <label for="image-size">အရွယ်အစား</label>
+                    <select id="image-size">
+                        <option value="square">စတုရန်း (512x512)</option>
+                        <option value="portrait" selected>ဒေါင်လိုက် (512x768)</option>
+                        <option value="landscape">အလျားလိုက် (768x512)</option>
+                    </select>
                 </div>
             </div>
-
-            <div class="text-input-output">
-                <div class="input-section">
-                    <textarea id="textPrompt" placeholder="Describe what you want to generate (e.g., 'A poem about Myanmar's sunrise')"></textarea>
-                    <div class="input-tools">
-                        <button class="tool-btn" title="Add example">
-                            <i class="fas fa-lightbulb"></i>
-                        </button>
-                        <button class="tool-btn" title="Clear">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="image-quality">အရည်အသွေး</label>
+                    <select id="image-quality">
+                        <option value="standard">သာမန်</option>
+                        <option value="hd" selected>HD</option>
+                        <option value="ultra">အထူးကောင်း</option>
+                    </select>
                 </div>
-
-                <div class="output-section">
-                    <div class="output-toolbar">
-                        <span class="output-label">Generated Text</span>
-                        <div class="output-actions">
-                            <button class="action-btn" title="Copy">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                            <button class="action-btn" title="Download">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="action-btn" title="Save">
-                                <i class="fas fa-save"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="generatedText" class="generated-content">
-                        <p class="placeholder-text">Your generated content will appear here...</p>
-                    </div>
+                
+                <div class="input-group">
+                    <label for="image-number">ပုံအရေအတွက်</label>
+                    <select id="image-number">
+                        <option value="1">1 ပုံ</option>
+                        <option value="2" selected>2 ပုံ</option>
+                        <option value="4">4 ပုံ</option>
+                    </select>
                 </div>
             </div>
-
-            <div class="text-templates">
-                <h3>Quick Templates</h3>
-                <div class="template-grid">
-                    <div class="template-card" data-prompt="Professional email requesting a meeting">
-                        <i class="fas fa-envelope"></i>
-                        <span>Business Email</span>
-                    </div>
-                    <div class="template-card" data-prompt="Poem about the Irrawaddy River">
-                        <i class="fas fa-pen-fancy"></i>
-                        <span>Poem</span>
-                    </div>
-                    <div class="template-card" data-prompt="300-word blog post about AI in Myanmar">
-                        <i class="fas fa-blog"></i>
-                        <span>Blog Post</span>
-                    </div>
-                    <div class="template-card" data-prompt="Formal apology letter template">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Formal Letter</span>
-                    </div>
+            
+            <button id="generate-image-btn" class="primary-btn">ပုံဖန်တီးရန်</button>
+        </div>
+        
+        <div class="image-results">
+            <div class="result-header">
+                <h3>ဖန်တီးထားသော ပုံများ</h3>
+                <div class="loading-spinner hidden" id="image-loading">
+                    <div class="spinner"></div>
+                    <p>ပုံများကို ဖန်တီးနေပါသည်...</p>
                 </div>
             </div>
-        </main>
+            
+            <div id="generated-images" class="image-grid">
+                <div class="image-placeholder">
+                    <i class="fas fa-image"></i>
+                    <p>ပုံများကို ဖန်တီးရန် အထက်ပါခလုတ်ကို နှိပ်ပါ</p>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script src="../assets/js/text.js" type="module"></script>
+    
+    <script src="../assets/js/image.js"></script>
 </body>
 </html>
