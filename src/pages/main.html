@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Chat Assistant</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles for feature quick links */
+        .feature-quicklinks {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 0.75rem;
+            background-color: var(--sidebar-bg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .feature-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            transition: all 0.2s;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            min-width: 60px;
+        }
+        
+        .feature-link:hover {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .feature-link i {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        @media (max-width: 768px) {
+            .feature-quicklinks {
+                gap: 0.75rem;
+                padding: 0.5rem;
+            }
+            .feature-link {
+                padding: 0.5rem;
+                font-size: 0.7rem;
+            }
+            .feature-link i {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>New Chat</span>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-page="chat">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Chat</span>
+                    </li>
+                    <li class="nav-item" data-page="text">
+                        <i class="fas fa-font"></i>
+                        <span>Text Generate</span>
+                    </li>
+                    <li class="nav-item" data-page="image">
+                        <i class="fas fa-image"></i>
+                        <span>Image Generate</span>
+                    </li>
+                    <li class="nav-item" data-page="coder">
+                        <i class="fas fa-code"></i>
+                        <span>Coder</span>
+                    </li>
+                </ul>
+                
+                <div class="history-section">
+                    <div class="section-header">
+                        <i class="fas fa-history"></i>
+                        <span>History</span>
+                    </div>
+                    <ul class="history-list" id="historyList">
+                        <!-- Dynamically populated -->
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">U</div>
+                    <span class="username">User</span>
+                </div>
+                <button class="settings-btn" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <div class="chat-header">
+                <h1>BURME AI Assistant</h1>
+                <div class="model-info">
+                    <span class="model-name">GPT-4</span>
+                    <span class="model-status">Online</span>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be appended here -->
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="input-box">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Type your message here..." 
+                        rows="1"
+                        spellcheck="false"
+                    ></textarea>
+                    <button id="sendButton" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="hint-text">BURME AI may produce inaccurate information</span>
+                </div>
+            </div>
+
+            <!-- Feature Quick Links at Bottom -->
+            <div class="feature-quicklinks">
+                <a href="../text/text.html" class="feature-link">
+                    <i class="fas fa-font"></i>
+                    <span>Text</span>
+                </a>
+                <a href="../image/image.html" class="feature-link">
+                    <i class="fas fa-image"></i>
+                    <span>Image</span>
+                </a>
+                <a href="../coder/coder.html" class="feature-link">
+                    <i class="fas fa-code"></i>
+                    <span>Code</span>
+                </a>
+                <a href="../setting/setting.html" class="feature-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="../about/about.html" class="feature-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/js/main.js" type="module"></script>
+</body>
+              </html>
