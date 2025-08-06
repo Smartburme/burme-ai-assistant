@@ -1,5 +1,6 @@
 # BURME AI Project Structure
 ===========================
+```
 
 📁 burme-ai/
 │
@@ -36,7 +37,7 @@
 ├── 📄 worker.js             # Cloudflare Worker script for backend/API handling
 ├── 📄 wrangler.toml         # Cloudflare config for deployment
 └── 📄 README.md             # Project overview & setup guide
-
+```
 
 💡 index.html should include:
 -----------------------------
