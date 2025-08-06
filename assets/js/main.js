@@ -1,30 +1,71 @@
-// Chat အပြန်အလှန် စနစ်
-class ChatSystem {
-  constructor() {
-    this.chatHistory = [];
-    this.apiKey = localStorage.getItem('burme_ai_api_key') || '';
-  }
-
-  sendMessage(message) {
-    // API နဲ့ ချိတ်ဆက်ပြီး အဖြေရယူမယ့် logic
-    console.log('Message sent:', message);
-  }
-
-  clearChat() {
-    this.chatHistory = [];
-    this.updateChatUI();
-  }
-}
-
-// DOM နဲ့ ချိတ်ဆက်မယ့် code
-document.addEventListener('DOMContentLoaded', () => {
-  const chatSystem = new ChatSystem();
-  
-  // Send button event
-  document.getElementById('sendButton').addEventListener('click', () => {
-    const userInput = document.getElementById('userInput').value;
-    if(userInput.trim() !== '') {
-      chatSystem.sendMessage(userInput);
+document.addEventListener('DOMContentLoaded', function() {
+    // Loader animation
+    if (document.querySelector('.loader-container')) {
+        setTimeout(() => {
+            window.location.href = 'src/Pages/main.html';
+        }, 2500);
+        return;
     }
-  });
+    
+    // Navigation between pages
+    const navLinks = document.querySelectorAll('[data-page]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.getAttribute('data-page');
+            if (page === 'main') {
+                window.location.href = 'main.html';
+            } else {
+                window.location.href = `${page}.html`;
+            }
+        });
+    });
+    
+    // Chat functionality
+    const chatHistory = document.getElementById('chatHistory');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+    
+    if (sendButton) {
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
+    
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (message === '') return;
+        
+        // Add user message to chat
+        addMessageToChat('user', message);
+        userInput.value = '';
+        
+        // Simulate AI response
+        setTimeout(() => {
+            addMessageToChat('ai', 'This is a simulated response from BURME AI. In the full implementation, this would connect to the actual AI API.');
+        }, 1000);
+    }
+    
+    function addMessageToChat(sender, text) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message');
+        messageDiv.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
+        messageDiv.textContent = text;
+        chatHistory.appendChild(messageDiv);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+    
+    // New chat button
+    const newChatBtn = document.querySelector('.btn-new-chat');
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', function() {
+            if (confirm('Start a new chat? Your current chat will be cleared.')) {
+                chatHistory.innerHTML = '';
+            }
+        });
+    }
 });
