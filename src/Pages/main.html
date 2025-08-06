@@ -1,25 +1,56 @@
-<div class="page-container">
-    <h1 class="page-title">BURME AI Chat</h1>
-    
-    <div class="chat-container">
-        <div id="chatHistory" class="chat-history">
-            <!-- Messages will appear here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BURME AI - Chat</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Menu -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="../../assets/image/logo.png" alt="BURME AI">
+            </div>
+            
+            <nav class="main-menu">
+                <ul>
+                    <li class="active"><a href="#" data-page="main"><i class="icon-chat"></i> Chat</a></li>
+                    <li><a href="#" data-page="text"><i class="icon-text"></i> Text</a></li>
+                    <li><a href="#" data-page="image"><i class="icon-image"></i> Image</a></li>
+                    <li><a href="#" data-page="coder"><i class="icon-code"></i> Coder</a></li>
+                </ul>
+            </nav>
+            
+            <div class="bottom-menu">
+                <ul>
+                    <li><a href="#" data-page="setting"><i class="icon-settings"></i> Settings</a></li>
+                    <li><a href="#" data-page="about"><i class="icon-info"></i> About</a></li>
+                </ul>
+            </div>
         </div>
         
-        <div class="chat-input-container">
-            <textarea id="userInput" placeholder="Type your message here..." rows="3"></textarea>
-            <button id="sendButton" class="send-btn">
-                <i class="fas fa-paper-plane"></i> Send
-            </button>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>BURME AI Chat</h2>
+                    <button class="btn-new-chat">New Chat</button>
+                </div>
+                
+                <div class="chat-history" id="chatHistory">
+                    <!-- Chat messages will appear here -->
+                </div>
+                
+                <div class="chat-input">
+                    <textarea placeholder="Ask BURME AI anything..." id="userInput"></textarea>
+                    <button id="sendButton"><i class="icon-send"></i></button>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="chat-controls">
-        <button id="clearChat" class="control-btn">
-            <i class="fas fa-trash"></i> Clear Chat
-        </button>
-        <button id="exportChat" class="control-btn">
-            <i class="fas fa-download"></i> Export
-        </button>
-    </div>
-</div>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>
