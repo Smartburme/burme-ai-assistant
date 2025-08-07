@@ -1,187 +1,116 @@
-/* text.css - Text Generation Page */
-.text-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 1.5rem;
-    max-width: 1200px;
+/* Text Generator Page Styles */
+.text-generator-container {
+    max-width: 900px;
     margin: 0 auto;
+    padding: 1.5rem;
+    font-family: var(--myanmar-font);
 }
 
 .text-header {
-    margin-bottom: 1.5rem;
-}
-
-.text-header h1 {
-    font-size: 1.8rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
 }
 
 .text-controls {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.control-group {
-    flex: 1;
-    min-width: 250px;
+.input-group {
+    margin-bottom: 1.2rem;
 }
 
-.control-group label {
+.input-group label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
-.control-group select,
-.control-group input[type="range"],
-.control-group input[type="number"] {
+.input-group input,
+.input-group select,
+.input-group textarea {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.8rem;
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--input-bg);
-    color: var(--text-primary);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: inherit;
 }
 
-.range-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.primary-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    display: block;
+    width: 100%;
+    font-family: inherit;
 }
 
-.range-container input[type="range"] {
-    flex: 1;
+.primary-btn:hover {
+    background: #3a5ae8;
 }
 
-.range-value {
-    min-width: 40px;
-    text-align: center;
+.text-result-container {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.text-area-container {
-    display: flex;
-    gap: 1.5rem;
-    flex: 1;
-    min-height: 0;
-}
-
-@media (max-width: 900px) {
-    .text-area-container {
-        flex-direction: column;
-    }
-}
-
-.text-input,
-.text-output {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
-}
-
-.text-area-header {
+.result-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
 }
 
-.text-area-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.text-area-header .word-count {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-textarea {
-    flex: 1;
-    padding: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--input-bg);
-    color: var(--text-primary);
-    resize: none;
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-.text-output-content {
-    flex: 1;
-    padding: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--input-bg);
-    overflow-y: auto;
-    line-height: 1.6;
-}
-
-.text-actions {
+.result-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: 0.5rem;
 }
 
-.preset-buttons {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.preset-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    background: var(--preset-btn-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 1.2rem;
+    transition: color 0.3s;
 }
 
-.preset-btn:hover {
-    background: var(--preset-btn-hover);
-    border-color: var(--primary-color);
+.icon-btn:hover {
+    color: var(--primary-color);
 }
 
-.preset-btn.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.loading-indicator {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
+.generated-text {
+    min-height: 200px;
     padding: 1rem;
-    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    line-height: 1.7;
+    white-space: pre-wrap;
 }
 
-.loading-indicator.active {
-    display: flex;
+.placeholder {
+    color: var(--secondary-color);
+    font-style: italic;
 }
 
-.spinner {
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid rgba(0,0,0,0.1);
-    border-radius: 50%;
-    border-top-color: var(--primary-color);
-    animation: spin 1s linear infinite;
+/* Myanmar text specific styles */
+[lang="my"] .generated-text {
+    font-family: 'Pyidaungsu', sans-serif;
+    line-height: 2;
 }
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-  }
