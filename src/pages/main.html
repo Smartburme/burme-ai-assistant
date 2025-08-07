@@ -1,179 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BURME AI - Chat Assistant</title>
-    <link rel="stylesheet" href="../../assets/css/main.css">
+    <title>BURME AI - AI Power Assistant</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Enhanced sidebar styles */
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .nav-menu {
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .nav-header-btn {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .nav-header-btn:hover {
-            background-color: rgba(79, 70, 229, 0.1);
-            color: var(--primary-color);
-        }
-
-        .history-actions {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .clear-history {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .clear-history:hover {
-            color: var(--primary-color);
-        }
-
-        @media (max-width: 768px) {
-            .sidebar-header {
-                padding: 0.75rem;
-            }
-            .nav-header-btn {
-                font-size: 0.9rem;
-                padding: 0.4rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Enhanced Sidebar Navigation -->
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <button class="new-chat-btn">
-                    <i class="fas fa-plus"></i>
-                    <span>New Chat</span>
+                <h1>BURME AI</h1>
+                <button id="new-chat-btn" class="new-chat-btn">
+                    <i class="fas fa-plus"></i> New Chat
                 </button>
-                <div class="header-actions">
-                    <button class="nav-header-btn" data-page="settings" title="Settings">
-                        <i class="fas fa-cog"></i>
-                    </button>
-                    <button class="nav-header-btn" data-page="about" title="About">
-                        <i class="fas fa-info-circle"></i>
-                    </button>
+            </div>
+            
+            <div class="chat-history">
+                <h3>Chat History</h3>
+                <div id="history-list" class="history-list">
+                    <!-- Chat history items will be loaded here -->
                 </div>
             </div>
             
-            <nav class="sidebar-nav">
-                <ul class="nav-menu">
-                    <li class="nav-item active" data-page="chat">
-                        <i class="fas fa-comment-dots"></i>
-                        <span>Chat</span>
-                    </li>
-                    <li class="nav-item" data-page="text">
-                        <a href="../pages/text.html" class="nav-link">
-                            <i class="fas fa-font"></i>
-                            <span>Text Generate</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" data-page="image">
-                        <a href="../pages/image.html" class="nav-link">
-                            <i class="fas fa-image"></i>
-                            <span>Image Generate</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" data-page="coder">
-                        <a href="../pages/coder.html" class="nav-link">
-                            <i class="fas fa-code"></i>
-                            <span>Coder</span>
-                        </a>
-                    </li>
-                </ul>
-                
-                <div class="history-section">
-                    <div class="section-header">
-                        <i class="fas fa-history"></i>
-                        <span>History</span>
-                    </div>
-                    <ul class="history-list" id="historyList">
-                        <!-- Dynamically populated -->
-                    </ul>
-                    <div class="history-actions">
-                        <button class="clear-history" id="clearHistoryBtn">
-                            <i class="fas fa-trash-alt"></i> Clear History
-                        </button>
-                    </div>
-                </div>
-            </nav>
+            <div class="sidebar-footer">
+                <button id="settings-btn" class="icon-btn">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button id="about-btn" class="icon-btn">
+                    <i class="fas fa-info-circle"></i> About
+                </button>
+            </div>
         </aside>
 
         <!-- Main Chat Area -->
         <main class="chat-container">
             <div class="chat-header">
-                <h1>BURME AI Assistant</h1>
-                <div class="model-info">
-                    <span class="model-name">GPT-4</span>
-                    <span class="model-status">Online</span>
-                </div>
-            </div>
-            
-            <div class="chat-messages" id="chatMessages">
-                <!-- Messages will be appended here -->
-            </div>
-            
-            <div class="chat-input-container">
-                <div class="input-box">
-                    <textarea 
-                        id="messageInput" 
-                        placeholder="Type your message here..." 
-                        rows="1"
-                        spellcheck="false"
-                    ></textarea>
-                    <button id="sendButton" class="send-btn">
-                        <i class="fas fa-paper-plane"></i>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="chat">
+                        <i class="fas fa-comments"></i> Chat
+                    </button>
+                    <button class="mode-btn" data-mode="text">
+                        <i class="fas fa-font"></i> Text
+                    </button>
+                    <button class="mode-btn" data-mode="image">
+                        <i class="fas fa-image"></i> Image
+                    </button>
+                    <button class="mode-btn" data-mode="coder">
+                        <i class="fas fa-code"></i> Coder
                     </button>
                 </div>
-                <div class="input-footer">
-                    <span class="hint-text">BURME AI may produce inaccurate information</span>
+            </div>
+            
+            <div id="chat-messages" class="chat-messages">
+                <!-- Chat messages will be displayed here -->
+                <div class="welcome-message">
+                    <h2>Welcome to BURME AI</h2>
+                    <p>Ask me anything or select a mode to get started!</p>
+                    <div class="quick-prompts">
+                        <button class="prompt-btn" data-prompt="How to say hello in Myanmar?">How to say hello in Myanmar?</button>
+                        <button class="prompt-btn" data-prompt="Write a poem about Myanmar">Write a poem about Myanmar</button>
+                        <button class="prompt-btn" data-prompt="Explain AI in simple terms">Explain AI in simple terms</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Input Area - Changes based on mode -->
+            <div class="input-container">
+                <!-- Default Chat Input -->
+                <div id="chat-input" class="input-section active">
+                    <div class="input-box">
+                        <textarea id="message-input" placeholder="Type your message here..."></textarea>
+                        <button id="send-btn" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Text Generation Input -->
+                <div id="text-input" class="input-section">
+                    <div class="input-controls">
+                        <div class="input-group">
+                            <label for="text-topic">Topic</label>
+                            <input type="text" id="text-topic" placeholder="Enter topic...">
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="text-length">Length</label>
+                                <select id="text-length">
+                                    <option value="short">Short</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="long">Long</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="text-style">Style</label>
+                                <select id="text-style">
+                                    <option value="formal">Formal</option>
+                                    <option value="casual" selected>Casual</option>
+                                    <option value="creative">Creative</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="generate-text-btn" class="generate-btn">Generate Text</button>
+                </div>
+                
+                <!-- Image Generation Input -->
+                <div id="image-input" class="input-section">
+                    <div class="input-controls">
+                        <div class="input-group full-width">
+                            <label for="image-prompt">Prompt</label>
+                            <textarea id="image-prompt" rows="2" placeholder="Describe the image you want to generate..."></textarea>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="image-style">Style</label>
+                                <select id="image-style">
+                                    <option value="realistic">Realistic</option>
+                                    <option value="cartoon">Cartoon</option>
+                                    <option value="anime" selected>Anime</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="image-size">Size</label>
+                                <select id="image-size">
+                                    <option value="square">Square</option>
+                                    <option value="portrait" selected>Portrait</option>
+                                    <option value="landscape">Landscape</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="generate-image-btn" class="generate-btn">Generate Image</button>
+                </div>
+                
+                <!-- Code Generation Input -->
+                <div id="coder-input" class="input-section">
+                    <div class="input-controls">
+                        <div class="input-group full-width">
+                            <label for="coding-prompt">Request</label>
+                            <textarea id="coding-prompt" rows="2" placeholder="Describe what you want to code..."></textarea>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="coding-language">Language</label>
+                                <select id="coding-language">
+                                    <option value="python">Python</option>
+                                    <option value="javascript" selected>JavaScript</option>
+                                    <option value="html">HTML/CSS</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="coding-level">Level</label>
+                                <select id="coding-level">
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate" selected>Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="generate-code-btn" class="generate-btn">Generate Code</button>
                 </div>
             </div>
         </main>
     </div>
 
-    <script src="../../assets/js/main.js" type="module"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
-                </html>
+</html>
